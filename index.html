@@ -75,7 +75,7 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 </style>
 </head>
 <body>
-<div class="bar"><span class="saved" id="saved">Saved ✓</span><button id="print">Print / PDF</button><button id="lock">🔒 Edit</button><button id="reset" hidden>Reset</button></div>
+<div class="bar"><span class="saved" id="saved">Saved ✓</span><button id="print">Print / PDF</button></div>
 <div id="app">
 <header>
 <img src="Highfield Crest 120.jpg">
@@ -211,85 +211,7 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 </section>
 
 </main>
-<footer class="ed">Highfield RFC · Matchday itinerary</footer>
-</div>
-<input type="file" id="file" accept="image/*" hidden>
-<script>
-(function(){
-var KEY='highfield-matchday-v1', PIN='', $=function(s){return document.querySelector(s)};
-var app=$('#app'), DEFAULT=app.innerHTML, edit=false, timer, target;
-try{var s=localStorage.getItem(KEY);if(s)app.innerHTML=s}catch(e){}
 
-function tabs(){
-  var nav=$('#nav'), panels=[].slice.call(app.querySelectorAll('.panel'));
-  nav.innerHTML='';
-  if(!panels.some(function(p){return p.classList.contains('on')}))panels[0].classList.add('on');
-  panels.forEach(function(p){
-    var b=document.createElement('button');
-    b.textContent=p.getAttribute('data-title').replace(/&amp;/g,'&');
-    if(p.classList.contains('on'))b.className='on';
-    b.onclick=function(){
-      panels.forEach(function(q){q.classList.remove('on')});p.classList.add('on');
-      [].forEach.call(nav.children,function(c){c.classList.remove('on')});b.classList.add('on');
-      window.scrollTo(0,0);
-    };
-    nav.appendChild(b);
-  });
-}
-function setEdit(on){
-  edit=on;document.body.classList.toggle('edit',on);
-  [].forEach.call(app.querySelectorAll('.ed'),function(e){e.contentEditable=on?'true':'false'});
-  $('#lock').textContent=on?'✓ Done':'🔒 Edit';$('#reset').hidden=!on;
-}
-function save(){
-  clearTimeout(timer);
-  timer=setTimeout(function(){
-    try{localStorage.setItem(KEY,app.innerHTML);var m=$('#saved');m.classList.add('show');setTimeout(function(){m.classList.remove('show')},1200)}
-    catch(e){alert('Could not save: storage is full. Remove an image and try again.')}
-  },400);
-}
-$('#lock').onclick=function(){
-  if(!edit&&PIN&&prompt('PIN')!==PIN)return;
-  setEdit(!edit);save();
-};
-$('#print').onclick=function(){window.print()};
-$('#reset').onclick=function(){
-  if(!confirm('Reset everything back to the original template?'))return;
-  try{localStorage.removeItem(KEY)}catch(e){}
-  app.innerHTML=DEFAULT;tabs();setEdit(true);
-};
-app.addEventListener('input',save);
-app.addEventListener('click',function(e){
-  var t=e.target;
-  if(t.classList.contains('x')){var r=t.closest('li,.imgwrap');if(r){r.remove();save()}}
-  else if(t.classList.contains('add')){
-    var ul=t.previousElementSibling,last=ul.lastElementChild;
-    if(!last)return;
-    var c=last.cloneNode(true);
-    [].forEach.call(c.querySelectorAll('.ed'),function(n,i){if(n.classList.contains('d')||n.classList.contains('m'))n.textContent=n.classList.contains('m')?'Details':'New item'});
-    ul.appendChild(c);setEdit(true);save();
-  }
-  else if(t.classList.contains('addimg')){target=t;$('#file').click()}
-});
-$('#file').onchange=function(){
-  var f=this.files[0];this.value='';if(!f||!target)return;
-  var r=new FileReader();
-  r.onload=function(){
-    var im=new Image();
-    im.onload=function(){
-      var k=Math.min(1,900/im.width),cv=document.createElement('canvas');
-      cv.width=im.width*k;cv.height=im.height*k;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);
-      var w=document.createElement('div');w.className='imgwrap';
-      w.innerHTML='<img alt=""><button class="x">✕</button>';
-      w.firstChild.src=cv.toDataURL('image/jpeg',.8);
-      target.parentNode.insertBefore(w,target);save();
-    };
-    im.src=r.result;
-  };
-  r.readAsDataURL(f);
-};
-tabs();setEdit(false);
-})();
-</script>
+</div>
 </body>
 </html>
