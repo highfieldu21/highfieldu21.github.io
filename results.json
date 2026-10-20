@@ -4,7 +4,7 @@
     "Competition": "U21 Donal Walsh Trophy",
     "Result": "Loss",
     "Loc": "Away",
-    "Oppposition": "University College Cork RFC",
+    "Opposition": "University College Cork RFC",
     "Grade": "U21",
     "Score": "37:17"
   },
@@ -13,7 +13,7 @@
     "Competition": "U21 Friendly",
     "Result": "Loss",
     "Loc": "Home",
-    "Oppposition": "Dolphin RFC",
+    "Opposition": "Dolphin RFC",
     "Grade": "U21",
     "Score": "17:36"
   },
@@ -22,7 +22,7 @@
     "Competition": "Bank of Ireland Munster Senior Challenge Cup",
     "Result": "Loss",
     "Loc": "Away",
-    "Oppposition": "Nenagh Ormond RFC 1st XV",
+    "Opposition": "Nenagh Ormond RFC 1st XV",
     "Grade": "Senior",
     "Score": "31:26"
   },
@@ -31,7 +31,7 @@
     "Competition": "U21 Donal Walsh Trophy",
     "Result": "Win",
     "Loc": "Home",
-    "Oppposition": "Young Munster RFC",
+    "Opposition": "Young Munster RFC",
     "Grade": "U21",
     "Score": "69:12"
   },
@@ -40,16 +40,16 @@
     "Competition": "Energia All Ireland League Division 1B",
     "Result": "Loss",
     "Loc": "Home",
-    "Oppposition": "Nenagh Ormond",
+    "Opposition": "Nenagh Ormond",
     "Grade": "Senior",
     "Score": "12:22"
   },
   {
     "Date": "03/10/2026",
     "Competition": "Energia All Ireland League Division 1B",
-    "Result": "Win",
+    "Result": "Loss",
     "Loc": "Away",
-    "Oppposition": "Instonians",
+    "Opposition": "Instonians",
     "Grade": "Senior",
     "Score": "7:24"
   },
@@ -58,7 +58,7 @@
     "Competition": "Energia All Ireland League Division 1B",
     "Result": "Win",
     "Loc": "Home",
-    "Oppposition": "Dublin University",
+    "Opposition": "Dublin University",
     "Grade": "Senior",
     "Score": "57:29"
   }
