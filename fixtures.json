@@ -2,7 +2,7 @@
   {
     "Date": "24/10/2026",
     "Opposition": "NUIM Barnhall",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Parsonstown",
     "Grade": "Senior"
@@ -202,7 +202,7 @@
   {
     "Date": "20/03/2027",
     "Opposition": "Dublin University",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "College Park",
     "Grade": "Senior"
@@ -210,7 +210,7 @@
   {
     "Date": "27/03/2027",
     "Opposition": "Instonians",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Woodleigh Park",
     "Grade": "Senior"
@@ -218,7 +218,7 @@
   {
     "Date": "03/04/2027",
     "Opposition": "Nenagh Ormond",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "New Ormond Park",
     "Grade": "Senior"
