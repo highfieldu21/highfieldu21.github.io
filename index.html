@@ -334,7 +334,7 @@ function renderResults(){
   document.getElementById("resRows").innerHTML = list.map(r => {
     const res = resultOf(r), sc = scoreOf(r);
     return `<tr class="res ${esc(res)}"><td class="date">${r.date ? fmt(r.date) : esc(r.Date)}</td><td class="opp">${esc(r.Opposition)}</td>` +
-      `<td class="score">${res ? `<span class="rb ${esc(res)}">${esc(res)}</span>` : ""}${esc(sc)}</td>` +      
+      `<td class="score">${esc(r.Score)}</td>` +      
       `<td class="ha"><span class="loc ${esc(r.Loc)}">${esc(r.Loc)}</span></td>` +
       `<td class="comp">${esc(r.Competition)}</td><td class="grade"><span class="gr">${esc(r.Grade)}</span></td></tr>`;
   }).join("");
