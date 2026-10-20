@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A3D1D">
+<title>Highfield Matchday</title>
+<meta property="og:title" content="Highfield RFC — Matchday">
+<meta property="og:description" content="Squad, timings, warm-up and matchday info. Tap to open.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--green:#0A3D1D;--green2:#14602f;--gold:#C9A227;--paper:#F5F6F1;--card:#fff;--ink:#17201a;--mute:#68746b;--line:#dfe4dc;--red:#c0392b;
+--font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root{--paper:#0d1a12;--card:#13241a;--ink:#eef3ec;--mute:#9db0a2;--line:#24392c}}
+*{box-sizing:border-box}
+html{scroll-padding-top:60px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.45 var(--font);padding-bottom:env(safe-area-inset-bottom,0)}
+.bar{position:sticky;top:0;z-index:20;display:flex;gap:8px;align-items:center;justify-content:flex-end;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 8px;background:var(--green);color:#fff}
+.bar .saved{margin-right:auto;font-size:13px;opacity:0;transition:opacity .3s}
+.bar .saved.show{opacity:.9}
+.bar button{font:inherit;font-size:14px;color:#fff;background:rgba(255,255,255,.14);border:0;border-radius:8px;padding:7px 12px}
+body.edit .bar #lock{background:var(--gold);color:#1b1500}
+header{background:var(--green);color:#fff;padding:14px 18px 22px;display:flex;gap:16px;align-items:center}
+header svg{flex:none;width:64px;height:64px}
+header .k{font-size:13px;color:var(--gold);margin:0}
+header h1{font-size:clamp(26px,7vw,40px);line-height:1.05;margin:2px 0 4px;font-weight:800;letter-spacing:-.01em}
+header h1 small{font-weight:500;opacity:.75;font-size:.55em;margin:0 .3em}
+header .sub{margin:0;opacity:.85;font-size:15px}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.facts div{background:var(--card);padding:12px 18px}
+.facts span{display:block;font-size:12px;color:var(--mute)}
+.facts b{font-size:17px}
+.facts .ko b{font-size:26px;color:var(--green2)}
+@media (prefers-color-scheme:dark){.facts .ko b{color:var(--gold)}}
+nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 48px);z-index:10;display:flex;overflow-x:auto;background:var(--card);border-bottom:2px solid var(--green);scrollbar-width:none}
+nav button{flex:none;font:inherit;font-size:15px;font-weight:600;color:var(--mute);background:none;border:0;border-bottom:3px solid transparent;padding:12px 15px;margin-bottom:-2px}
+nav button.on{color:var(--green);border-bottom-color:var(--gold)}
+@media (prefers-color-scheme:dark){nav button.on{color:var(--gold)}}
+main{max-width:760px;margin:0 auto;padding:0 0 40px}
+.panel{display:none;padding:18px 14px}
+.panel.on{display:block}
+.panel h2{font-size:22px;margin:0 0 12px;color:var(--green)}
+@media (prefers-color-scheme:dark){.panel h2{color:var(--gold)}}
+h3{font-size:15px;margin:20px 0 6px;color:var(--green2)}
+@media (prefers-color-scheme:dark){h3{color:#8fd0a4}}
+ul.l{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+ul.l li{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:baseline;padding:11px 14px;border-top:1px solid var(--line)}
+ul.l li:first-child{border-top:0}
+ul.l .t,ul.l .n{font-weight:800;color:var(--green2);font-variant-numeric:tabular-nums;min-width:48px}
+@media (prefers-color-scheme:dark){ul.l .t,ul.l .n{color:var(--gold)}}
+ul.l .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;min-width:0;align-self:center}
+ul.l .m{display:block;font-size:13px;color:var(--mute)}
+ul.l .d{font-weight:600}
+ul.l .x{grid-column:2}
+.note{margin:8px 2px 0;font-size:14px;color:var(--mute)}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pairs div,.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.pairs span{display:block;font-size:12px;color:var(--mute)}
+.card h3{margin-top:0}
+.card p{margin:0}
+.card+.card{margin-top:10px}
+.imgwrap{position:relative;margin-top:12px}
+.imgwrap img{width:100%;border-radius:12px;display:block}
+.x,.add,.addimg{display:none}
+body.edit .x{display:inline-block;font:inherit;font-size:13px;color:#fff;background:var(--red);border:0;border-radius:6px;padding:2px 8px;justify-self:start}
+body.edit .imgwrap .x{position:absolute;top:8px;right:8px}
+body.edit .add,body.edit .addimg{display:block;width:100%;margin-top:8px;font:inherit;font-size:14px;color:var(--green2);background:none;border:2px dashed var(--green2);border-radius:10px;padding:9px}
+body.edit .ed{outline:1px dashed rgba(201,162,39,.7);outline-offset:2px;border-radius:3px}
+body.edit .ed:focus{outline:2px solid var(--gold)}
+footer{text-align:center;color:var(--mute);font-size:13px;padding:10px 0 30px}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media print{.bar,nav,.x,.add,.addimg{display:none!important}.panel{display:block!important;break-inside:avoid}header{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="bar"><span class="saved" id="saved">Saved ✓</span><button id="print">Print / PDF</button><button id="lock">🔒 Edit</button><button id="reset" hidden>Reset</button></div>
+<div id="app">
+<header>
+<svg viewBox="0 0 64 64" aria-label="Highfield RFC crest"><path d="M32 3 7 12v20c0 14 10 24 25 29 15-5 25-15 25-29V12z" fill="#0A3D1D" stroke="#C9A227" stroke-width="3"/><text x="32" y="40" text-anchor="middle" font-size="26" font-weight="800" fill="#C9A227" font-family="Georgia,serif">H</text></svg>
+<div>
+<p class="k ed">Matchday · Highfield RFC</p>
+<h1><span class="ed">Highfield</span><small>v</small><span class="ed">Opponent</span></h1>
+<p class="sub ed">Saturday 27 September 2026 · Woodleigh Park</p>
+</div>
+</header>
+<div class="facts">
+<div><span>Competition</span><b class="ed">Munster Senior League</b></div>
+<div><span>Venue</span><b class="ed">Woodleigh Park</b></div>
+<div><span>Pitch</span><b class="ed">Main Pitch</b></div>
+<div class="ko"><span>Kick-off</span><b class="ed">14:30</b></div>
+</div>
+<nav id="nav"></nav>
+<main>
+
+<section class="panel on" data-title="Timings">
+<h2>Timings</h2>
+<h3>Pre-match</h3>
+<ul class="l">
+<li><b class="t ed">11:45</b><span><span class="d ed">Squad arrive at clubhouse</span><span class="m ed">Clubhouse</span></span><button class="x">✕</button></li>
+<li><b class="t ed">12:00</b><span><span class="d ed">Strapping available</span><span class="m ed">Physio Room</span></span><button class="x">✕</button></li>
+<li><b class="t ed">12:15</b><span><span class="d ed">Pre-match meal</span><span class="m ed">Function Room</span></span><button class="x">✕</button></li>
+<li><b class="t ed">12:50</b><span><span class="d ed">Team meeting</span><span class="m ed">Team Room</span></span><button class="x">✕</button></li>
+<li><b class="t ed">13:10</b><span><span class="d ed">Forwards &amp; backs walkthrough</span><span class="m ed">Back Pitch</span></span><button class="x">✕</button></li>
+</ul>
+<button class="add">＋ Add timing</button>
+<h3>Ground timings</h3>
+<ul class="l">
+<li><b class="t ed">13:30</b><span><span class="d ed">Changing room open</span><span class="m ed">Home Dressing Room</span></span><button class="x">✕</button></li>
+<li><b class="t ed">13:45</b><span><span class="d ed">Referee kit &amp; stud check</span><span class="m ed">Dressing Room</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:00</b><span><span class="d ed">Kickers out</span><span class="m ed">Pitch</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:12</b><span><span class="d ed">Team warm-up begins</span><span class="m ed">Pitch</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:28</b><span><span class="d ed">Coin toss</span><span class="m ed">Tunnel</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:30</b><span><span class="d ed">Kick-off</span><span class="m ed">Pitch</span></span><button class="x">✕</button></li>
+</ul>
+<button class="add">＋ Add timing</button>
+<p class="note ed">Half-time is 10 minutes.</p>
+<h3>Post-match</h3>
+<ul class="l">
+<li><b class="t ed">16:20</b><span><span class="d ed">Warm-down &amp; recovery</span><span class="m ed">Gym</span></span><button class="x">✕</button></li>
+<li><b class="t ed">16:45</b><span><span class="d ed">Post-match meal</span><span class="m ed">Clubhouse</span></span><button class="x">✕</button></li>
+</ul>
+<button class="add">＋ Add timing</button>
+<button class="addimg">＋ Image</button>
+</section>
+
+<section class="panel" data-title="Squad">
+<h2>Matchday squad</h2>
+<h3>Starting XV</h3>
+<ul class="l">
+<li><b class="n ed">1</b><span><span class="d ed">Loosehead Prop</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">2</b><span><span class="d ed">Hooker</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">3</b><span><span class="d ed">Tighthead Prop</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">4</b><span><span class="d ed">Second Row</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">5</b><span><span class="d ed">Second Row</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">6</b><span><span class="d ed">Blindside Flanker</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">7</b><span><span class="d ed">Openside Flanker</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">8</b><span><span class="d ed">Number 8</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">9</b><span><span class="d ed">Scrum-half</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">10</b><span><span class="d ed">Out-half</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">11</b><span><span class="d ed">Left Wing</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">12</b><span><span class="d ed">Inside Centre</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">13</b><span><span class="d ed">Outside Centre</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">14</b><span><span class="d ed">Right Wing</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">15</b><span><span class="d ed">Full-back</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+</ul>
+<button class="add">＋ Add player</button>
+<h3>Replacements</h3>
+<ul class="l">
+<li><b class="n ed">16</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">17</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">18</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">19</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">20</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">21</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">22</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">23</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+<li><b class="n ed">TR</b><span><span class="d ed">Travelling Reserve</span><span class="m ed">Player name</span></span><button class="x">✕</button></li>
+</ul>
+<button class="add">＋ Add replacement</button>
+</section>
+
+<section class="panel" data-title="Officials">
+<h2>Match officials</h2>
+<div class="pairs">
+<div><span>Referee</span><b class="ed">TBC</b></div>
+<div><span>Assistant referees</span><b class="ed">TBC &amp; TBC</b></div>
+<div><span>4th official</span><b class="ed">TBC</b></div>
+<div><span>Citing / TMO</span><b class="ed">N/A</b></div>
+</div>
+</section>
+
+<section class="panel" data-title="Info &amp; Dress">
+<h2>Info &amp; dress</h2>
+<div class="card"><h3 class="ed">Parking</h3><p class="ed">Team bus and players park in the main car park off the Douglas road. Leave the spaces nearest the clubhouse for match officials and the visiting team.</p></div>
+<div class="card"><h3 class="ed">Dress code</h3><p class="ed">Pre-match: club polo or quarter-zip with navy travel bottoms. Bring both jerseys. Post-match: club polo with smart trousers or chinos for the function.</p></div>
+<div class="card"><h3 class="ed">Weather</h3><p class="ed">Forecast for kick-off: — °C, — wind. Studs recommended for soft ground; check with the kit man on arrival.</p></div>
+<div class="card"><h3 class="ed">Notes</h3><p class="ed">Physio available from arrival. Water carriers briefed at the team meeting. Medics on the far touchline.</p></div>
+<button class="addimg">＋ Image</button>
+</section>
+
+<section class="panel" data-title="Warm-up">
+<h2>Team warm-up</h2>
+<ul class="l">
+<li><b class="t ed">14:12</b><span><span class="d ed">RAMP: raise &amp; pulse</span><span class="m ed">Pitch · 3 min</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:15</b><span><span class="d ed">Mobility &amp; activation</span><span class="m ed">Pitch · 3 min</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:18</b><span><span class="d ed">Handling: gauntlet</span><span class="m ed">Pitch · 3 min</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:21</b><span><span class="d ed">Units</span><span class="m ed">Fwds: scrum &amp; lineout · Bks: shape · 4 min</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:25</b><span><span class="d ed">Collision &amp; contact</span><span class="m ed">Pitch · 2 min</span></span><button class="x">✕</button></li>
+<li><b class="t ed">14:28</b><span><span class="d ed">Return to changing room</span><span class="m ed">Dressing Room</span></span><button class="x">✕</button></li>
+</ul>
+<button class="add">＋ Add block</button>
+</section>
+
+<section class="panel" data-title="Food">
+<h2>Food &amp; fuelling</h2>
+<h3 class="ed">Pre-match meal · Function Room, 12:15</h3>
+<ul class="l">
+<li><span class="d ed">Pasta with tomato &amp; basil</span><button class="x">✕</button></li>
+<li><span class="d ed">Grilled chicken</span><button class="x">✕</button></li>
+<li><span class="d ed">Steamed rice</span><button class="x">✕</button></li>
+<li><span class="d ed">Baked beans</span><button class="x">✕</button></li>
+<li><span class="d ed">Scrambled eggs</span><button class="x">✕</button></li>
+<li><span class="d ed">Porridge &amp; honey</span><button class="x">✕</button></li>
+<li><span class="d ed">Fresh fruit &amp; bananas</span><button class="x">✕</button></li>
+<li><span class="d ed">Yoghurt &amp; granola</span><button class="x">✕</button></li>
+</ul>
+<button class="add">＋ Add item</button>
+<button class="addimg">＋ Image</button>
+</section>
+
+</main>
+<footer class="ed">Highfield RFC · Matchday itinerary</footer>
+</div>
+<input type="file" id="file" accept="image/*" hidden>
+<script>
+(function(){
+var KEY='highfield-matchday-v1', PIN='', $=function(s){return document.querySelector(s)};
+var app=$('#app'), DEFAULT=app.innerHTML, edit=false, timer, target;
+try{var s=localStorage.getItem(KEY);if(s)app.innerHTML=s}catch(e){}
+
+function tabs(){
+  var nav=$('#nav'), panels=[].slice.call(app.querySelectorAll('.panel'));
+  nav.innerHTML='';
+  if(!panels.some(function(p){return p.classList.contains('on')}))panels[0].classList.add('on');
+  panels.forEach(function(p){
+    var b=document.createElement('button');
+    b.textContent=p.getAttribute('data-title').replace(/&amp;/g,'&');
+    if(p.classList.contains('on'))b.className='on';
+    b.onclick=function(){
+      panels.forEach(function(q){q.classList.remove('on')});p.classList.add('on');
+      [].forEach.call(nav.children,function(c){c.classList.remove('on')});b.classList.add('on');
+      window.scrollTo(0,0);
+    };
+    nav.appendChild(b);
+  });
+}
+function setEdit(on){
+  edit=on;document.body.classList.toggle('edit',on);
+  [].forEach.call(app.querySelectorAll('.ed'),function(e){e.contentEditable=on?'true':'false'});
+  $('#lock').textContent=on?'✓ Done':'🔒 Edit';$('#reset').hidden=!on;
+}
+function save(){
+  clearTimeout(timer);
+  timer=setTimeout(function(){
+    try{localStorage.setItem(KEY,app.innerHTML);var m=$('#saved');m.classList.add('show');setTimeout(function(){m.classList.remove('show')},1200)}
+    catch(e){alert('Could not save: storage is full. Remove an image and try again.')}
+  },400);
+}
+$('#lock').onclick=function(){
+  if(!edit&&PIN&&prompt('PIN')!==PIN)return;
+  setEdit(!edit);save();
+};
+$('#print').onclick=function(){window.print()};
+$('#reset').onclick=function(){
+  if(!confirm('Reset everything back to the original template?'))return;
+  try{localStorage.removeItem(KEY)}catch(e){}
+  app.innerHTML=DEFAULT;tabs();setEdit(true);
+};
+app.addEventListener('input',save);
+app.addEventListener('click',function(e){
+  var t=e.target;
+  if(t.classList.contains('x')){var r=t.closest('li,.imgwrap');if(r){r.remove();save()}}
+  else if(t.classList.contains('add')){
+    var ul=t.previousElementSibling,last=ul.lastElementChild;
+    if(!last)return;
+    var c=last.cloneNode(true);
+    [].forEach.call(c.querySelectorAll('.ed'),function(n,i){if(n.classList.contains('d')||n.classList.contains('m'))n.textContent=n.classList.contains('m')?'Details':'New item'});
+    ul.appendChild(c);setEdit(true);save();
+  }
+  else if(t.classList.contains('addimg')){target=t;$('#file').click()}
+});
+$('#file').onchange=function(){
+  var f=this.files[0];this.value='';if(!f||!target)return;
+  var r=new FileReader();
+  r.onload=function(){
+    var im=new Image();
+    im.onload=function(){
+      var k=Math.min(1,900/im.width),cv=document.createElement('canvas');
+      cv.width=im.width*k;cv.height=im.height*k;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);
+      var w=document.createElement('div');w.className='imgwrap';
+      w.innerHTML='<img alt=""><button class="x">✕</button>';
+      w.firstChild.src=cv.toDataURL('image/jpeg',.8);
+      target.parentNode.insertBefore(w,target);save();
+    };
+    im.src=r.result;
+  };
+  r.readAsDataURL(f);
+};
+tabs();setEdit(false);
+})();
+</script>
+</body>
+</html>
