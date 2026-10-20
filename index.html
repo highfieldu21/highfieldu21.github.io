@@ -81,6 +81,7 @@ tr.next{background:#fbf5dc;border-left-color:var(--gold)}
   td.date{font-size:15px;white-space:nowrap}
   td.ground,td.comp{font-size:15px;color:var(--ink)}
   td.grade{text-align:left}
+  td.score{font-size:15px;text-align:left}
   tr.next{background:#fbf5dc}
   .day{min-height:92px;align-items:stretch;padding:5px;font-size:13px}
   .day .dots{display:none}
@@ -88,6 +89,14 @@ tr.next{background:#fbf5dc;border-left-color:var(--gold)}
   .chip.A{border-left-style:dashed}
   .day>span:first-child{align-self:flex-start}
 }
+
+
+/* Results */
+tr.res td.opp{grid-column:1;grid-row:2}
+td.score{grid-column:2;grid-row:2;align-self:center;text-align:right;font-weight:700;font-size:18px;white-space:nowrap}
+.rb{display:inline-block;min-width:22px;text-align:center;border-radius:5px;color:#fff;font-size:12px;font-weight:700;padding:1px 6px;margin-right:6px;vertical-align:2px}
+.rb.W{background:#1d7a3a}.rb.L{background:#b03a2e}.rb.D{background:#c9a227}
+tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{border-left-color:#c9a227}
 
 /* Calendar view */
 .views{display:flex;gap:8px;margin-bottom:10px}
@@ -121,12 +130,13 @@ button.day{cursor:pointer}
     <p class="club">Highfield RFC</p>
     <h1>Club Info</h1>
   </div>
-  <ing src="Highfield Crest 160 x 160.jpg">Highfield RFC Crest<img>
+  <img src="Highfield Crest 160 x 160.jpg">Highfield RFC Crest</img>
 </header>
 <div class="navbg">
   <nav role="tablist" aria-label="Sections">
     <button role="tab" aria-selected="true" data-tab="training">Training</button>
     <button role="tab" aria-selected="false" data-tab="fixtures">Fixtures</button>
+    <button role="tab" aria-selected="false" data-tab="results">Results</button>
     <button role="tab" aria-selected="false" data-tab="squad">Squad</button>
     <button role="tab" aria-selected="false" data-tab="info">Info</button>
   </nav>
@@ -163,6 +173,16 @@ button.day{cursor:pointer}
       <h3 class="sub" id="subhead"></h3>
       <div id="dayList"></div>
     </div>
+  </section>
+
+  <section id="results" hidden>
+    <h2>Results</h2>
+    <div class="pills" id="resPills" role="group" aria-label="Filter results by grade (select one or more)"></div>
+    <table>
+      <thead><tr><th>Date</th><th>Opposition</th><th>Score</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th></tr></thead>
+      <tbody id="resRows"></tbody>
+    </table>
+    <p class="msg" id="resMsg">Loading results…</p>
   </section>
 
   <section id="squad" hidden>
@@ -294,6 +314,63 @@ fetch("fixtures.json")
     const m = document.getElementById("msg");
     m.className = "msg err";
     m.textContent = "Couldn't load fixtures.json. Keep it in the same folder as this page and open the page from its web address, not from a local file.";
+  });
+
+// Results
+let results = [], resSel = new Set();
+const resultOf = r => {
+  if (r.Result) return String(r.Result).trim().charAt(0).toUpperCase();
+  if (r.For != null && r.Against != null && r.For !== "" && r.Against !== "") {
+    const a = Number(r.For), b = Number(r.Against);
+    if (!isNaN(a) && !isNaN(b)) return a > b ? "W" : a < b ? "L" : "D";
+  }
+  return "";
+};
+const scoreOf = r => r.Score ?? (r.For != null && r.Against != null ? `${r.For}-${r.Against}` : "");
+
+function renderResults(){
+  const list = results.filter(r => resSel.size === 0 || resSel.has(r.Grade));
+  document.getElementById("resRows").innerHTML = list.map(r => {
+    const res = resultOf(r), sc = scoreOf(r);
+    return `<tr class="res ${esc(res)}"><td class="date">${r.date ? fmt(r.date) : esc(r.Date)}</td><td class="opp">${esc(r.Opposition)}</td>` +
+      `<td class="score">${res ? `<span class="rb ${esc(res)}">${esc(res)}</span>` : ""}${esc(sc)}</td>` +
+      `<td class="grade"><span class="gr">${esc(r.Grade)}</span></td>` +
+      `<td class="ha"><span class="loc ${esc(r.Loc)}">${esc(r.Loc)}</span></td>` +
+      `<td class="ground">${esc(r.Ground)}</td><td class="comp">${esc(r.Competition)}</td></tr>`;
+  }).join("");
+  const m = document.getElementById("resMsg");
+  m.className = "msg";
+  m.textContent = `${list.length} result${list.length === 1 ? "" : "s"}`;
+}
+
+function buildResPills(){
+  const grades = [...new Set(results.map(r => r.Grade))];
+  const box = document.getElementById("resPills");
+  box.innerHTML = `<button class="pill" data-g="">All</button>` +
+    grades.map(g => `<button class="pill" data-g="${esc(g)}">${esc(g)}</button>`).join("");
+  const sync = () => box.querySelectorAll(".pill").forEach(p =>
+    p.setAttribute("aria-pressed", p.dataset.g === "" ? resSel.size === 0 : resSel.has(p.dataset.g)));
+  box.querySelectorAll(".pill").forEach(p => p.addEventListener("click", () => {
+    const g = p.dataset.g;
+    if (g === "") resSel.clear();
+    else if (resSel.has(g)) resSel.delete(g);
+    else resSel.add(g);
+    sync(); renderResults();
+  }));
+  sync();
+}
+
+fetch("results.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(data => {
+    results = data.map(r => ({...r, date: r.Date ? toDate(r.Date) : null}))
+                  .sort((a,b) => (b.date || 0) - (a.date || 0));   // latest first
+    buildResPills(); renderResults();
+  })
+  .catch(() => {
+    const m = document.getElementById("resMsg");
+    m.className = "msg err";
+    m.textContent = "Couldn't load results.json. Keep it in the same folder as this page and open the page from its web address, not from a local file.";
   });
 </script>
 </body>
