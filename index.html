@@ -32,6 +32,10 @@ h2{font-size:20px;margin:0 0 12px;color:var(--green)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
 .card h3{margin:0 0 4px;font-size:16px;color:var(--green)}
 .card p{margin:0;color:var(--muted)}
+.sched{list-style:none;margin:6px 0 0;padding:0}
+.sched li{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line);font-size:16px}
+.sched li:first-child{border-top:0}
+.sched span:last-child{color:var(--green)}
 
 /* Grade filter: one swipeable row of large tap targets */
 .pills{display:flex;gap:8px;overflow-x:auto;margin:0 -14px 14px;padding:2px 14px;scrollbar-width:none}
@@ -140,7 +144,12 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 <main>
   <section id="training">
     <h2>Training</h2>
-    <div class="card"><h3>Schedule</h3><p>Add training days, times and pitches here.</p></div>
+    <div class="card"><h3>Schedule</h3>
+      <ul class="sched">
+        <li><span>Monday</span><span>7:30pm</span></li>
+        <li><span>Thursday</span><span>6:45pm</span></li>
+      </ul>
+    </div>
   </section>
 
   <section id="fixtures" hidden>
