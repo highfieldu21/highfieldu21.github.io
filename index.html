@@ -100,6 +100,19 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 #fixtures .loc.H{background:#d9f0df;color:#14592c}
 #fixtures .loc.A{background:#fde3c8;color:#9a4a0b}
 
+/* Fixtures: compact phone cards (3 lines: date + badges / opposition / ground and competition) */
+#fixtures .mcomp{display:none}
+@media (max-width:719.98px){
+  #fixtures tr{grid-template-columns:1fr auto auto;gap:0 6px;align-items:center;padding:8px 12px;margin-bottom:8px;border-radius:10px}
+  #fixtures td.date{grid-column:1;grid-row:1;font-size:13px}
+  #fixtures td.grade{grid-column:2;grid-row:1;text-align:right}
+  #fixtures td.ha{grid-column:3;grid-row:1}
+  #fixtures td.opp{grid-column:1/-1;grid-row:2;font-size:16px;margin:3px 0 1px}
+  #fixtures td.ground{grid-column:1/-1;grid-row:3;font-size:13px;color:var(--muted)}
+  #fixtures td.comp{display:none}
+  #fixtures .mcomp{display:inline}
+}
+
 /* Results table rows: normal weight, wins shaded light green */
 #results td,#results .loc,#results .gr,#results .rb{font-weight:400}
 #results tr.win{background:#dff3e3}
@@ -163,16 +176,22 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 </main>
 
 <script>
+// Remember the last tab and grade filters on this phone (silently skipped if storage is blocked)
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem("hrfc:" + k)); } catch (e) { return null; } },
+  set(k, v){ try { localStorage.setItem("hrfc:" + k, JSON.stringify(v)); } catch (e) {} }
+};
 const tabs = document.querySelectorAll("nav button");
 function show(id){
   tabs.forEach(b => b.setAttribute("aria-selected", b.dataset.tab === id));
   document.querySelectorAll("main section").forEach(s => s.hidden = s.id !== id);
   history.replaceState(null, "", "#" + id);
+  store.set("tab", id);
   window.scrollTo(0, 0);
 }
 tabs.forEach(b => b.addEventListener("click", () => show(b.dataset.tab)));
-const start = location.hash.slice(1);
-if (document.getElementById(start)) show(start);
+const start = location.hash.slice(1) || store.get("tab");
+if (start && document.querySelector(`nav [data-tab="${start}"]`)) show(start);
 
 let fixtures = [], selected = new Set();  // empty set = show all grades
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -189,7 +208,7 @@ function renderList(){
     return `<tr class="${cls}"><td class="date">${fmt(f.date)}</td><td class="opp">${esc(f.Opposition)}</td>` +
       `<td class="grade"><span class="gr">${esc(f.Grade)}</span></td>` +
       `<td class="ha"><span class="loc ${locKey(f.Loc)}">${esc(f.Loc)}</span></td>` +
-      `<td class="ground">${esc(f.Ground)}</td><td class="comp">${esc(f.Competition)}</td></tr>`;
+      `<td class="ground">${esc(f.Ground)}<span class="mcomp"> &middot; ${esc(f.Competition)}</span></td><td class="comp">${esc(f.Competition)}</td></tr>`;
   }).join("");
   const m = document.getElementById("msg");
   m.className = "msg";
@@ -200,6 +219,7 @@ function render(){ renderList(); }
 
 function buildPills(){
   const grades = [...new Set(fixtures.map(f => f.Grade))];
+  selected = new Set((store.get("fxGrades") || []).filter(g => grades.includes(g)));
   const box = document.getElementById("pills");
   box.innerHTML = `<button class="pill" data-g="">All</button>` +
     grades.map(g => `<button class="pill" data-g="${esc(g)}">${esc(g)}</button>`).join("");
@@ -210,6 +230,7 @@ function buildPills(){
     if (g === "") selected.clear();                       // All resets the filter
     else if (selected.has(g)) selected.delete(g);         // tap again to remove
     else selected.add(g);
+    store.set("fxGrades", [...selected]);
     sync(); render();
   }));
   sync();
@@ -257,6 +278,7 @@ function renderResults(){
 
 function buildResPills(){
   const grades = [...new Set(results.map(r => r.Grade))];
+  resSel = new Set((store.get("resGrades") || []).filter(g => grades.includes(g)));
   const box = document.getElementById("resPills");
   box.innerHTML = `<button class="pill" data-g="">All</button>` +
     grades.map(g => `<button class="pill" data-g="${esc(g)}">${esc(g)}</button>`).join("");
@@ -267,6 +289,7 @@ function buildResPills(){
     if (g === "") resSel.clear();
     else if (resSel.has(g)) resSel.delete(g);
     else resSel.add(g);
+    store.set("resGrades", [...resSel]);
     sync(); renderResults();
   }));
   sync();
