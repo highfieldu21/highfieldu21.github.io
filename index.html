@@ -99,15 +99,19 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 #fixtures td,#fixtures .loc,#fixtures .gr{font-weight:400}
 #fixtures .loc.H{background:#d9f0df;color:#14592c}
 #fixtures .loc.A{background:#f8d9d6;color:#9b2c22}
+
+/* Results table rows: normal weight, wins shaded light green */
+#results td,#results .loc,#results .gr,#results .rb{font-weight:400}
+#results tr.win{background:#dff3e3}
 </style>
 </head>
 <body>
 <header class="hero">
   <div class="wrap">
     <img class="crest" src="Highfield Crest 160 x 160.jpg" alt="Highfield RFC crest">
-    
+    <p class="eyebrow">Club Info</p>
     <h1>Highfield RFC</h1>
-    <p class="eyebrow">Woodleigh Park</p>
+    <p class="herosub">Woodleigh Park</p>
   </div>
 </header>
 <div class="navbg">
@@ -239,7 +243,8 @@ function renderResults(){
   const list = results.filter(r => resSel.size === 0 || resSel.has(r.Grade));
   document.getElementById("resRows").innerHTML = list.map(r => {
     const res = resultOf(r), sc = scoreOf(r);
-    return `<tr class="res ${esc(res)}"><td class="date">${r.date ? fmt(r.date) : esc(r.Date)}</td><td class="opp">${esc(r.Opposition)}</td>` +
+    const win = String(r.Result ?? "").trim().toLowerCase() === "win";
+    return `<tr class="res ${esc(res)}${win ? " win" : ""}"><td class="date">${r.date ? fmt(r.date) : esc(r.Date)}</td><td class="opp">${esc(r.Opposition)}</td>` +
       `<td class="score">${esc(r.Score)}</td>` +      
       `<td class="gameresult">${esc(r.Result)}</td>` +      
       `<td class="ha"><span class="loc ${locKey(r.Loc)}">${esc(r.Loc)}</span></td>` +
