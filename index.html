@@ -171,6 +171,7 @@ if (document.getElementById(start)) show(start);
 let fixtures = [], selected = new Set();  // empty set = show all grades
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const toDate = s => { const [d,m,y] = s.split("/").map(Number); return new Date(y, m-1, d); };
+const locKey = v => String(v ?? "").trim().charAt(0).toUpperCase();   // "Home"/"H" -> H, "Away"/"A" -> A
 const fmt = d => d.toLocaleDateString("en-IE", {weekday:"short", day:"numeric", month:"short", year:"numeric"});
 
 function renderList(){
@@ -178,10 +179,10 @@ function renderList(){
   const list = fixtures.filter(f => selected.size === 0 || selected.has(f.Grade));
   const nextIdx = list.findIndex(f => f.date >= today);
   document.getElementById("rows").innerHTML = list.map((f,i) => {
-    const cls = [f.Loc === "A" ? "away" : "", f.date < today ? "past" : (i === nextIdx ? "next" : "")].join(" ");
+    const cls = [locKey(f.Loc) === "A" ? "away" : "", f.date < today ? "past" : (i === nextIdx ? "next" : "")].join(" ");
     return `<tr class="${cls}"><td class="date">${fmt(f.date)}</td><td class="opp">${esc(f.Opposition)}</td>` +
       `<td class="grade"><span class="gr">${esc(f.Grade)}</span></td>` +
-      `<td class="ha"><span class="loc ${esc(f.Loc)}">${esc(f.Loc)}</span></td>` +
+      `<td class="ha"><span class="loc ${locKey(f.Loc)}">${esc(f.Loc)}</span></td>` +
       `<td class="ground">${esc(f.Ground)}</td><td class="comp">${esc(f.Competition)}</td></tr>`;
   }).join("");
   const m = document.getElementById("msg");
@@ -239,7 +240,7 @@ function renderResults(){
     return `<tr class="res ${esc(res)}"><td class="date">${r.date ? fmt(r.date) : esc(r.Date)}</td><td class="opp">${esc(r.Opposition)}</td>` +
       `<td class="score">${esc(r.Score)}</td>` +      
       `<td class="gameresult">${esc(r.Result)}</td>` +      
-      `<td class="ha"><span class="loc ${esc(r.Loc)}">${esc(r.Loc)}</span></td>` +
+      `<td class="ha"><span class="loc ${locKey(r.Loc)}">${esc(r.Loc)}</span></td>` +
       `<td class="comp">${esc(r.Competition)}</td><td class="grade"><span class="gr">${esc(r.Grade)}</span></td></tr>`;
   }).join("");
   const m = document.getElementById("resMsg");
