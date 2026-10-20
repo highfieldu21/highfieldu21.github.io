@@ -10,7 +10,7 @@
   {
     "Date": "25/10/2026",
     "Opposition": "Cork Constitution FC 2nd XV",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Munster Senior Clubs League Division 1",
     "Ground": "Temple Hill",
     "Grade": "J1"
@@ -18,7 +18,7 @@
   {
     "Date": "28/10/2026",
     "Opposition": "Garryowen FC",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Dooradoyle",
     "Grade": "U21"
@@ -26,7 +26,7 @@
   {
     "Date": "30/10/2026",
     "Opposition": "UCC",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Woodleigh Park",
     "Grade": "Senior"
@@ -34,7 +34,7 @@
   {
     "Date": "01/11/2026",
     "Opposition": "Nenagh Ormond RFC 2nd XV",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Munster Senior Clubs League Division 1",
     "Ground": "Woodleigh Park",
     "Grade": "J1"
@@ -42,7 +42,7 @@
   {
     "Date": "07/11/2026",
     "Opposition": "Old Crescent RFC",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Woodleigh Park",
     "Grade": "U21"
@@ -50,7 +50,7 @@
   {
     "Date": "07/11/2026",
     "Opposition": "Blackrock College",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Stradbrook",
     "Grade": "Senior"
@@ -58,7 +58,7 @@
   {
     "Date": "18/11/2026",
     "Opposition": "Cork Constitution FC",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Woodleigh Park",
     "Grade": "U21"
@@ -66,7 +66,7 @@
   {
     "Date": "28/11/2026",
     "Opposition": "City Of Armagh",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Woodleigh Park",
     "Grade": "Senior"
@@ -74,7 +74,7 @@
   {
     "Date": "29/11/2026",
     "Opposition": "Shannon RFC 2nd XV",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Munster Senior Clubs League Division 1",
     "Ground": "Coonagh",
     "Grade": "J1"
@@ -82,7 +82,7 @@
   {
     "Date": "02/12/2026",
     "Opposition": "Nenagh Ormond RFC",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Nenagh",
     "Grade": "U21"
@@ -90,7 +90,7 @@
   {
     "Date": "05/12/2026",
     "Opposition": "Garryowen",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Dooradoyle",
     "Grade": "Senior"
@@ -98,7 +98,7 @@
   {
     "Date": "06/12/2026",
     "Opposition": "Garryowen FC 2nd XV",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Munster Senior Clubs League Division 1",
     "Ground": "Woodleigh Park",
     "Grade": "J1"
@@ -106,7 +106,7 @@
   {
     "Date": "12/12/2026",
     "Opposition": "NAAS",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Woodleigh Park",
     "Grade": "Senior"
@@ -114,7 +114,7 @@
   {
     "Date": "09/01/2027",
     "Opposition": "NAAS",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Forenaughts",
     "Grade": "Senior"
@@ -122,7 +122,7 @@
   {
     "Date": "10/01/2027",
     "Opposition": "University College Cork RFC 2nd XV",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Munster Senior Clubs League Division 1",
     "Ground": "Mardyke",
     "Grade": "J1"
@@ -130,7 +130,7 @@
   {
     "Date": "13/01/2027",
     "Opposition": "Sundays Well RFC",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Woodleigh Park",
     "Grade": "U21"
@@ -138,7 +138,7 @@
   {
     "Date": "16/01/2027",
     "Opposition": "Garryowen",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Woodleigh Park",
     "Grade": "Senior"
@@ -146,7 +146,7 @@
   {
     "Date": "17/01/2027",
     "Opposition": "Cork Constitution FC 2nd XV",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Munster Senior Clubs League Division 1",
     "Ground": "Woodleigh Park",
     "Grade": "J1"
@@ -154,7 +154,7 @@
   {
     "Date": "20/01/2027",
     "Opposition": "Dolphin RFC",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Virgin Media Park",
     "Grade": "U21"
@@ -162,7 +162,7 @@
   {
     "Date": "30/01/2027",
     "Opposition": "City Of Armagh",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Palace Grounds",
     "Grade": "Senior"
@@ -170,7 +170,7 @@
   {
     "Date": "06/02/2027",
     "Opposition": "Blackrock College",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Woodleigh Park",
     "Grade": "Senior"
@@ -178,7 +178,7 @@
   {
     "Date": "10/02/2027",
     "Opposition": "Shannon RFC",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Coonagh",
     "Grade": "U21"
@@ -186,7 +186,7 @@
   {
     "Date": "26/02/2027",
     "Opposition": "UCC",
-    "Loc": "A",
+    "Loc": "Away",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Mardyke",
     "Grade": "Senior"
@@ -194,7 +194,7 @@
   {
     "Date": "06/03/2027",
     "Opposition": "NUIM Barnhall",
-    "Loc": "H",
+    "Loc": "Home",
     "Competition": "Energia All Ireland League Division 1B",
     "Ground": "Woodleigh Park",
     "Grade": "Senior"
