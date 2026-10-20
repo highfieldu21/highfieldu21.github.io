@@ -4,203 +4,186 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0A3D1D">
-<title>Highfield U21 Info</title>
-<meta property="og:title" content="Highfield RFC — U21">
-<meta property="og:description" content="Squad, timings, warm-up and matchday info. Tap to open.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="og-image.png">
-<meta name="twitter:card" content="summary_large_image">
+<title>Highfield RFC</title>
 <style>
-:root{--green:#0A3D1D;--green2:#14602f;--gold:#C9A227;--paper:#F5F6F1;--card:#fff;--ink:#17201a;--mute:#68746b;--line:#dfe4dc;--red:#c0392b;
---font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-@media (prefers-color-scheme:dark){:root{--paper:#0d1a12;--card:#13241a;--ink:#eef3ec;--mute:#9db0a2;--line:#24392c}}
-*{box-sizing:border-box}
-html{scroll-padding-top:60px}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.45 var(--font);padding-bottom:env(safe-area-inset-bottom,0)}
-.bar{position:sticky;top:0;z-index:20;display:flex;gap:8px;align-items:center;justify-content:flex-end;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 8px;background:var(--green);color:#fff}
-.bar .saved{margin-right:auto;font-size:13px;opacity:0;transition:opacity .3s}
-.bar .saved.show{opacity:.9}
-.bar button{font:inherit;font-size:14px;color:#fff;background:rgba(255,255,255,.14);border:0;border-radius:8px;padding:7px 12px}
-body.edit .bar #lock{background:var(--gold);color:#1b1500}
-header{background:var(--green);color:#fff;padding:14px 18px 22px;display:flex;gap:16px;align-items:center}
-header svg{flex:none;width:64px;height:64px}
-header .k{font-size:13px;color:var(--gold);margin:0}
-header h1{font-size:clamp(26px,7vw,40px);line-height:1.05;margin:2px 0 4px;font-weight:800;letter-spacing:-.01em}
-header h1 small{font-weight:500;opacity:.75;font-size:.55em;margin:0 .3em}
-header .sub{margin:0;opacity:.85;font-size:15px}
-.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
-.facts div{background:var(--card);padding:12px 18px}
-.facts span{display:block;font-size:12px;color:var(--mute)}
-.facts b{font-size:17px}
-.facts .ko b{font-size:26px;color:var(--green2)}
-@media (prefers-color-scheme:dark){.facts .ko b{color:var(--gold)}}
-nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 48px);z-index:10;display:flex;overflow-x:auto;background:var(--card);border-bottom:2px solid var(--green);scrollbar-width:none}
-nav button{flex:none;font:inherit;font-size:15px;font-weight:600;color:var(--mute);background:none;border:0;border-bottom:3px solid transparent;padding:12px 15px;margin-bottom:-2px}
-nav button.on{color:var(--green);border-bottom-color:var(--gold)}
-@media (prefers-color-scheme:dark){nav button.on{color:var(--gold)}}
-main{max-width:760px;margin:0 auto;padding:0 0 40px}
-.panel{display:none;padding:18px 14px}
-.panel.on{display:block}
-.panel h2{font-size:22px;margin:0 0 12px;color:var(--green)}
-@media (prefers-color-scheme:dark){.panel h2{color:var(--gold)}}
-h3{font-size:15px;margin:20px 0 6px;color:var(--green2)}
-@media (prefers-color-scheme:dark){h3{color:#8fd0a4}}
-ul.l{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-ul.l li{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:baseline;padding:11px 14px;border-top:1px solid var(--line)}
-ul.l li:first-child{border-top:0}
-ul.l .t,ul.l .n{font-weight:800;color:var(--green2);font-variant-numeric:tabular-nums;min-width:48px}
-@media (prefers-color-scheme:dark){ul.l .t,ul.l .n{color:var(--gold)}}
-ul.l .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;min-width:0;align-self:center}
-ul.l .m{display:block;font-size:13px;color:var(--mute)}
-ul.l .d{font-weight:600}
-ul.l .x{grid-column:2}
-.note{margin:8px 2px 0;font-size:14px;color:var(--mute)}
-.pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pairs div,.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.pairs span{display:block;font-size:12px;color:var(--mute)}
-.card h3{margin-top:0}
-.card p{margin:0}
-.card+.card{margin-top:10px}
-.imgwrap{position:relative;margin-top:12px}
-.imgwrap img{width:100%;border-radius:12px;display:block}
-.x,.add,.addimg{display:none}
-body.edit .x{display:inline-block;font:inherit;font-size:13px;color:#fff;background:var(--red);border:0;border-radius:6px;padding:2px 8px;justify-self:start}
-body.edit .imgwrap .x{position:absolute;top:8px;right:8px}
-body.edit .add,body.edit .addimg{display:block;width:100%;margin-top:8px;font:inherit;font-size:14px;color:var(--green2);background:none;border:2px dashed var(--green2);border-radius:10px;padding:9px}
-body.edit .ed{outline:1px dashed rgba(201,162,39,.7);outline-offset:2px;border-radius:3px}
-body.edit .ed:focus{outline:2px solid var(--gold)}
-footer{text-align:center;color:var(--mute);font-size:13px;padding:10px 0 30px}
-button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-@media print{.bar,nav,.x,.add,.addimg{display:none!important}.panel{display:block!important;break-inside:avoid}header{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* Mobile first: base styles are for phones, wider screens are added at the bottom */
+:root{--green:#0A3D1D;--gold:#c9a227;--bg:#f3f5f1;--card:#fff;--ink:#17261c;--muted:#5d6b61;--line:#dde4dc;--bar:64px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header{background:var(--green);color:#fff;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 14px}
+.club{font-size:13px;opacity:.8;margin:0}
+h1{margin:0;font-size:24px}
+.wrap{max-width:960px;margin:0 auto}
+
+/* Tab bar: fixed at the bottom on phones, within thumb reach */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;background:var(--green);
+  padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -2px 8px rgba(0,0,0,.2)}
+nav button{flex:1;min-height:var(--bar);background:none;border:0;color:#b9cfbf;font:inherit;font-size:14px;font-weight:600;
+  padding:8px 4px;cursor:pointer;border-top:3px solid transparent}
+nav button[aria-selected=true]{color:#fff;border-top-color:var(--gold)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
+
+main{max-width:960px;margin:0 auto;padding:16px 14px calc(var(--bar) + 28px + env(safe-area-inset-bottom,0px))}
+section[hidden]{display:none}
+h2{font-size:20px;margin:0 0 12px;color:var(--green)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.card h3{margin:0 0 4px;font-size:16px;color:var(--green)}
+.card p{margin:0;color:var(--muted)}
+
+/* Grade filter: one swipeable row of large tap targets */
+.pills{display:flex;gap:8px;overflow-x:auto;margin:0 -14px 14px;padding:2px 14px;scrollbar-width:none}
+.pills::-webkit-scrollbar{display:none}
+.pill{flex:0 0 auto;min-height:44px;border:1.5px solid var(--green);background:#fff;color:var(--green);
+  border-radius:999px;padding:0 20px;font:inherit;font-weight:600;cursor:pointer}
+.pill[aria-pressed=true]{background:var(--green);color:#fff}
+
+/* Fixtures: each table row is a card on phones */
+table,tbody{display:block}
+thead{display:none}
+tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;background:var(--card);border:1px solid var(--line);
+  border-left:5px solid var(--green);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+td{display:block;padding:0}
+td.date{grid-column:1;font-weight:600;color:var(--green);font-size:14px}
+td.ha{grid-column:2;grid-row:1}
+td.opp{grid-column:1/-1;grid-row:2;font-size:18px;font-weight:700;margin:2px 0}
+td.ground{grid-column:1;grid-row:3;color:var(--ink);font-size:14px}
+td.comp{grid-column:1/-1;grid-row:4;color:var(--muted);font-size:13px}
+td.grade{grid-column:2;grid-row:3;text-align:right}
+tr.away{border-left-color:#9aa89e}
+tr.past{opacity:.55}
+tr.next{background:#fbf5dc;border-left-color:var(--gold)}
+.loc,.gr{display:inline-block;border-radius:6px;font-weight:700;font-size:12px;padding:2px 8px}
+.loc.H{background:var(--green);color:#fff}
+.loc.A{background:#e7ebe6;color:var(--ink)}
+.gr{background:#e7ebe6;color:var(--green)}
+.msg{color:var(--muted);font-size:14px;margin:6px 2px}
+.msg.err{color:#a02020}
+
+/* Tablet and up: top tabs and a real table */
+@media (min-width:720px){
+  header{padding-bottom:0}
+  h1{font-size:28px;margin-bottom:10px}
+  nav{position:static;box-shadow:none;padding:0;max-width:960px;margin:0 auto;background:none}
+  nav button{flex:0 0 auto;min-height:0;padding:12px 22px;border-top:0;border-bottom:3px solid transparent}
+  nav button[aria-selected=true]{border-bottom-color:var(--gold)}
+  .navbg{background:var(--green)}
+  main{padding:24px 16px 48px}
+  .pills{margin:0 0 16px;padding:2px 0;flex-wrap:wrap;overflow:visible}
+  .pill{min-height:38px}
+  table{display:table;width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  tbody{display:table-row-group}
+  thead{display:table-header-group}
+  tr{display:table-row;border:0;border-radius:0;padding:0;margin:0;background:none}
+  th,td{display:table-cell;text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--green);color:#fff;font-size:14px}
+  td.opp{font-size:16px;margin:0}
+  td.date{font-size:15px;white-space:nowrap}
+  td.ground,td.comp{font-size:15px;color:var(--ink)}
+  td.grade{text-align:left}
+  tr.next{background:#fbf5dc}
+}
 </style>
 </head>
 <body>
-<div class="bar"><button id="print">Print / PDF</button></div>
-<div id="app">
 <header>
-<img src="Highfield Crest 120.jpg">
-<div>
-<p class="k ed">Highfield RFC</p>
-<h1><span class="ed">Highfield U21</span></h1>
-<p class="sub ed">Woodleigh Park</p>
-</div>
+  <div class="wrap">
+    <p class="club">Highfield RFC</p>
+    <h1>Club Info</h1>
+  </div>
 </header>
-
-<nav id="nav"></nav>
-<main>
-
-<section class="panel on" data-title="U21 Fixtures">
-<h2>Fixtures</h2>
-<h3>Pre-match</h3>
-<ul class="l">
-<li><b class="t ed">11:45</b><span><span class="d ed">Squad arrive at clubhouse</span><span class="m ed">Clubhouse</span></span></li>
-
-</ul>
-
-<h3>Ground timings</h3>
-<ul class="l">
-<li><b class="t ed">13:30</b><span><span class="d ed">Changing room open</span><span class="m ed">Home Dressing Room</span></span></li>
-
-</ul>
-
-<p class="note ed">Half-time is 10 minutes.</p>
-<h3>Post-match</h3>
-<ul class="l">
-<li><b class="t ed">16:20</b><span><span class="d ed">Warm-down &amp; recovery</span><span class="m ed">Gym</span></span></li>
-
-</ul>
-
-</section>
-
-<section class="panel" data-title="Squad">
-<h2>Matchday squad</h2>
-<h3>Starting XV</h3>
-<ul class="l">
-<li><b class="n ed">1</b><span><span class="d ed">Loosehead Prop</span><span class="m ed">Player name</span></span></li>
-
-</ul>
-<button class="add">＋ Add player</button>
-<h3>Replacements</h3>
-<ul class="l">
-<li><b class="n ed">16</b><span><span class="d ed">Replacement</span><span class="m ed">Player name</span></span></li>
-</ul>
-
-</section>
-
-<section class="panel" data-title="Officials">
-<h2>Match officials</h2>
-<div class="pairs">
-<div><span>Referee</span><b class="ed">TBC</b></div>
-<div><span>Assistant referees</span><b class="ed">TBC &amp; TBC</b></div>
-<div><span>4th official</span><b class="ed">TBC</b></div>
-<div><span>Citing / TMO</span><b class="ed">N/A</b></div>
+<div class="navbg">
+  <nav role="tablist" aria-label="Sections">
+    <button role="tab" aria-selected="true" data-tab="training">Training</button>
+    <button role="tab" aria-selected="false" data-tab="fixtures">Fixtures</button>
+    <button role="tab" aria-selected="false" data-tab="squad">Squad</button>
+    <button role="tab" aria-selected="false" data-tab="info">Info</button>
+  </nav>
 </div>
-</section>
 
-<section class="panel" data-title="Info &amp; Dress">
-<h2>Info &amp; dress</h2>
-<div class="card"><h3 class="ed">Parking</h3><p class="ed">Team bus and players park in the main car park off the Douglas road. Leave the spaces nearest the clubhouse for match officials and the visiting team.</p></div>
-<div class="card"><h3 class="ed">Dress code</h3><p class="ed">Pre-match: club polo or quarter-zip with navy travel bottoms. Bring both jerseys. Post-match: club polo with smart trousers or chinos for the function.</p></div>
-<div class="card"><h3 class="ed">Weather</h3><p class="ed">Forecast for kick-off: — °C, — wind. Studs recommended for soft ground; check with the kit man on arrival.</p></div>
-<div class="card"><h3 class="ed">Notes</h3><p class="ed">Physio available from arrival. Water carriers briefed at the team meeting. Medics on the far touchline.</p></div>
-<button class="addimg">＋ Image</button>
-</section>
+<main>
+  <section id="training">
+    <h2>Training</h2>
+    <div class="card"><h3>Schedule</h3><p>Add training days, times and pitches here.</p></div>
+  </section>
 
-<section class="panel" data-title="Warm-up">
-<h2>Team warm-up</h2>
-<ul class="l">
-<li><b class="t ed">14:12</b><span><span class="d ed">RAMP: raise &amp; pulse</span><span class="m ed">Pitch · 3 min</span></span><button class="x">✕</button></li>
-<li><b class="t ed">14:15</b><span><span class="d ed">Mobility &amp; activation</span><span class="m ed">Pitch · 3 min</span></span><button class="x">✕</button></li>
-<li><b class="t ed">14:18</b><span><span class="d ed">Handling: gauntlet</span><span class="m ed">Pitch · 3 min</span></span><button class="x">✕</button></li>
-<li><b class="t ed">14:21</b><span><span class="d ed">Units</span><span class="m ed">Fwds: scrum &amp; lineout · Bks: shape · 4 min</span></span><button class="x">✕</button></li>
-<li><b class="t ed">14:25</b><span><span class="d ed">Collision &amp; contact</span><span class="m ed">Pitch · 2 min</span></span><button class="x">✕</button></li>
-<li><b class="t ed">14:28</b><span><span class="d ed">Return to changing room</span><span class="m ed">Dressing Room</span></span><button class="x">✕</button></li>
-</ul>
-<button class="add">＋ Add block</button>
-</section>
+  <section id="fixtures" hidden>
+    <h2>Fixtures</h2>
+    <div class="pills" id="pills" role="group" aria-label="Filter by grade"></div>
+    <table>
+      <thead><tr><th>Date</th><th>Opposition</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="msg" id="msg">Loading fixtures…</p>
+  </section>
 
-<section class="panel" data-title="Food">
-<h2>Food &amp; fuelling</h2>
-<h3 class="ed">Pre-match meal · Function Room, 12:15</h3>
-<ul class="l">
-<li><span class="d ed">Pasta with tomato &amp; basil</span><button class="x">✕</button></li>
+  <section id="squad" hidden>
+    <h2>Squad</h2>
+    <div class="card"><h3>Squad list</h3><p>Add players and positions here.</p></div>
+  </section>
 
-</ul>
-
-</section>
-
+  <section id="info" hidden>
+    <h2>Info</h2>
+    <div class="card"><h3>Home ground</h3><p>Woodleigh Park</p></div>
+    <div class="card"><h3>Parking and dress code</h3><p>Add parking, dress code and contact details here.</p></div>
+  </section>
 </main>
 
-</div>
 <script>
-(function(){
-
-var KEY='highfield-u21',  $=function(s){return document.querySelector(s)};
-  
-var app=$('#app'), DEFAULT=app.innerHTML, edit=false, timer, target;
-  
-try{var s=localStorage.getItem(KEY);if(s)app.innerHTML=s}catch(e){}
-
-  function tabs(){
-  var nav=$('#nav'), panels=[].slice.call(app.querySelectorAll('.panel'));
-  nav.innerHTML='';
-  if(!panels.some(function(p){return p.classList.contains('on')}))panels[0].classList.add('on');
-  panels.forEach(function(p){
-    var b=document.createElement('button');
-    b.textContent=p.getAttribute('data-title').replace(/&amp;/g,'&');
-    if(p.classList.contains('on'))b.className='on';
-    b.onclick=function(){
-      panels.forEach(function(q){q.classList.remove('on')});p.classList.add('on');
-      [].forEach.call(nav.children,function(c){c.classList.remove('on')});b.classList.add('on');
-      window.scrollTo(0,0);
-    };
-    nav.appendChild(b);
-  });
+const tabs = document.querySelectorAll("nav button");
+function show(id){
+  tabs.forEach(b => b.setAttribute("aria-selected", b.dataset.tab === id));
+  document.querySelectorAll("main section").forEach(s => s.hidden = s.id !== id);
+  history.replaceState(null, "", "#" + id);
+  window.scrollTo(0, 0);
 }
-  
-  $('#print').onclick=function(){window.print()};
-  })();
+tabs.forEach(b => b.addEventListener("click", () => show(b.dataset.tab)));
+const start = location.hash.slice(1);
+if (document.getElementById(start)) show(start);
+
+let fixtures = [], grade = "All";
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const toDate = s => { const [d,m,y] = s.split("/").map(Number); return new Date(y, m-1, d); };
+const fmt = d => d.toLocaleDateString("en-IE", {weekday:"short", day:"numeric", month:"short", year:"numeric"});
+
+function render(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const list = fixtures.filter(f => grade === "All" || f.Grade === grade);
+  const nextIdx = list.findIndex(f => f.date >= today);
+  document.getElementById("rows").innerHTML = list.map((f,i) => {
+    const cls = [f.Loc === "A" ? "away" : "", f.date < today ? "past" : (i === nextIdx ? "next" : "")].join(" ");
+    return `<tr class="${cls}"><td class="date">${fmt(f.date)}</td><td class="opp">${esc(f.Opposition)}</td>` +
+      `<td class="grade"><span class="gr">${esc(f.Grade)}</span></td>` +
+      `<td class="ha"><span class="loc ${esc(f.Loc)}">${esc(f.Loc)}</span></td>` +
+      `<td class="ground">${esc(f.Ground)}</td><td class="comp">${esc(f.Competition)}</td></tr>`;
+  }).join("");
+  const m = document.getElementById("msg");
+  m.className = "msg";
+  m.textContent = `${list.length} fixture${list.length === 1 ? "" : "s"}` + (nextIdx >= 0 ? " · next match highlighted" : "");
+}
+
+function buildPills(){
+  const grades = ["All", ...new Set(fixtures.map(f => f.Grade))];
+  const box = document.getElementById("pills");
+  box.innerHTML = grades.map(g => `<button class="pill" aria-pressed="${g === grade}" data-g="${esc(g)}">${esc(g)}</button>`).join("");
+  box.querySelectorAll(".pill").forEach(p => p.addEventListener("click", () => {
+    grade = p.dataset.g;
+    box.querySelectorAll(".pill").forEach(x => x.setAttribute("aria-pressed", x === p));
+    render();
+  }));
+}
+
+fetch("fixtures.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(data => {
+    fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort((a,b) => a.date - b.date);
+    buildPills(); render();
+  })
+  .catch(() => {
+    const m = document.getElementById("msg");
+    m.className = "msg err";
+    m.textContent = "Couldn't load fixtures.json. Keep it in the same folder as this page and open the page from its web address, not from a local file.";
+  });
 </script>
-  
 </body>
 </html>
