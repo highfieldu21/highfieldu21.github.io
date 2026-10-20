@@ -82,7 +82,37 @@ tr.next{background:#fbf5dc;border-left-color:var(--gold)}
   td.ground,td.comp{font-size:15px;color:var(--ink)}
   td.grade{text-align:left}
   tr.next{background:#fbf5dc}
+  .day{min-height:92px;align-items:stretch;padding:5px;font-size:13px}
+  .day .dots{display:none}
+  .chip{display:block;font-size:11px;line-height:1.25;text-align:left;border-left:3px solid var(--c);padding:1px 4px;background:#f3f5f1;border-radius:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+  .chip.A{border-left-style:dashed}
+  .day>span:first-child{align-self:flex-start}
 }
+
+/* Calendar view */
+.views{display:flex;gap:8px;margin-bottom:10px}
+.calhead{display:flex;align-items:center;justify-content:space-between;margin:4px 0 8px}
+.calhead strong{font-size:18px;color:var(--green)}
+.calhead button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--green);background:#fff;color:var(--green);font-size:22px;line-height:1;cursor:pointer}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.dow{text-align:center;font-size:12px;color:var(--muted);padding:4px 0}
+.day{min-height:54px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:4px 2px;font:inherit;font-size:13px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.day.blank{background:none;border:0}
+button.day{cursor:pointer}
+.day.today{border:2px solid var(--gold)}
+.day.sel{background:#e3efe6;border:2px solid var(--green)}
+.day.past{opacity:.55}
+.dots{display:flex;flex-wrap:wrap;gap:3px;justify-content:center}
+.dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--c);background:var(--c)}
+.dot.A{background:transparent}
+.chip{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin:10px 2px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.fx{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c,var(--green));border-radius:12px;padding:12px 14px;margin-top:10px}
+.fx b{display:block;font-size:18px;margin:2px 0}
+.fx small{display:block;color:var(--muted);font-size:13px}
+.fx .top{font-weight:600;color:var(--green);font-size:14px}
+.sub{font-size:15px;color:var(--green);margin:14px 2px 0}
 </style>
 </head>
 <body>
@@ -91,7 +121,7 @@ tr.next{background:#fbf5dc;border-left-color:var(--gold)}
     <p class="club">Highfield RFC</p>
     <h1>Club Info</h1>
   </div>
-    <svg viewBox="0 0 64 64" aria-label="Highfield RFC crest"><path d="M32 3 7 12v20c0 14 10 24 25 29 15-5 25-15 25-29V12z" fill="#0A3D1D" stroke="#C9A227" stroke-width="3"/><text x="32" y="40" text-anchor="middle" font-size="26" font-weight="800" fill="#C9A227" font-family="Georgia,serif">H</text></svg>
+  <svg viewBox="0 0 64 64" aria-label="Highfield RFC crest"><path d="M32 3 7 12v20c0 14 10 24 25 29 15-5 25-15 25-29V12z" fill="#0A3D1D" stroke="#C9A227" stroke-width="3"/><text x="32" y="40" text-anchor="middle" font-size="26" font-weight="800" fill="#C9A227" font-family="Georgia,serif">H</text></svg>
 </header>
 <div class="navbg">
   <nav role="tablist" aria-label="Sections">
@@ -105,20 +135,34 @@ tr.next{background:#fbf5dc;border-left-color:var(--gold)}
 <main>
   <section id="training">
     <h2>Training</h2>
-    <div class="card"><h3>Schedule</h3>
-      <p>Mondays. 7:30pm.</p>
-      <p>Thursdays. 6:45pm.</p>
-    </div>
+    <div class="card"><h3>Schedule</h3><p>Add training days, times and pitches here.</p></div>
   </section>
 
   <section id="fixtures" hidden>
     <h2>Fixtures</h2>
+    <div class="views" id="views" role="group" aria-label="View">
+      <button class="pill" data-v="list" aria-pressed="true">List</button>
+      <button class="pill" data-v="cal" aria-pressed="false">Calendar</button>
+    </div>
     <div class="pills" id="pills" role="group" aria-label="Filter by grade (select one or more)"></div>
+    <div id="listView">
     <table>
       <thead><tr><th>Date</th><th>Opposition</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th></tr></thead>
       <tbody id="rows"></tbody>
     </table>
     <p class="msg" id="msg">Loading fixtures…</p>
+    </div>
+    <div id="calView" hidden>
+      <div class="calhead">
+        <button id="prev" aria-label="Previous month">&#8249;</button>
+        <strong id="monthLabel"></strong>
+        <button id="next" aria-label="Next month">&#8250;</button>
+      </div>
+      <div class="cal" id="cal"></div>
+      <div class="legend" id="legend"></div>
+      <h3 class="sub" id="subhead"></h3>
+      <div id="dayList"></div>
+    </div>
   </section>
 
   <section id="squad" hidden>
@@ -150,7 +194,7 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 const toDate = s => { const [d,m,y] = s.split("/").map(Number); return new Date(y, m-1, d); };
 const fmt = d => d.toLocaleDateString("en-IE", {weekday:"short", day:"numeric", month:"short", year:"numeric"});
 
-function render(){
+function renderList(){
   const today = new Date(); today.setHours(0,0,0,0);
   const list = fixtures.filter(f => selected.size === 0 || selected.has(f.Grade));
   const nextIdx = list.findIndex(f => f.date >= today);
@@ -165,6 +209,63 @@ function render(){
   m.className = "msg";
   m.textContent = `${list.length} fixture${list.length === 1 ? "" : "s"}` + (nextIdx >= 0 ? " · next match highlighted" : "");
 }
+
+function render(){ renderList(); renderCal(); }
+
+// Calendar
+const PALETTE = ["#0A3D1D","#c9a227","#2b6cb0","#b4472f","#7b4fa0"];
+const colour = g => PALETTE[[...new Set(fixtures.map(f => f.Grade))].indexOf(g) % PALETTE.length];
+const dkey = d => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+let cur = null, selDay = null;
+
+function fxCard(f){
+  return `<div class="fx" style="--c:${colour(f.Grade)}"><span class="top">${fmt(f.date)} &middot; ${esc(f.Loc === "H" ? "Home" : "Away")}</span>` +
+    `<b>${esc(f.Opposition)}</b><small>${esc(f.Grade)} &middot; ${esc(f.Ground)}</small><small>${esc(f.Competition)}</small></div>`;
+}
+
+function renderCal(){
+  if (!fixtures.length) return;
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (!cur){
+    const nx = fixtures.find(f => f.date >= today) || fixtures[fixtures.length-1];
+    cur = new Date(nx.date.getFullYear(), nx.date.getMonth(), 1);
+  }
+  const list = fixtures.filter(f => selected.size === 0 || selected.has(f.Grade));
+  const by = {};
+  list.forEach(f => (by[dkey(f.date)] ||= []).push(f));
+  const y = cur.getFullYear(), m = cur.getMonth();
+  document.getElementById("monthLabel").textContent = cur.toLocaleDateString("en-IE", {month:"long", year:"numeric"});
+  const offset = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m+1, 0).getDate();
+  let h = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d => `<div class="dow">${d}</div>`).join("");
+  for (let i = 0; i < offset; i++) h += `<div class="day blank"></div>`;
+  for (let d = 1; d <= days; d++){
+    const dt = new Date(y, m, d), k = dkey(dt), fs = by[k] || [];
+    const cls = ["day", fs.length ? "has" : "", dt < today ? "past" : "", +dt === +today ? "today" : "", k === selDay ? "sel" : ""].join(" ");
+    const inner = `<span>${d}</span><span class="dots">${fs.map(f => `<i class="dot ${esc(f.Loc)}" style="--c:${colour(f.Grade)}"></i>`).join("")}</span>` +
+      fs.map(f => `<span class="chip ${esc(f.Loc)}" style="--c:${colour(f.Grade)}">${esc(f.Opposition)}</span>`).join("");
+    h += fs.length ? `<button class="${cls}" data-k="${k}" aria-label="${fmt(dt)}, ${fs.length} fixture${fs.length>1?"s":""}">${inner}</button>`
+                   : `<div class="${cls}">${inner}</div>`;
+  }
+  const box = document.getElementById("cal");
+  box.innerHTML = h;
+  box.querySelectorAll("button.day").forEach(b => b.addEventListener("click", () => {
+    selDay = selDay === b.dataset.k ? null : b.dataset.k; renderCal();
+  }));
+  document.getElementById("legend").innerHTML =
+    [...new Set(fixtures.map(f => f.Grade))].map(g => `<span><i class="dot" style="--c:${colour(g)}"></i>${esc(g)}</span>`).join("") +
+    `<span><i class="dot A" style="--c:#555"></i>Away (hollow)</span>`;
+  const shown = selDay && by[selDay] ? by[selDay] : list.filter(f => f.date.getFullYear() === y && f.date.getMonth() === m);
+  document.getElementById("subhead").textContent = selDay && by[selDay] ? "Selected day" : "This month";
+  document.getElementById("dayList").innerHTML = shown.length ? shown.map(fxCard).join("") : `<p class="msg">No fixtures this month.</p>`;
+}
+
+document.getElementById("prev").addEventListener("click", () => { cur = new Date(cur.getFullYear(), cur.getMonth()-1, 1); selDay = null; renderCal(); });
+document.getElementById("next").addEventListener("click", () => { cur = new Date(cur.getFullYear(), cur.getMonth()+1, 1); selDay = null; renderCal(); });
+document.querySelectorAll("#views .pill").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("#views .pill").forEach(x => x.setAttribute("aria-pressed", x === b));
+  document.getElementById("listView").hidden = b.dataset.v !== "list";
+  document.getElementById("calView").hidden = b.dataset.v !== "cal";
+}));
 
 function buildPills(){
   const grades = [...new Set(fixtures.map(f => f.Grade))];
