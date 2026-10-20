@@ -91,7 +91,7 @@ tr.next{background:#fbf5dc;border-left-color:var(--gold)}
     <p class="club">Highfield RFC</p>
     <h1>Club Info</h1>
   </div>
-  <svg viewBox="0 0 64 64" aria-label="Highfield RFC crest"><path d="M32 3 7 12v20c0 14 10 24 25 29 15-5 25-15 25-29V12z" fill="#0A3D1D" stroke="#C9A227" stroke-width="3"/><text x="32" y="40" text-anchor="middle" font-size="26" font-weight="800" fill="#C9A227" font-family="Georgia,serif">H</text></svg>
+    <svg viewBox="0 0 64 64" aria-label="Highfield RFC crest"><path d="M32 3 7 12v20c0 14 10 24 25 29 15-5 25-15 25-29V12z" fill="#0A3D1D" stroke="#C9A227" stroke-width="3"/><text x="32" y="40" text-anchor="middle" font-size="26" font-weight="800" fill="#C9A227" font-family="Georgia,serif">H</text></svg>
 </header>
 <div class="navbg">
   <nav role="tablist" aria-label="Sections">
@@ -110,7 +110,7 @@ tr.next{background:#fbf5dc;border-left-color:var(--gold)}
 
   <section id="fixtures" hidden>
     <h2>Fixtures</h2>
-    <div class="pills" id="pills" role="group" aria-label="Filter by grade"></div>
+    <div class="pills" id="pills" role="group" aria-label="Filter by grade (select one or more)"></div>
     <table>
       <thead><tr><th>Date</th><th>Opposition</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th></tr></thead>
       <tbody id="rows"></tbody>
@@ -142,14 +142,14 @@ tabs.forEach(b => b.addEventListener("click", () => show(b.dataset.tab)));
 const start = location.hash.slice(1);
 if (document.getElementById(start)) show(start);
 
-let fixtures = [], grade = "All";
+let fixtures = [], selected = new Set();  // empty set = show all grades
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const toDate = s => { const [d,m,y] = s.split("/").map(Number); return new Date(y, m-1, d); };
 const fmt = d => d.toLocaleDateString("en-IE", {weekday:"short", day:"numeric", month:"short", year:"numeric"});
 
 function render(){
   const today = new Date(); today.setHours(0,0,0,0);
-  const list = fixtures.filter(f => grade === "All" || f.Grade === grade);
+  const list = fixtures.filter(f => selected.size === 0 || selected.has(f.Grade));
   const nextIdx = list.findIndex(f => f.date >= today);
   document.getElementById("rows").innerHTML = list.map((f,i) => {
     const cls = [f.Loc === "A" ? "away" : "", f.date < today ? "past" : (i === nextIdx ? "next" : "")].join(" ");
@@ -164,14 +164,20 @@ function render(){
 }
 
 function buildPills(){
-  const grades = ["All", ...new Set(fixtures.map(f => f.Grade))];
+  const grades = [...new Set(fixtures.map(f => f.Grade))];
   const box = document.getElementById("pills");
-  box.innerHTML = grades.map(g => `<button class="pill" aria-pressed="${g === grade}" data-g="${esc(g)}">${esc(g)}</button>`).join("");
+  box.innerHTML = `<button class="pill" data-g="">All</button>` +
+    grades.map(g => `<button class="pill" data-g="${esc(g)}">${esc(g)}</button>`).join("");
+  const sync = () => box.querySelectorAll(".pill").forEach(p =>
+    p.setAttribute("aria-pressed", p.dataset.g === "" ? selected.size === 0 : selected.has(p.dataset.g)));
   box.querySelectorAll(".pill").forEach(p => p.addEventListener("click", () => {
-    grade = p.dataset.g;
-    box.querySelectorAll(".pill").forEach(x => x.setAttribute("aria-pressed", x === p));
-    render();
+    const g = p.dataset.g;
+    if (g === "") selected.clear();                       // All resets the filter
+    else if (selected.has(g)) selected.delete(g);         // tap again to remove
+    else selected.add(g);
+    sync(); render();
   }));
+  sync();
 }
 
 fetch("fixtures.json")
