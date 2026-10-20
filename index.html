@@ -179,7 +179,7 @@ button.day{cursor:pointer}
     <h2>Results</h2>
     <div class="pills" id="resPills" role="group" aria-label="Filter results by grade (select one or more)"></div>
     <table>
-      <thead><tr><th>Date</th><th>Opposition</th><th>Score</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th></tr></thead>
+      <thead><tr><th>Date</th><th>Opposition</th><th>Score</th><th>H/A</th><th>Competition</th><th>Grade</th></tr></thead>
       <tbody id="resRows"></tbody>
     </table>
     <p class="msg" id="resMsg">Loading results…</p>
@@ -333,10 +333,9 @@ function renderResults(){
   document.getElementById("resRows").innerHTML = list.map(r => {
     const res = resultOf(r), sc = scoreOf(r);
     return `<tr class="res ${esc(res)}"><td class="date">${r.date ? fmt(r.date) : esc(r.Date)}</td><td class="opp">${esc(r.Opposition)}</td>` +
-      `<td class="score">${res ? `<span class="rb ${esc(res)}">${esc(res)}</span>` : ""}${esc(sc)}</td>` +
-      `<td class="grade"><span class="gr">${esc(r.Grade)}</span></td>` +
+      `<td class="score">${res ? `<span class="rb ${esc(res)}">${esc(res)}</span>` : ""}${esc(sc)}</td>` +      
       `<td class="ha"><span class="loc ${esc(r.Loc)}">${esc(r.Loc)}</span></td>` +
-      `<td class="ground">${esc(r.Ground)}</td><td class="comp">${esc(r.Competition)}</td></tr>`;
+      `<td class="comp">${esc(r.Competition)}</td><td class="grade"><span class="gr">${esc(r.Grade)}</span></td></tr>`;
   }).join("");
   const m = document.getElementById("resMsg");
   m.className = "msg";
