@@ -180,6 +180,30 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 </div>
 <script>
 (function(){
+
+var KEY='highfield-u21',  $=function(s){return document.querySelector(s)};
+  
+var app=$('#app'), DEFAULT=app.innerHTML, edit=false, timer, target;
+  
+try{var s=localStorage.getItem(KEY);if(s)app.innerHTML=s}catch(e){}
+
+  function tabs(){
+  var nav=$('#nav'), panels=[].slice.call(app.querySelectorAll('.panel'));
+  nav.innerHTML='';
+  if(!panels.some(function(p){return p.classList.contains('on')}))panels[0].classList.add('on');
+  panels.forEach(function(p){
+    var b=document.createElement('button');
+    b.textContent=p.getAttribute('data-title').replace(/&amp;/g,'&');
+    if(p.classList.contains('on'))b.className='on';
+    b.onclick=function(){
+      panels.forEach(function(q){q.classList.remove('on')});p.classList.add('on');
+      [].forEach.call(nav.children,function(c){c.classList.remove('on')});b.classList.add('on');
+      window.scrollTo(0,0);
+    };
+    nav.appendChild(b);
+  });
+}
+  
   $('#print').onclick=function(){window.print()};
   })();
 </script>
