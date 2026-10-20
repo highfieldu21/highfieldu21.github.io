@@ -11,9 +11,18 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-header{background:var(--green);color:#fff;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 14px}
-.club{font-size:13px;opacity:.8;margin:0}
-h1{margin:0;font-size:24px}
+.hero{background:linear-gradient(160deg,#0A3D1D 0%,#14592c 100%);color:#fff;padding:calc(18px + env(safe-area-inset-top,0px)) 16px 22px;text-align:center}
+.crest{width:68px;height:68px;border-radius:50%;object-fit:contain;background:#fff;padding:3px;border:2px solid rgba(201,162,39,.8);margin:0 auto 10px;display:block}
+.eyebrow{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.clubname{margin:2px 0 0;font-size:14px;opacity:.85}
+.hero h1{margin:4px 0 4px;font-size:28px;line-height:1.15}
+.hero h1 .v{color:var(--gold);font-weight:400;font-size:.7em;padding:0 .25em}
+.herosub{margin:0;font-size:14px;opacity:.85}
+.herogrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px auto 0;max-width:520px;text-align:left}
+.herogrid div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:8px 12px}
+.herogrid div:first-child{grid-column:1/-1}
+.herogrid small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.herogrid span{font-size:15px}
 .wrap{max-width:960px;margin:0 auto}
 
 /* Tab bar: fixed at the bottom on phones, within thumb reach */
@@ -62,8 +71,10 @@ tr.next{background:#fbf5dc;border-left-color:var(--gold)}
 
 /* Tablet and up: top tabs and a real table */
 @media (min-width:720px){
-  header{padding-bottom:0}
-  h1{font-size:28px;margin-bottom:10px}
+  .hero{padding-bottom:26px}
+  .hero h1{font-size:34px}
+  .herogrid{grid-template-columns:2fr 1fr 1fr}
+  .herogrid div:first-child{grid-column:auto}
   nav{position:static;box-shadow:none;padding:0;max-width:960px;margin:0 auto;background:none}
   nav button{flex:0 0 auto;min-height:0;padding:12px 22px;border-top:0;border-bottom:3px solid transparent}
   nav button[aria-selected=true]{border-bottom-color:var(--gold)}
@@ -100,13 +111,15 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 </style>
 </head>
 <body>
-<header>
+<header class="hero">
   <div class="wrap">
-    <p class="club">Highfield RFC</p>
-    <h1>Club Info</h1>
-    <img src="Highfield Crest 160 x 160.jpg"></img>
+    <img class="crest" src="Highfield Crest 160 x 160.jpg" alt="Highfield RFC crest">
+    <p class="eyebrow" id="heroEyebrow">Club Info</p>
+    <p class="clubname" id="heroClub" hidden>Highfield RFC</p>
+    <h1 id="heroTitle">Highfield RFC</h1>
+    <p class="herosub" id="heroSub">Woodleigh Park</p>
+    <div class="herogrid" id="heroGrid" hidden></div>
   </div>
-  
 </header>
 <div class="navbg">
   <nav role="tablist" aria-label="Sections">
@@ -192,6 +205,22 @@ function renderList(){
 
 function render(){ renderList(); }
 
+function updateHero(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const f = fixtures.find(x => x.date >= today);
+  if (!f) return;                                   // keep the static club heading
+  const home = locKey(f.Loc) === "H";
+  const t = home ? ["Highfield", f.Opposition] : [f.Opposition, "Highfield"];
+  document.getElementById("heroEyebrow").textContent = "Next match \u00b7 " + (home ? "Home" : "Away");
+  document.getElementById("heroClub").hidden = false;
+  document.getElementById("heroTitle").innerHTML = `${esc(t[0])}<span class="v">v</span>${esc(t[1])}`;
+  document.getElementById("heroSub").textContent = `${fmt(f.date)} \u00b7 ${f.Ground}`;
+  const g = document.getElementById("heroGrid");
+  g.innerHTML = `<div><small>Competition</small><span>${esc(f.Competition)}</span></div>` +
+    `<div><small>Venue</small><span>${esc(f.Ground)}</span></div><div><small>Grade</small><span>${esc(f.Grade)}</span></div>`;
+  g.hidden = false;
+}
+
 function buildPills(){
   const grades = [...new Set(fixtures.map(f => f.Grade))];
   const box = document.getElementById("pills");
@@ -213,7 +242,7 @@ fetch("fixtures.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort((a,b) => a.date - b.date);
-    buildPills(); render();
+    buildPills(); render(); updateHero();
   })
   .catch(() => {
     const m = document.getElementById("msg");
