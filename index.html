@@ -38,8 +38,7 @@ h2{font-size:20px;margin:0 0 12px;color:var(--green)}
 .sched span:last-child{color:var(--green)}
 
 /* Grade filter: one swipeable row of large tap targets */
-.pills{display:flex;gap:8px;overflow-x:auto;margin:0 -14px 14px;padding:2px 14px;scrollbar-width:none}
-.pills::-webkit-scrollbar{display:none}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;padding:2px 0}
 .pill{flex:0 0 auto;min-height:44px;border:1.5px solid var(--green);background:#fff;color:var(--green);
   border-radius:999px;padding:0 20px;font:inherit;font-weight:600;cursor:pointer}
 .pill[aria-pressed=true]{background:var(--green);color:#fff}
@@ -190,6 +189,11 @@ const store = {
   get(k){ try { return JSON.parse(localStorage.getItem("hrfc:" + k)); } catch (e) { return null; } },
   set(k, v){ try { localStorage.setItem("hrfc:" + k, JSON.stringify(v)); } catch (e) {} }
 };
+// Order of the grade filter buttons (left to right, after "All").
+// Edit this list to change the order; any grade not listed goes at the end in A-Z order.
+const GRADE_ORDER = ["Senior", "J1", "U21", "J2", "U18.5", "U16", "U14", "U13"];
+const gradeRank = g => { const i = GRADE_ORDER.indexOf(g); return i === -1 ? GRADE_ORDER.length : i; };
+const sortGrades = list => [...list].sort((a, b) => gradeRank(a) - gradeRank(b) || String(a).localeCompare(String(b)));
 const tabs = document.querySelectorAll("nav button");
 function show(id){
   tabs.forEach(b => b.setAttribute("aria-selected", b.dataset.tab === id));
@@ -227,7 +231,7 @@ function renderList(){
 function render(){ renderList(); }
 
 function buildPills(){
-  const grades = [...new Set(fixtures.map(f => f.Grade))];
+  const grades = sortGrades(new Set(fixtures.map(f => f.Grade)));
   selected = new Set((store.get("fxGrades") || []).filter(g => grades.includes(g)));
   const box = document.getElementById("pills");
   box.innerHTML = `<button class="pill" data-g="">All</button>` +
@@ -286,7 +290,7 @@ function renderResults(){
 }
 
 function buildResPills(){
-  const grades = [...new Set(results.map(r => r.Grade))];
+  const grades = sortGrades(new Set(results.map(r => r.Grade)));
   resSel = new Set((store.get("resGrades") || []).filter(g => grades.includes(g)));
   const box = document.getElementById("resPills");
   box.innerHTML = `<button class="pill" data-g="">All</button>` +
