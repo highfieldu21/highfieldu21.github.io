@@ -21,6 +21,7 @@ import re
 import sys
 
 import requests
+from datetime import datetime
 
 URL = "https://munsterrugby.sportlomo.com/results/"
 # ROW_SPLIT = '<ul class="column-six table-body resul"'
@@ -53,7 +54,15 @@ def fetch_html(from_date: str, to_date: str) -> str:
     response.raise_for_status()
     return response.text
 
-
+def format_date(value: str) -> str:
+    """'01 Oct 2026' -> '01/10/2026'. Returns the original text if it can't be parsed."""
+    value = value.strip()
+    for fmt in ("%d %b %Y", "%d %B %Y"):   # 'Oct' and 'October'
+        try:
+            return datetime.strptime(value, fmt).strftime("%d/%m/%Y")
+        except ValueError:
+            continue
+    return value
 
 def get_attr(row: str, name: str) -> str:
     """Equivalent of row.match(/data-<name>="(.*?)"/mi)[1]; '' if missing."""
@@ -161,7 +170,7 @@ def parse_results(page_html: str) -> list:
 
         results.append(
             {
-                "Date": get_attr(row, "date"),
+                "Date":  format_date(get_attr(row, "date")),
                 "Competition": competition,
                 "Result": winner,
                 "Loc" : get_venue(home_team, "Highfield"),
