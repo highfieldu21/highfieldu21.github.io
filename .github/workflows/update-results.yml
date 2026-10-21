@@ -1,4 +1,4 @@
-name: Update Munster results
+name: Update Munster Results
 
 on:
   schedule:
