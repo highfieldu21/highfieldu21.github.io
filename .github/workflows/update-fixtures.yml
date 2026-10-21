@@ -1,0 +1,64 @@
+name: Update Munster Fixtures
+
+on:
+  schedule:
+    - cron: '0 9-23 * * *'      # hourly at 09:00 UTC
+  workflow_dispatch:         # manual "Run workflow" button
+    inputs:
+      from_date:
+        description: 'From date (DD-MM-YYYY), optional'
+        required: false
+      to_date:
+        description: 'To date (DD-MM-YYYY), optional'
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch results
+        env:
+          FROM_DATE: ${{ inputs.from_date }}
+          TO_DATE: ${{ inputs.to_date }}
+        run: |
+          # Empty env vars would override the script defaults, so only pass them if set
+          ARGS=""
+          [ -n "$FROM_DATE" ] && ARGS="$ARGS --from $FROM_DATE"
+          [ -n "$TO_DATE" ] && ARGS="$ARGS --to $TO_DATE"
+          python script/get-mr-fix.py --debug --save-html debug/raw.html $ARGS
+
+      - name: Upload raw response (for debugging)
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: raw-response
+          path: debug/raw.html
+          if-no-files-found: ignore
+
+      - name: Validate JSON
+        run: python -m json.tool data/fixtures.json > /dev/null
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if ! git diff --staged --quiet; then
+            git commit -m "Update results"
+            git pull --rebase
+            git push
+          else
+            echo "No changes to commit"
+          fi
