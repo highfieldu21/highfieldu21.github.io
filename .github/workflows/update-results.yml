@@ -37,7 +37,7 @@ jobs:
           ARGS=""
           [ -n "$FROM_DATE" ] && ARGS="$ARGS --from $FROM_DATE"
           [ -n "$TO_DATE" ] && ARGS="$ARGS --to $TO_DATE"
-          python scripts/get-mr-res.py --debug --save-html debug/raw.html $ARGS
+          python script/get-mr-res.py --debug --save-html debug/raw.html $ARGS
 
       - name: Upload raw response (for debugging)
         if: always()
