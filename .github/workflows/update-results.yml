@@ -17,7 +17,7 @@
          - name: Fetch data
            run: |
              mkdir -p data
-             curl -sSf "https://example.com/your-endpoint" -o data/table.json
+             curl -sSf "https://example.com/your-endpoint" -o data/res.json
 
          - name: Commit if changed
            run: |
