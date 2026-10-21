@@ -250,12 +250,13 @@ def main() -> int:
         return 1
 
     # No timestamp on purpose: identical data => identical file => no commit.
-    output = {
-        "from": args.from_date,
-        "to": args.to_date,
-        "count": len(results),
-        "results": results,
-    }
+    #output = {
+    #    "from": args.from_date,
+    #    "to": args.to_date,
+    #    "count": len(results),
+    #    "results": results,
+    #}
+    output = results
     text = json.dumps(output, indent=2, ensure_ascii=False) + "\n"
 
     if args.dry_run:
