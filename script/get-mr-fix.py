@@ -169,6 +169,9 @@ def main():
           "Use --allow-empty if this is expected.", file=sys.stderr)
         return 1
 
+    output = fixtures
+    text = json.dumps(output, indent=2, ensure_ascii=False) + "\n"    
+    
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
         f.write(text)
