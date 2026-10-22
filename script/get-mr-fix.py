@@ -85,6 +85,7 @@ def parse_fixtures(page):
     for row in rows:
         home = strip_html_entities(attr(row, "hometeam"))
         away = strip_html_entities(attr(row, "awayteam"))
+        competition =  strip_html_entities(attr(row, "compname"))
         if CLUB in home:
             flag = "Home"
         elif CLUB in away:
@@ -95,9 +96,10 @@ def parse_fixtures(page):
             "Date": attr(row, "date"),            
             "Opposition": get_opposition(home, away, "highfield"),
             "Referee": attr(row, "referee"),
-            "Competition": strip_html_entities(attr(row, "compname")),
+            "Competition": competition,
             "Ground": strip_html_entities(attr(row, "venue")),
             "Loc": flag,
+            "Grade": get_grade(competition),
         })
     return fixtures
 
