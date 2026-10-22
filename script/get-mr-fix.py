@@ -82,7 +82,7 @@ def parse_fixtures(page):
             flag = "-"
         fixtures.append({
             "Date": attr(row, "date"),            
-            "Opposition"": f["away"] if f["flag"] == "Home" else f["home"] if f["flag"] == "Away" else f"{f['home']} v {f['away']}",
+            "Opposition": f["away"] if f["flag"] == "Home" else f["home"] if f["flag"] == "Away" else f"{f['home']} v {f['away']}",
             "Referee": attr(row, "referee"),
             "Competition": strip_html_entities(attr(row, "compname")),
             "Ground": strip_html_entities(attr(row, "venue")),
