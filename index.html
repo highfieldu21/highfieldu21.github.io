@@ -249,7 +249,7 @@ function buildPills(){
   sync();
 }
 
-fetch("fixtures.json")
+fetch("data/fixtures.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort((a,b) => a.date - b.date);
