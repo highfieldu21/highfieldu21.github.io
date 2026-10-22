@@ -29,7 +29,7 @@ ROW_SPLIT = re.compile(r'(?=<ul[^>]*class="[^"]*\btable-body\b[^"]*\bresul\b)', 
 
 # Defaults copied from the original Apps Script (hardcoded there)
 DEFAULT_FROM = "01-09-2026"
-#DEFAULT_TO = "21-10-2026"
+DEFAULT_TO = "31-05-2027"
 
 DROP_COLUMNS = ["home_team", "away_team", "home_score", "away_score"]
 
