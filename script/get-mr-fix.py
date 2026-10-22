@@ -66,7 +66,18 @@ def fetch_html(from_date, to_date):
     resp.raise_for_status()
     return resp.text
 
+def get_opposition(home_team: str, away_team: str, team: str) -> str:
+    """Return the team that is not `team` (case-insensitive substring match).
 
+    Returns '' if neither side contains `team`.
+    """
+    needle = team.lower()
+    if needle in home_team.lower():
+        return away_team
+    if needle in away_team.lower():
+        return home_team
+    return ""
+    
 def parse_fixtures(page):
     """Returns one dict per fixture row (same fields the script collected)."""
     rows = page.split(ROW_SPLIT)[1:]  # first chunk is the page header, as in the original loop starting at 1
@@ -82,7 +93,7 @@ def parse_fixtures(page):
             flag = "-"
         fixtures.append({
             "Date": attr(row, "date"),            
-            "Opposition": f["away"] if f["flag"] == "Home" else f["home"] if f["flag"] == "Away" else f"{f['home']} v {f['away']}",
+            "Opposition": get_opposition(home, away, "highfield"),
             "Referee": attr(row, "referee"),
             "Competition": strip_html_entities(attr(row, "compname")),
             "Ground": strip_html_entities(attr(row, "venue")),
