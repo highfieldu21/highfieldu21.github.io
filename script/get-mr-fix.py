@@ -93,7 +93,7 @@ def parse_fixtures(page):
         else:
             flag = "-"
         fixtures.append({
-            "Date": attr(row, "date"),            
+            "Date": format_date(attr(row, "date")),            
             "Opposition": get_opposition(home, away, "highfield"),
             "Referee": attr(row, "referee"),
             "Competition": competition,
@@ -103,7 +103,16 @@ def parse_fixtures(page):
         })
     return fixtures
 
-
+def format_date(value: str) -> str:
+    """'01 Oct 2026' -> '01/10/2026'. Returns the original text if it can't be parsed."""
+    value = value.strip()
+    for fmt in ("%d %b %Y", "%d %B %Y"):   # 'Oct' and 'October'
+        try:
+            return datetime.strptime(value, fmt).strftime("%d/%m/%Y")
+        except ValueError:
+            continue
+    return value
+    
 def normalise_date(raw):
     """Return dd/mm/yyyy, which is what the website expects."""
     for fmt in ("%d/%m/%Y", "%Y-%m-%d", "%d/%m/%Y %H:%M", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"):
@@ -135,7 +144,7 @@ def get_grade(competition: str) -> str:
 def to_result_row(f):
     opposition = f["away"] if f["flag"] == "Home" else f["home"] if f["flag"] == "Away" else f"{f['home']} v {f['away']}"
     return {
-        "Date": normalise_date(f["date"]),
+        "Date": format_date(normalise_date(f["date"])),
         "Opposition": opposition,
         "Loc": f["flag"],
         "Competition": f["competition"],
