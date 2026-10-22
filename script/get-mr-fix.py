@@ -165,9 +165,9 @@ def main():
         fixtures = [f for f in fixtures if f["flag"] != "-"]
 
     if not fixtures and not args.allow_empty:
-    print("ERROR: no results found; not overwriting existing data. "
+        print("ERROR: no fixtures found; not overwriting existing data. "
           "Use --allow-empty if this is expected.", file=sys.stderr)
-    return 1
+        return 1
 
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
