@@ -8,9 +8,9 @@ data/results.json in the format the website expects.
 
 Usage:
     pip install requests
-    python update_results.py --from 01/09/2026 --to 22/10/2026
-    python update_results.py                      # defaults to the last 30 days
-    python update_results.py --all                # keep every club's games, not just Highfield
+    python update_fixtures.py --from 01/09/2026 --to 22/10/2026
+    python update_fixtures.py                      # defaults to the futuee
+    python update_fixtures.py --all                # keep every club's games, not just Highfield
 """
 import argparse
 import html
