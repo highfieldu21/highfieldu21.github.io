@@ -155,7 +155,7 @@ def main():
                         help="End date DD-MM-YYYY")
         
     p.add_argument("--all", action="store_true", help="include games that don't involve " + CLUB)
-    p.add_argument("--output", default=str(OUTPUT), help="output file (default: data/results.json)")
+    p.add_argument("--out", default=str(OUTPUT), help="output file (default: data/fixtures.json)")
     args = p.parse_args()
     print (args.from_date, args.to_date)
 
@@ -163,15 +163,19 @@ def main():
     print(f"Found {len(fixtures)} fixtures between {args.from_date} and {args.to_date}")
     if not args.all:
         fixtures = [f for f in fixtures if f["flag"] != "-"]
-    new_rows = [to_result_row(f) for f in fixtures]
 
-    out = Path(args.output)
-    ##existing = json.loads(out.read_text(encoding="utf-8")) if out.exists() else []
-    final = new_rows
+    if not fixtures and not args.allow_empty:
+    print("ERROR: no results found; not overwriting existing data. "
+          "Use --allow-empty if this is expected.", file=sys.stderr)
+    return 1
 
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(final, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"Wrote {len(final)} rows to {out}")
+    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
+    with open(args.out, "w", encoding="utf-8") as f:
+        f.write(text)
+    print(f"Wrote {args.out}")
+    return 0
+
+
 
 
 if __name__ == "__main__":
