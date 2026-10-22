@@ -1,144 +1,107 @@
 #!/usr/bin/env python3
 """
-Fetch Munster Rugby results from munsterrugby.sportlomo.com and save as JSON.
+Python equivalent of the Apps Script myFixtureData(fDate, tDate).
 
-Python port of the Apps Script function myResultData(fDate, tDate).
+It POSTs a date range to the Munster Rugby SportLoMo fixtures page, pulls the
+data-* attributes out of each fixture row, and writes the Highfield games to
+data/results.json in the format the website expects.
 
 Usage:
-    python scripts/fetch_results.py
-    python scripts/fetch_results.py --from 01-09-2026 --to 30-09-2026
-    python scripts/fetch_results.py --html-file sample.html   # offline test
-
-Dates are DD-MM-YYYY, exactly as the Apps Script sent them. They can also be
-set with the FROM_DATE / TO_DATE environment variables.
+    pip install requests
+    python update_results.py --from 01/09/2026 --to 22/10/2026
+    python update_results.py                      # defaults to the last 30 days
+    python update_results.py --all                # keep every club's games, not just Highfield
 """
-
 import argparse
 import html
 import json
-import os
 import re
+import os
 import sys
 
+from datetime import datetime, timedelta
+from pathlib import Path
+
 import requests
-from datetime import datetime
+
+
+DEFAULT_TO = "31-05-2027"
 
 URL = "https://munsterrugby.sportlomo.com/fixtures/"
-# ROW_SPLIT = '<ul class="column-six table-body resul"'
-ROW_SPLIT = re.compile(r'(?=<ul[^>]*class="[^"]*\btable-body\b[^"]*\bresul\b)', re.IGNORECASE)
+CLUB = "Highfield RFC"
+OUTPUT = Path("data/fixtures.json")
 
-# Defaults copied from the original Apps Script (hardcoded there)
-DEFAULT_FROM = "01-09-2026"
-DEFAULT_TO = "31-12-2026"
+# Competition text -> Grade shown on the website. Edit to suit; first match wins.
 
-DROP_COLUMNS = ["home_team", "away_team", "home_score", "away_score"]
-
-def fetch_html(from_date: str, to_date: str) -> str:
-    """POST the same form the Apps Script posted and return the page HTML."""
-    response = None
-
-    form_data = {
-        "fdate": from_date,
-        "tdate": to_date,
-        "sort": "date",
-        "btn": "",
-    }
-
-    headers = {
-        # Some sites reject the default python-requests User-Agent
-        "User-Agent": "Mozilla/5.0 (compatible;  Google-Apps-Script)",
-    }
-    # requests sends a dict via data= as application/x-www-form-urlencoded
-    response = requests.post(URL, data=form_data, headers=headers, timeout=30)
-
-    response.raise_for_status()
-    return response.text
-
-def format_date(value: str) -> str:
-    """'01 Oct 2026' -> '01/10/2026'. Returns the original text if it can't be parsed."""
-    value = value.strip()
-    for fmt in ("%d %b %Y", "%d %B %Y"):   # 'Oct' and 'October'
-        try:
-            return datetime.strptime(value, fmt).strftime("%d/%m/%Y")
-        except ValueError:
-            continue
-    return value
-
-def get_attr(row: str, name: str) -> str:
-    """Equivalent of row.match(/data-<name>="(.*?)"/mi)[1]; '' if missing."""
-    m = re.search(rf'data-{name}="(.*?)"', row, re.IGNORECASE | re.MULTILINE)
-    return m.group(1) if m else ""
-
-
-def get_score(txt_score: str) -> str:
-    """Port of the Apps Script getScore().
-
-    '' -> '-'
-    '22 (3T)' -> '22'
-    """
-    if txt_score == "":
-        return "-"
-
-    # Same regex as the original: a digit, then anything up to the first "("
-    m = re.search(r"([0-9].*?)\(", txt_score, re.IGNORECASE | re.MULTILINE)
-    if m:
-        return m.group(1).strip()
-
-    # No "(" in the value (e.g. just "22"): return it as-is rather than crashing
-    return txt_score.strip()
-
-def _to_int(value):
-    """Return an int if the value is numeric, otherwise None."""
-    try:
-        return int(str(value).strip())
-    except ValueError:
-        return None
-
-def strip_html_entities(value: str) -> str:
-    """Decode entities such as &amp; and &#39; into plain characters."""
-    return html.unescape(value)
-
-def get_venue(home_team: str, team: str) -> str:
-    """Return 'Home' if home_team contains `team` (case-insensitive), else 'Away'."""
-    return "Home" if team.lower() in home_team.lower() else "Away"
-
-def get_opposition(home_team: str, away_team: str, team: str) -> str:
-    """Return the team that is not `team` (case-insensitive substring match).
-
-    Returns '' if neither side contains `team`.
-    """
-    needle = team.lower()
-    if needle in home_team.lower():
-        return away_team
-    if needle in away_team.lower():
-        return home_team
-    return ""
-
-def get_winner(home_team: str, away_team: str, home_score, away_score) -> str:
-    """Win / Loss / Draw from `team`'s point of view.
-
-    Returns '' if either score isn't a number (conceded, postponed, unplayed).
-    """
-    team = "Highfield"
-    h, a = _to_int(home_score), _to_int(away_score)
-    if h is None or a is None:
-        return ""
-    if h == a:
-        return "Draw"
-
-    winning_team = home_team if h > a else away_team
-    return "Win" if team.lower() in winning_team.lower() else "Loss"
-
-# Checked in order, first match wins. Matching is case-insensitive.
 GRADE_EXCEPTIONS = [
     ("dennehy cup", "J2"),
     ("junior 2", "J2"),
     ("seconds", "J1"),
+    ("senior clubs league", "J1"),
     ("senior challenge", "Senior"),
 ]
 
-AGE_GRADE = re.compile(r"\bU\d+(?:\.\d+)?\b", re.IGNORECASE)
+ROW_SPLIT = '<ul class="column-seven table-body"'
 
+
+def strip_html_entities(text):
+    """Equivalent of stripHtmlEntities(): decode things like &amp; and &#39;."""
+    return html.unescape(text or "").strip()
+
+
+def attr(row, name):
+    """Equivalent of row.match(/data-<name>="(.*?)"/mi)[1]; empty string if missing."""
+    m = re.search(rf'data-{name}="(.*?)"', row, re.I | re.S)
+    return m.group(1) if m else ""
+
+
+def fetch_html(from_date, to_date):
+    form = {"fdate": from_date, "tdate": to_date, "sort": "date", "btn": ""}
+    resp = requests.post(
+        URL,
+        data=form,  # sent as application/x-www-form-urlencoded, like the original
+        headers={"User-Agent": "Mozilla/5.0 (compatible;  Google-Apps-Script)"},
+        timeout=30,
+    )
+    resp.raise_for_status()
+    return resp.text
+
+
+def parse_fixtures(page):
+    """Returns one dict per fixture row (same fields the script collected)."""
+    rows = page.split(ROW_SPLIT)[1:]  # first chunk is the page header, as in the original loop starting at 1
+    fixtures = []
+    for row in rows:
+        home = strip_html_entities(attr(row, "hometeam"))
+        away = strip_html_entities(attr(row, "awayteam"))
+        if CLUB in home:
+            flag = "Home"
+        elif CLUB in away:
+            flag = "Away"
+        else:
+            flag = "-"
+        fixtures.append({
+            "date": attr(row, "date"),
+            "home": home,
+            "away": away,
+            "referee": attr(row, "referee"),
+            "competition": strip_html_entities(attr(row, "compname")),
+            "venue": strip_html_entities(attr(row, "venue")),
+            "flag": flag,
+        })
+    return fixtures
+
+
+def normalise_date(raw):
+    """Return dd/mm/yyyy, which is what the website expects."""
+    for fmt in ("%d/%m/%Y", "%Y-%m-%d", "%d/%m/%Y %H:%M", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"):
+        try:
+            return datetime.strptime(raw.strip(), fmt).strftime("%d/%m/%Y")
+        except ValueError:
+            continue
+    return raw  # unknown format: leave untouched so nothing is lost
+
+AGE_GRADE = re.compile(r"\bU\d+(?:\.\d+)?\b", re.IGNORECASE)
 
 def get_grade(competition: str) -> str:
     """Derive a grade from the competition name.
@@ -156,128 +119,60 @@ def get_grade(competition: str) -> str:
     m = AGE_GRADE.search(competition)
     return m.group(0).upper() if m else ""
 
-def parse_results(page_html: str) -> list:
-    rows = ROW_SPLIT.split(page_html)[1:]  # first chunk is everything before row 1
-    results = []
 
-    for row in rows:
-      #home_team = get_attr(row, "hometeam")
-        away_team = get_attr(row, "awayteam")
-        #home_score = get_score(get_attr(row, "homescore"))
-        #away_score = get_score(get_attr(row, "awayscore"))
-        #winner =  get_winner(home_team, away_team, home_score, away_score)
-        competition = strip_html_entities(get_attr(row, "compname"))
+def to_result_row(f):
+    opposition = f["away"] if f["flag"] == "Home" else f["home"] if f["flag"] == "Away" else f"{f['home']} v {f['away']}"
+    return {
+        "Date": normalise_date(f["date"]),
+        "Opposition": opposition,
+        "Loc": f["flag"],
+        "Competition": f["competition"],
+        "Ground": f["venue"],
+        "Grade": get_grade(f["competition"]),        
+        "Referee": f["referee"],        
+    }
 
-        results.append(
-            {
-                "Date":  format_date(get_attr(row, "date")),
-                "Competition": competition,
-                "Result": winner,
-                "Loc" : get_venue(home_team, "Highfield"),
-                "Opposition" : get_opposition(home_team, away_team, "Highfield"),
-                "Grade": get_grade(competition),
-                #"Score": f"{home_score}:{away_score}",
-                "Referee": get_attr(row, "referee"),
-                "home_team": home_team,
-                "away_team": away_team,
-                #"home_score": home_score,
-                #"away_score": away_score,
-            }
-        )
 
-    return results
+def key(r):
+    return (r["Date"], r["Opposition"], r["Competition"])
 
-def drop_columns(results: list, columns: list) -> list:
-    """Return the records with the given keys removed (missing keys are ignored)."""
-    drop = set(columns)
-    return [{k: v for k, v in r.items() if k not in drop} for r in results]
 
-def filter_by_team(results: list, team: str) -> list:
-    """Keep only records where home_team or away_team contains `team` (case-insensitive)."""
-    if not team:
-        return results
-    needle = team.lower()
-    return [
-        r for r in results
-        if needle in r["home_team"].lower() or needle in r["away_team"].lower()
-    ]
+def sort_key(r):
+    try:
+        return datetime.strptime(r["Date"], "%d/%m/%Y")
+    except ValueError:
+        return datetime.min
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Fetch Munster Rugby results to JSON")
-    parser.add_argument("--from", dest="from_date",
-                        default=os.environ.get("FROM_DATE") or DEFAULT_FROM,
-                        help="Start date DD-MM-YYYY")
-    parser.add_argument("--to", dest="to_date",
+
+def main():
+    today = datetime.today()
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--from", dest="from_date", default=(today - timedelta(days=2)).strftime("%d-%m-%Y"),
+                   help="start date dd/mm/yyyy (default: 2 days ago)")
+
+    p.add_argument("--to", dest="to_date",
                         default=os.environ.get("TO_DATE") or DEFAULT_TO,
                         help="End date DD-MM-YYYY")
-    parser.add_argument("--out", default="data/fixtures.json", help="Output JSON path")
-    parser.add_argument("--html-file", help="Parse a local HTML file instead of fetching")
-    parser.add_argument("--allow-empty", action="store_true",
-                        help="Write the file even if zero results were found")
-    parser.add_argument("--debug", action="store_true",
-                        help="Print request/response diagnostics")
-    parser.add_argument("--save-html", help="Save the raw HTML response to this path")
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Print a preview instead of writing the file")
-    parser.add_argument("--team", default=os.environ.get("TEAM_FILTER") or "Highfield",
-                        help='Only keep matches where home or away team contains this text '
-                             '(case-insensitive). Use --team "" to keep everything.')    
-    args = parser.parse_args()
+        
+    p.add_argument("--all", action="store_true", help="include games that don't involve " + CLUB)
+    p.add_argument("--output", default=str(OUTPUT), help="output file (default: data/results.json)")
+    args = p.parse_args()
+    print (args.from_date, args.to_date)
 
-    if args.html_file:
-        with open(args.html_file, encoding="utf-8") as f:
-            page_html = f.read()
-    else:
-        try:
-            page_html = fetch_html(args.from_date, args.to_date)
-        except requests.RequestException as exc:
-            print(f"ERROR: request failed: {exc}", file=sys.stderr)
-            return 1
+    fixtures = parse_fixtures(fetch_html(args.from_date, args.to_date))
+    print(f"Found {len(fixtures)} fixtures between {args.from_date} and {args.to_date}")
+    if not args.all:
+        fixtures = [f for f in fixtures if f["flag"] != "-"]
+    new_rows = [to_result_row(f) for f in fixtures]
 
-    if args.save_html:
-        os.makedirs(os.path.dirname(args.save_html) or ".", exist_ok=True)
-        with open(args.save_html, "w", encoding="utf-8") as f:
-            f.write(page_html)
+    out = Path(args.output)
+    ##existing = json.loads(out.read_text(encoding="utf-8")) if out.exists() else []
+    final = new_rows
 
-    if args.debug:
-        print(f"[debug] html length: {len(page_html)}")
-        print(f"[debug] 'data-hometeam' occurrences: {page_html.lower().count('data-hometeam')}")
-        print(f"[debug] 'table-body' occurrences: {page_html.count('table-body')}")
-        print(f"[debug] first 300 chars: {page_html[:300]!r}")
-
-    results = parse_results(page_html)
-    total_parsed = len(results)
-    results = filter_by_team(results, args.team)
-    print(f"Parsed {total_parsed} result(s); {len(results)} match '{args.team}'")
-#    print(f"Parsed {len(results)} result(s) for {args.from_date} to {args.to_date}")
-
-    results = drop_columns(results, DROP_COLUMNS)
-
-    if not results and not args.allow_empty:
-        print("ERROR: no results found; not overwriting existing data. "
-              "Use --allow-empty if this is expected.", file=sys.stderr)
-        return 1
-
-    # No timestamp on purpose: identical data => identical file => no commit.
-    #output = {
-    #    "from": args.from_date,
-    #    "to": args.to_date,
-    #    "count": len(results),
-    #    "results": results,
-    #}
-    output = results
-    text = json.dumps(output, indent=2, ensure_ascii=False) + "\n"
-
-    if args.dry_run:
-        print(text[:1000])
-        return 0
-
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    with open(args.out, "w", encoding="utf-8") as f:
-        f.write(text)
-    print(f"Wrote {args.out}")
-    return 0
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(final, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"Wrote {len(final)} rows to {out}")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
