@@ -1,0 +1,353 @@
+[
+  {
+    "date": "23 Oct 2026",
+    "home": "Highfield RFC",
+    "away": "Dolphin-Sundays Well",
+    "referee": "Patrick  Coakley (Pending)",
+    "competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "25 Oct 2026",
+    "home": "Cork Constitution FC 2nd XV",
+    "away": "Highfield RFC 2nd XV",
+    "referee": "John Moynihan",
+    "competition": "Munster Senior Clubs League Division 1",
+    "venue": "Temple Hill",
+    "flag": "Away"
+  },
+  {
+    "date": "28 Oct 2026",
+    "home": "Garryowen FC",
+    "away": "Highfield RFC",
+    "referee": "Cillian Pegley",
+    "competition": "U21 Donal Walsh Trophy",
+    "venue": "Dooradoyle",
+    "flag": "Away"
+  },
+  {
+    "date": "28 Oct 2026",
+    "home": "Crosshaven/Cork Con",
+    "away": "Highfield RFC",
+    "referee": "Niall Higgins",
+    "competition": "Boys Clubs U16 Munster Conference 7",
+    "venue": "Temple Hill",
+    "flag": "Away"
+  },
+  {
+    "date": "30 Oct 2026",
+    "home": "Sundays Well RFC 2nd XV",
+    "away": "Highfield RFC 3rd XV",
+    "referee": "TBC (Pending)",
+    "competition": "South - Junior 2 League",
+    "venue": "Virgin Media Park",
+    "flag": "Away"
+  },
+  {
+    "date": "31 Oct 2026",
+    "home": "Kanturk RFC",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster League Group 2",
+    "venue": "Kanturk",
+    "flag": "Away"
+  },
+  {
+    "date": "01 Nov 2026",
+    "home": "Highfield RFC 2nd XV",
+    "away": "Nenagh Ormond RFC 2nd XV",
+    "referee": "TBC (Pending)",
+    "competition": "Munster Senior Clubs League Division 1",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "07 Nov 2026",
+    "home": "Highfield RFC",
+    "away": "Old Crescent RFC",
+    "referee": "TBC (Pending)",
+    "competition": "U21 Donal Walsh Trophy",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "07 Nov 2026",
+    "home": "Highfield RFC",
+    "away": "Crosshaven/Cork Con",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U18.5 Munster Conference 6",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "07 Nov 2026",
+    "home": "Highfield RFC",
+    "away": "Ballincollig RFC White",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U16 Munster Conference 7",
+    "venue": "Tanner Park",
+    "flag": "Home"
+  },
+  {
+    "date": "13 Nov 2026",
+    "home": "Bandon RFC 2nd XV",
+    "away": "Highfield RFC 3rd XV",
+    "referee": "TBC (Pending)",
+    "competition": "South - Junior 2 League",
+    "venue": "Bandon",
+    "flag": "Away"
+  },
+  {
+    "date": "14 Nov 2026",
+    "home": "Mitchelstown-Galbally-Fermoy",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U18.5 Munster Conference 6",
+    "venue": "TBC",
+    "flag": "Away"
+  },
+  {
+    "date": "14 Nov 2026",
+    "home": "Highfield RFC",
+    "away": "Crosshaven RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster League Group 2",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "18 Nov 2026",
+    "home": "Highfield RFC",
+    "away": "Cork Constitution FC",
+    "referee": "TBC (Pending)",
+    "competition": "U21 Donal Walsh Trophy",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "21 Nov 2026",
+    "home": "Highfield RFC",
+    "away": "Youghal RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U18.5 South Munster League Group 1",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "21 Nov 2026",
+    "home": "Highfield RFC",
+    "away": "Midleton RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U16 South Munster League Group 4",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "21 Nov 2026",
+    "home": "Skibbereen RFC",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
+    "venue": "Skibbereen",
+    "flag": "Away"
+  },
+  {
+    "date": "25 Nov 2026",
+    "home": "Highfield RFC",
+    "away": "UL Bohemian RFC",
+    "referee": "TBC (Pending)",
+    "competition": "U21 Donal Walsh Trophy",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "27 Nov 2026",
+    "home": "Highfield RFC 3rd XV",
+    "away": "Cork Constitution FC 3rd XV",
+    "referee": "TBC (Pending)",
+    "competition": "South - Junior 2 League",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "29 Nov 2026",
+    "home": "Shannon RFC 2nd XV",
+    "away": "Highfield RFC 2nd XV",
+    "referee": "TBC (Pending)",
+    "competition": "Munster Senior Clubs League Division 1",
+    "venue": "Coonagh",
+    "flag": "Away"
+  },
+  {
+    "date": "02 Dec 2026",
+    "home": "Nenagh Ormond RFC",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "U21 Donal Walsh Trophy",
+    "venue": "Nenagh",
+    "flag": "Away"
+  },
+  {
+    "date": "05 Dec 2026",
+    "home": "Highfield RFC",
+    "away": "Clonakilty RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "06 Dec 2026",
+    "home": "Highfield RFC 2nd XV",
+    "away": "Garryowen FC 2nd XV",
+    "referee": "TBC (Pending)",
+    "competition": "Munster Senior Clubs League Division 1",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "12 Dec 2026",
+    "home": "Highfield RFC",
+    "away": "Mallow RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster League Group 2",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "19 Dec 2026",
+    "home": "Highfield RFC",
+    "away": "Midleton RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U18.5 South Munster League Group 1",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "19 Dec 2026",
+    "home": "Clonakilty RFC Green",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster League Group 2",
+    "venue": "The Vale",
+    "flag": "Away"
+  },
+  {
+    "date": "08 Jan 2027",
+    "home": "Highfield RFC 3rd XV",
+    "away": "Dolphin RFC 3rd XV",
+    "referee": "TBC (Pending)",
+    "competition": "South - Junior 2 League",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "10 Jan 2027",
+    "home": "University College Cork RFC 2nd XV",
+    "away": "Highfield RFC 2nd XV",
+    "referee": "TBC (Pending)",
+    "competition": "Munster Senior Clubs League Division 1",
+    "venue": "Mardyke",
+    "flag": "Away"
+  },
+  {
+    "date": "13 Jan 2027",
+    "home": "Highfield RFC",
+    "away": "Sundays Well RFC",
+    "referee": "TBC (Pending)",
+    "competition": "U21 Donal Walsh Trophy",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "17 Jan 2027",
+    "home": "Highfield RFC 2nd XV",
+    "away": "Cork Constitution FC 2nd XV",
+    "referee": "TBC (Pending)",
+    "competition": "Munster Senior Clubs League Division 1",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "20 Jan 2027",
+    "home": "Dolphin RFC",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "U21 Donal Walsh Trophy",
+    "venue": "Virgin Media Park",
+    "flag": "Away"
+  },
+  {
+    "date": "22 Jan 2027",
+    "home": "Old Christians RFC 2nd XV",
+    "away": "Highfield RFC 3rd XV",
+    "referee": "TBC (Pending)",
+    "competition": "South - Junior 2 League",
+    "venue": "Rathcooney",
+    "flag": "Away"
+  },
+  {
+    "date": "23 Jan 2027",
+    "home": "Highfield RFC",
+    "away": "Bandon RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "05 Feb 2027",
+    "home": "University College Cork RFC 3rd XV",
+    "away": "Highfield RFC 3rd XV",
+    "referee": "TBC (Pending)",
+    "competition": "South - Junior 2 League",
+    "venue": "Mardyke",
+    "flag": "Away"
+  },
+  {
+    "date": "06 Feb 2027",
+    "home": "Kinsale RFC",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
+    "venue": "Kinsale",
+    "flag": "Away"
+  },
+  {
+    "date": "10 Feb 2027",
+    "home": "Shannon RFC",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "U21 Donal Walsh Trophy",
+    "venue": "Coonagh",
+    "flag": "Away"
+  },
+  {
+    "date": "13 Feb 2027",
+    "home": "Cobh Pirates RFC",
+    "away": "Highfield RFC",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U16 South Munster League Group 4",
+    "venue": "Cobh",
+    "flag": "Away"
+  },
+  {
+    "date": "19 Feb 2027",
+    "home": "Highfield RFC 3rd XV",
+    "away": "Kinsale RFC 2nd XV",
+    "referee": "TBC (Pending)",
+    "competition": "South - Junior 2 League",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  },
+  {
+    "date": "20 Feb 2027",
+    "home": "Highfield RFC",
+    "away": "Cork Constitution FC White",
+    "referee": "TBC (Pending)",
+    "competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
+    "venue": "Woodleigh Park",
+    "flag": "Home"
+  }
+]
