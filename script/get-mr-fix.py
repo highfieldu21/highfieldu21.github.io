@@ -81,13 +81,12 @@ def parse_fixtures(page):
         else:
             flag = "-"
         fixtures.append({
-            "date": attr(row, "date"),
-            "home": home,
-            "away": away,
-            "referee": attr(row, "referee"),
-            "competition": strip_html_entities(attr(row, "compname")),
-            "venue": strip_html_entities(attr(row, "venue")),
-            "flag": flag,
+            "Date": attr(row, "date"),            
+            "Opposition"": f["away"] if f["flag"] == "Home" else f["home"] if f["flag"] == "Away" else f"{f['home']} v {f['away']}",
+            "Referee": attr(row, "referee"),
+            "Competition": strip_html_entities(attr(row, "compname")),
+            "Ground": strip_html_entities(attr(row, "venue")),
+            "Loc": flag,
         })
     return fixtures
 
@@ -162,7 +161,7 @@ def main():
     fixtures = parse_fixtures(fetch_html(args.from_date, args.to_date))
     print(f"Found {len(fixtures)} fixtures between {args.from_date} and {args.to_date}")
     if not args.all:
-        fixtures = [f for f in fixtures if f["flag"] != "-"]
+        fixtures = [f for f in fixtures if f["Loc"] != "-"]
 
     if not fixtures and not args.allow_empty:
         print("ERROR: no fixtures found; not overwriting existing data. "
