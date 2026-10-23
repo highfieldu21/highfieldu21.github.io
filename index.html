@@ -191,9 +191,12 @@ const store = {
 };
 // Order of the grade filter buttons (left to right, after "All").
 // Edit this list to change the order; any grade not listed goes at the end in A-Z order.
-const GRADE_ORDER = ["Senior", "J1", "U21", "J2", "U18.5", "U16", "U14", "U13"];
+const GRADE_ORDER = ["Senior", "J1", "U21"];
 const gradeRank = g => { const i = GRADE_ORDER.indexOf(g); return i === -1 ? GRADE_ORDER.length : i; };
 const sortGrades = list => [...list].sort((a, b) => gradeRank(a) - gradeRank(b) || String(a).localeCompare(String(b)));
+// Always ask for a fresh copy of the data files: "no-cache" makes the browser check with the
+// server, and the changing ?v= value stops any cached copy along the way being reused.
+const fresh = path => fetch(`${path}?v=${Date.now()}`, { cache: "no-cache" });
 const tabs = document.querySelectorAll("nav button");
 function show(id){
   tabs.forEach(b => b.setAttribute("aria-selected", b.dataset.tab === id));
@@ -249,7 +252,7 @@ function buildPills(){
   sync();
 }
 
-fetch("data/fixtures.json")
+fresh("data/fixtures.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort((a,b) => a.date - b.date);
@@ -258,7 +261,7 @@ fetch("data/fixtures.json")
   .catch(() => {
     const m = document.getElementById("msg");
     m.className = "msg err";
-    m.textContent = "Couldn't load fixtures.json. Keep it in the same folder as this page and open the page from its web address, not from a local file.";
+    m.textContent = "Couldn't load data/fixtures.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
   });
 
 // Results
@@ -308,7 +311,7 @@ function buildResPills(){
   sync();
 }
 
-fetch("data/results.json")
+fresh("data/results.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     results = data.map(r => ({...r, date: r.Date ? toDate(r.Date) : null}))
@@ -318,7 +321,7 @@ fetch("data/results.json")
   .catch(() => {
     const m = document.getElementById("resMsg");
     m.className = "msg err";
-    m.textContent = "Couldn't load results.json. Keep it in the same folder as this page and open the page from its web address, not from a local file.";
+    m.textContent = "Couldn't load data/results.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
   });
 </script>
 </body>
