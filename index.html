@@ -80,7 +80,7 @@ tr.next{background:#dcebfa;border-left-color:#2b6cb0}
   th{background:var(--green);color:#fff;font-size:14px}
   td.opp{font-size:16px;margin:0}
   td.date{font-size:15px;white-space:nowrap}
-  td.ground,td.comp{font-size:15px;color:var(--ink)}
+  td.ground,td.comp,td.ref{font-size:15px;color:var(--ink)}
   td.grade{text-align:left}
   td.score{font-size:15px;text-align:left}
   tr.next{background:#dcebfa}
@@ -100,7 +100,7 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 #fixtures .loc.A{background:#fde3c8;color:#9a4a0b}
 
 /* Fixtures: compact phone cards (3 lines: date + badges / opposition / ground and competition) */
-#fixtures .mcomp{display:none}
+#fixtures .mcomp,#fixtures .mref{display:none}
 @media (max-width:719.98px){
   #fixtures tr{grid-template-columns:1fr auto auto;gap:0 6px;align-items:center;padding:8px 12px;margin-bottom:8px;border-radius:10px}
   #fixtures td.date{grid-column:1;grid-row:1;font-size:13px}
@@ -109,7 +109,9 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
   #fixtures td.opp{grid-column:1/-1;grid-row:2;font-size:16px;margin:3px 0 1px}
   #fixtures td.ground{grid-column:1/-1;grid-row:3;font-size:13px;color:var(--muted)}
   #fixtures td.comp{display:none}
-  #fixtures .mcomp{display:inline}
+  #fixtures td.ref{grid-column:1/-1;grid-row:4;font-size:13px;color:var(--muted)}
+  #fixtures td.ref:empty{display:none}
+  #fixtures .mcomp,#fixtures .mref{display:inline}
 }
 
 /* Results table rows: normal weight, wins shaded light green */
@@ -124,7 +126,7 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
     <p class="eyebrow"></p>
     <h1>Highfield RFC</h1>
     <p class="herosub">Woodleigh Park</p>    
-    <p class="hero">Fixtures & Results</p>
+    <p>Fixtures & Results</p>
   </div>
 </header>
 <div class="navbg">
@@ -139,7 +141,7 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
     <h2>Fixtures</h2>
     <div class="pills" id="pills" role="group" aria-label="Filter by grade (select one or more)"></div>
     <table>
-      <thead><tr><th>Date</th><th>Opposition</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th></tr></thead>
+      <thead><tr><th>Date</th><th>Opposition</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th><th>Referee</th></tr></thead>
       <tbody id="rows"></tbody>
     </table>
     <p class="msg" id="msg">Loading fixtures…</p>
@@ -200,7 +202,8 @@ function renderList(){
     return `<tr class="${cls}"><td class="date">${fmt(f.date)}</td><td class="opp">${esc(f.Opposition)}</td>` +
       `<td class="grade"><span class="gr">${esc(f.Grade)}</span></td>` +
       `<td class="ha"><span class="loc ${locKey(f.Loc)}">${esc(f.Loc)}</span></td>` +
-      `<td class="ground">${esc(f.Ground)}<span class="mcomp"> &middot; ${esc(f.Competition)}</span></td><td class="comp">${esc(f.Competition)}</td></tr>`;
+      `<td class="ground">${esc(f.Ground)}<span class="mcomp"> &middot; ${esc(f.Competition)}</span></td><td class="comp">${esc(f.Competition)}</td>` +
+      `<td class="ref">${f.Referee ? `<span class="mref">Referee: </span>${esc(f.Referee)}` : ""}</td></tr>`;
   }).join("");
   const m = document.getElementById("msg");
   m.className = "msg";
