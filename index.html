@@ -256,7 +256,7 @@ function buildPills(){
   sync();
 }
 
-fresh("data/fixtures.json")
+fresh("data/fixtures-all.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort((a,b) => a.date - b.date);
@@ -265,7 +265,7 @@ fresh("data/fixtures.json")
   .catch(() => {
     const m = document.getElementById("msg");
     m.className = "msg err";
-    m.textContent = "Couldn't load data/fixtures.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
+    m.textContent = "Couldn't load data/fixtures-all.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
   });
 
 // Results
