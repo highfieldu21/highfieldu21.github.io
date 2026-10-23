@@ -142,6 +142,7 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
   <section id="fixtures">
     <h2>Fixtures</h2>
     <div class="pills" id="pills" role="group" aria-label="Filter by grade (select one or more)"></div>
+    <div class="pills sub" id="compPills" role="group" aria-label="Filter fixtures by competition (select one or more)" hidden></div>
     <table>
       <thead><tr><th>Date</th><th>Opposition</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th><th>Referee</th></tr></thead>
       <tbody id="rows"></tbody>
@@ -190,7 +191,7 @@ tabs.forEach(b => b.addEventListener("click", () => show(b.dataset.tab)));
 const start = location.hash.slice(1) || store.get("tab");
 if (start && document.querySelector(`nav [data-tab="${start}"]`)) show(start);   // otherwise Fixtures is already showing
 
-let fixtures = [], selected = new Set();  // empty set = show all grades
+let fixtures = [], selected = new Set(), selComp = new Set();  // empty set = show all
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const toDate = s => { const [d,m,y] = s.split("/").map(Number); return new Date(y, m-1, d); };
 const locKey = v => String(v ?? "").trim().charAt(0).toUpperCase();   // "Home"/"H" -> H, "Away"/"A" -> A
@@ -198,7 +199,7 @@ const fmt = d => d.toLocaleDateString("en-IE", {weekday:"short", day:"numeric", 
 
 function renderList(){
   const today = new Date(); today.setHours(0,0,0,0);
-  const list = fixtures.filter(f => selected.size === 0 || selected.has(f.Grade));
+  const list = fixtures.filter(f => (selected.size === 0 || selected.has(f.Grade)) && (selComp.size === 0 || selComp.has(f.Competition)));
   const nextIdx = list.findIndex(f => f.date >= today);
   document.getElementById("rows").innerHTML = list.map((f,i) => {
     const cls = [locKey(f.Loc) === "A" ? "away" : "", f.date < today ? "past" : (i === nextIdx ? "next" : "")].join(" ");
@@ -215,6 +216,31 @@ function renderList(){
 
 function render(){ renderList(); }
 
+// Second filter: only shown once a grade is selected, and lists just the competitions in those grades.
+function buildFxCompPills(){
+  const box = document.getElementById("compPills");
+  const comps = selected.size === 0 ? [] :
+    [...new Set(fixtures.filter(f => selected.has(f.Grade)).map(f => f.Competition).filter(Boolean))]
+      .sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" }));
+  selComp = new Set([...selComp].filter(c => comps.includes(c)));   // drop picks that no longer apply
+  store.set("fxComps", [...selComp]);
+  box.hidden = comps.length < 1;
+  if (box.hidden) { selComp.clear(); box.innerHTML = ""; return; }
+  box.innerHTML = `<button class="pill" data-c="">All competitions</button>` +
+    comps.map(c => `<button class="pill" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+  const sync = () => box.querySelectorAll(".pill").forEach(p =>
+    p.setAttribute("aria-pressed", p.dataset.c === "" ? selComp.size === 0 : selComp.has(p.dataset.c)));
+  box.querySelectorAll(".pill").forEach(p => p.addEventListener("click", () => {
+    const c = p.dataset.c;
+    if (c === "") selComp.clear();
+    else if (selComp.has(c)) selComp.delete(c);
+    else selComp.add(c);
+    store.set("fxComps", [...selComp]);
+    sync(); render();
+  }));
+  sync();
+}
+
 function buildPills(){
   const grades = sortGrades(new Set(fixtures.map(f => f.Grade)));
   selected = new Set((store.get("fxGrades") || []).filter(g => grades.includes(g)));
@@ -229,7 +255,7 @@ function buildPills(){
     else if (selected.has(g)) selected.delete(g);         // tap again to remove
     else selected.add(g);
     store.set("fxGrades", [...selected]);
-    sync(); render();
+    sync(); buildFxCompPills(); render();
   }));
   sync();
 }
@@ -238,7 +264,8 @@ fresh("data/fixtures-all.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort((a,b) => a.date - b.date);
-    buildPills(); render();
+    selComp = new Set(store.get("fxComps") || []);
+    buildPills(); buildFxCompPills(); render();
   })
   .catch(() => {
     const m = document.getElementById("msg");
@@ -318,7 +345,7 @@ function buildResPills(){
   sync();
 }
 
-fresh("data/results-all.json")
+fresh("data/results.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     results = data.map(r => ({...r, date: r.Date ? toDate(r.Date) : null}))
