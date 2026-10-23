@@ -7,10 +7,10 @@ import html
 import json
 import os
 import re
-from datetime import datetime
-
 import requests
 
+from zoneinfo import ZoneInfo
+from datetime import datetime
 # End date used when --to / TO_DATE is not supplied (DD-MM-YYYY)
 DEFAULT_TO = "31-05-2027"
 
