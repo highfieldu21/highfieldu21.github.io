@@ -1,23 +1,25 @@
 #!/usr/bin/env python3
 """
-Download the fixture feed from sportsmanager.ie and save it as data/fixtures_ail.json
-in the same shape as the other fixture files.
+Download the results feed from sportsmanager.ie and save it as data/results_ail.json
+in the same shape as the other results file.
 
-Only these fields are written, one record per fixture:
+Only Highfield games are kept. Only these fields are written, one record per result:
 
     Date        <- fixtureDate (Unix timestamp), shown as 24/10/2026
     Opposition  <- awayTeam when Highfield is at home, homeTeam when away
-    Referee     <- officials.referee
+    Referee     <- officials.Referee
     Competition <- competitionName
-    Ground      <- venue
-    Loc         <- "Home" if homeTeam contains Highfield, otherwise "Away"
+    Loc         <- "Home" if homeTeam contains Highfield, "Away" if awayTeam does
     Grade       <- always "Senior"
+    Result      <- homeResult when Loc is Home, awayResult when Loc is Away, shown as Win / Loss / Draw
+    Score       <- homeScore and awayScore joined, e.g. "57:29" (home first, as in the feed).
+                   The feed gives "57;8" (points;league points), so only the part before ";" is used.
 
 Usage:
-    python script/get-ail-fix.py
-    python script/get-ail-fix.py --from 2026-09-01 --to 2027-04-30
-    python script/get-ail-fix.py --url "https://sportsmanager.ie/dataFeed/index.php?..."   # exact URL
-    python script/get-ail-fix.py --dry-run          # show the result, write nothing
+    python script/get-ail-res.py
+    python script/get-ail-res.py --from 2026-09-01 --to 2027-04-30
+    python script/get-ail-res.py --url "https://sportsmanager.ie/dataFeed/index.php?..."   # exact URL
+    python script/get-ail-res.py --dry-run          # show the result, write nothing
 
 Dates for --from / --to are YYYY-MM-DD (the feed's format, unlike the DD-MM-YYYY the other scripts use).
 """
@@ -34,10 +36,10 @@ DEFAULT_FROM = "2026-09-01"
 DEFAULT_TO = "2027-04-30"
 USER_ID = "7533"
 COMPETITION_ID = "215685"
-OUTPUT = "data/fixtures_ail.json"
+OUTPUT = "data/results_ail.json"
 
 CLUB = "Highfield"      # matched anywhere in the team name, ignoring capitals
-GRADE = "Senior"        # every fixture in this feed gets this grade
+GRADE = "Senior"        # every result in this feed gets this grade
 
 # Say honestly who is asking, so the feed's owner can see what is calling it.
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:153.0) Gecko/20100101 Firefox/153.0"
@@ -46,7 +48,7 @@ USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:153.0) Gecko/20100101
 def build_params(from_date, to_date, user_id, competition_id):
     return {
         "feedType": "fixture",
-        "type": "fixtures",
+        "type": "results",
         "user_id": user_id,
         "date_from": from_date,
         "date_to": to_date,
@@ -121,46 +123,63 @@ def get_referee(record) -> str:
     return ""
 
 
+RESULT_WORDS = {"win": "Win", "lose": "Loss", "loss": "Loss", "draw": "Draw"}
+
+
+def points(value) -> str:
+    """'57;8' -> '57'. The feed's score is 'points;league points'; only the match points are wanted."""
+    return as_text(value).split(";")[0].strip()
+
+
+def result_word(value) -> str:
+    """'win' -> 'Win', 'lose' -> 'Loss', 'draw' -> 'Draw' (what the website colours). Anything else is kept as is."""
+    text = as_text(value)
+    return RESULT_WORDS.get(text.lower(), text)
+
+
 def convert(records):
-    """Turn feed records into the output shape. Returns (fixtures, notes about anything odd)."""
-    fixtures = []
+    """Turn feed records into the output shape. Returns (results, notes about anything odd)."""
+    results = []
     missing = Counter()
-    neither = 0
+    skipped = 0
     club = CLUB.lower()
 
     for r in records:
         home = as_text(r.get("homeTeam"))
         away = as_text(r.get("awayTeam"))
-        #loc = "Home" if club in home.lower() else "Away"
-        
+
         if club in home.lower():
             loc = "Home"
         elif club in away.lower():
             loc = "Away"
         else:
-            continue      
-        
-        fixture = {
+            skipped += 1                  # not a Highfield game: leave it out
+            continue
+
+        home_score = points(r.get("homeScore"))
+        away_score = points(r.get("awayScore"))
+
+        result = {
             "Date": timestamp_to_date(r.get("fixtureDate")),
-            "Opposition": away if loc == "Home" else home,
-            "Referee": get_referee(r),
             "Competition": as_text(r.get("competitionName")),
-            "Ground": as_text(r.get("venue")),
-            "Loc": loc,
             "Grade": GRADE,
+            "Referee": get_referee(r),
+            "Opposition": away if loc == "Home" else home,
+            "Loc": loc,
+            "Result": result_word(r.get("homeResult" if loc == "Home" else "awayResult")),
+            "Score": f"{home_score}:{away_score}" if (home_score and away_score) else "",
         }
         for field, source in (("Date", "fixtureDate"), ("Opposition", "homeTeam/awayTeam"),
-                              ("Referee", "officials.referee"), ("Competition", "competitionName"),
-                              ("Ground", "venue")):
-            if not fixture[field]:
+                              ("Referee", "officials.Referee"), ("Competition", "competitionName"),
+                              ("Result", "homeResult/awayResult"), ("Score", "homeScore/awayScore")):
+            if not result[field]:
                 missing[source] += 1
-        fixtures.append(fixture)
+        results.append(result)
 
-    notes = [f"{n} fixture(s) have no value for {source}" for source, n in missing.items()]
-    if neither:
-        notes.append(f"{neither} fixture(s) don't involve {CLUB} at all - they are marked Away, "
-                     f"with the home team as the opposition")
-    return fixtures, notes
+    notes = [f"{n} result(s) have no value for {source}" for source, n in missing.items()]
+    if skipped:
+        notes.append(f"{skipped} game(s) skipped because neither team is {CLUB}")
+    return results, notes
 
 
 def main() -> int:
@@ -171,7 +190,7 @@ def main() -> int:
     p.add_argument("--competition-id", default=COMPETITION_ID)
     p.add_argument("--url", help="use this exact URL instead of building one (ignores the options above)")
     p.add_argument("--out", default=OUTPUT, help="output file (default: %(default)s)")
-    p.add_argument("--allow-empty", action="store_true", help="write the file even if there are no fixtures")
+    p.add_argument("--allow-empty", action="store_true", help="write the file even if there are no results")
     p.add_argument("--dry-run", action="store_true", help="print a preview instead of writing the file")
     args = p.parse_args()
 
@@ -198,17 +217,17 @@ def main() -> int:
               "not overwriting existing data.", file=sys.stderr)
         return 1
 
-    fixtures, notes = convert(records)
+    results, notes = convert(records)
     for note in notes:
         print(f"NOTE: {note}")
-    print(f"Converted {len(fixtures)} fixture(s)")
+    print(f"Converted {len(results)} result(s)")
 
-    if not fixtures and not args.allow_empty:
-        print("ERROR: no fixtures to write; not overwriting existing data. "
+    if not results and not args.allow_empty:
+        print("ERROR: no results to write; not overwriting existing data. "
               "Use --allow-empty if this is expected.", file=sys.stderr)
         return 1
 
-    text = dump_json(fixtures)
+    text = dump_json(results)
     if args.dry_run:
         print(text[:1500])
         return 0
