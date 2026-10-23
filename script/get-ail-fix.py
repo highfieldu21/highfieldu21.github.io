@@ -3,7 +3,7 @@
 Download the fixture feed from sportsmanager.ie and save the JSON it returns.
 
 No conversion and no merging: the response is saved as received (just
-pretty-printed so changes show up cleanly in git) to data/fixtures_sm.json,
+pretty-printed so changes show up cleanly in git) to data/fixtures_ail.json,
 so you can look at it before deciding what to do with it.
 
 Usage:
