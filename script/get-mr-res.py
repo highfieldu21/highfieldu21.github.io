@@ -14,14 +14,23 @@ set with the FROM_DATE / TO_DATE environment variables.
 """
 
 import argparse
-import html
-import json
 import os
 import re
 import sys
 
 import requests
-from datetime import datetime
+
+from rugby_util import (
+    DEFAULT_TO,
+    dump_json,
+    fetch_html,
+    format_date,
+    get_attr,
+    get_grade,
+    get_opposition,
+    strip_html_entities,
+    write_text,
+)
 
 URL = "https://munsterrugby.sportlomo.com/results/"
 # ROW_SPLIT = '<ul class="column-six table-body resul"'
@@ -29,46 +38,8 @@ ROW_SPLIT = re.compile(r'(?=<ul[^>]*class="[^"]*\btable-body\b[^"]*\bresul\b)', 
 
 # Defaults copied from the original Apps Script (hardcoded there)
 DEFAULT_FROM = "01-09-2026"
-DEFAULT_TO = "31-05-2027"
 
 DROP_COLUMNS = ["home_team", "away_team", "home_score", "away_score"]
-
-def fetch_html(from_date: str, to_date: str) -> str:
-    """POST the same form the Apps Script posted and return the page HTML."""
-    response = None
-
-    form_data = {
-        "fdate": from_date,
-        "tdate": to_date,
-        "sort": "date",
-        "btn": "",
-    }
-
-    headers = {
-        # Some sites reject the default python-requests User-Agent
-        "User-Agent": "Mozilla/5.0 (compatible;  Google-Apps-Script)",
-    }
-    # requests sends a dict via data= as application/x-www-form-urlencoded
-    response = requests.post(URL, data=form_data, headers=headers, timeout=30)
-
-    response.raise_for_status()
-    return response.text
-
-def format_date(value: str) -> str:
-    """'01 Oct 2026' -> '01/10/2026'. Returns the original text if it can't be parsed."""
-    value = value.strip()
-    for fmt in ("%d %b %Y", "%d %B %Y"):   # 'Oct' and 'October'
-        try:
-            return datetime.strptime(value, fmt).strftime("%d/%m/%Y")
-        except ValueError:
-            continue
-    return value
-
-def get_attr(row: str, name: str) -> str:
-    """Equivalent of row.match(/data-<name>="(.*?)"/mi)[1]; '' if missing."""
-    m = re.search(rf'data-{name}="(.*?)"', row, re.IGNORECASE | re.MULTILINE)
-    return m.group(1) if m else ""
-
 
 def get_score(txt_score: str) -> str:
     """Port of the Apps Script getScore().
@@ -94,25 +65,9 @@ def _to_int(value):
     except ValueError:
         return None
 
-def strip_html_entities(value: str) -> str:
-    """Decode entities such as &amp; and &#39; into plain characters."""
-    return html.unescape(value)
-
 def get_venue(home_team: str, team: str) -> str:
     """Return 'Home' if home_team contains `team` (case-insensitive), else 'Away'."""
     return "Home" if team.lower() in home_team.lower() else "Away"
-
-def get_opposition(home_team: str, away_team: str, team: str) -> str:
-    """Return the team that is not `team` (case-insensitive substring match).
-
-    Returns '' if neither side contains `team`.
-    """
-    needle = team.lower()
-    if needle in home_team.lower():
-        return away_team
-    if needle in away_team.lower():
-        return home_team
-    return ""
 
 def get_winner(home_team: str, away_team: str, home_score, away_score) -> str:
     """Win / Loss / Draw from `team`'s point of view.
@@ -128,33 +83,6 @@ def get_winner(home_team: str, away_team: str, home_score, away_score) -> str:
 
     winning_team = home_team if h > a else away_team
     return "Win" if team.lower() in winning_team.lower() else "Loss"
-
-# Checked in order, first match wins. Matching is case-insensitive.
-GRADE_EXCEPTIONS = [
-    ("dennehy cup", "J2"),
-    ("junior 2", "J2"),
-    ("seconds", "J1"),
-    ("senior challenge", "Senior"),
-]
-
-AGE_GRADE = re.compile(r"\bU\d+(?:\.\d+)?\b", re.IGNORECASE)
-
-
-def get_grade(competition: str) -> str:
-    """Derive a grade from the competition name.
-
-    'Boys Clubs U14 Friendly'  -> 'U14'
-    'South - Dennehy Cup'      -> 'J2'
-    anything else unmatched    -> ''
-    """
-    name = competition.lower()
-
-    for text, grade in GRADE_EXCEPTIONS:
-        if text in name:
-            return grade
-
-    m = AGE_GRADE.search(competition)
-    return m.group(0).upper() if m else ""
 
 def parse_results(page_html: str) -> list:
     rows = ROW_SPLIT.split(page_html)[1:]  # first chunk is everything before row 1
@@ -229,7 +157,7 @@ def main() -> int:
             page_html = f.read()
     else:
         try:
-            page_html = fetch_html(args.from_date, args.to_date)
+            page_html = fetch_html(URL, args.from_date, args.to_date)
         except requests.RequestException as exc:
             print(f"ERROR: request failed: {exc}", file=sys.stderr)
             return 1
@@ -266,15 +194,13 @@ def main() -> int:
     #    "results": results,
     #}
     output = results
-    text = json.dumps(output, indent=2, ensure_ascii=False) + "\n"
+    text = dump_json(output)
 
     if args.dry_run:
         print(text[:1000])
         return 0
 
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    with open(args.out, "w", encoding="utf-8") as f:
-        f.write(text)
+    write_text(args.out, text)
     print(f"Wrote {args.out}")
     return 0
 
