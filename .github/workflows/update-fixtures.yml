@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v6
 
       # The data refresh runs on the daily schedule and manual runs, not on ordinary pushes.
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         if: github.event_name != 'push'
         with:
           python-version: "3.12"
