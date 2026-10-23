@@ -282,7 +282,7 @@ function buildCompPills(){
       .sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" }));
   resComp = new Set([...resComp].filter(c => comps.includes(c)));   // drop picks that no longer apply
   store.set("resComps", [...resComp]);
-  box.hidden = comps.length < 2;                                    // nothing to choose between
+  box.hidden = comps.length < 1;                                    // no competition names in these grades
   if (box.hidden) { resComp.clear(); box.innerHTML = ""; return; }
   box.innerHTML = `<button class="pill" data-c="">All competitions</button>` +
     comps.map(c => `<button class="pill" data-c="${esc(c)}">${esc(c)}</button>`).join("");
