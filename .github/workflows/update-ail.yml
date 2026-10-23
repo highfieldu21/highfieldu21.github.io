@@ -54,9 +54,13 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         run: pip install requests
 
-      - name: Download the feed
+      - name: Download fixtures
         if: steps.gate.outputs.run == 'true'
         run: python script/get-ail-fix.py --from "$FROM_DATE" --to "$TO_DATE"
+
+      - name: Download results
+        if: steps.gate.outputs.run == 'true'
+        run: python script/get-ail-res.py 
 
       - name: Merge Fixture Files
         if: steps.gate.outputs.run == 'true'
