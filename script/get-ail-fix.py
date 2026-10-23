@@ -119,7 +119,7 @@ def get_referee(record) -> str:
     officials = record.get("officials")
     for item in (officials if isinstance(officials, list) else [officials]):
         if isinstance(item, dict):
-            for key in ("referee", "refereee"):
+            for key in ("Referee"):
                 text = as_text(item.get(key))
                 if text:
                     return text
