@@ -32,10 +32,6 @@ h2{font-size:20px;margin:0 0 12px;color:var(--green)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
 .card h3{margin:0 0 4px;font-size:16px;color:var(--green)}
 .card p{margin:0;color:var(--muted)}
-.sched{list-style:none;margin:6px 0 0;padding:0}
-.sched li{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line);font-size:16px}
-.sched li:first-child{border-top:0}
-.sched span:last-child{color:var(--green)}
 
 /* Grade filter: one swipeable row of large tap targets */
 .pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;padding:2px 0}
@@ -133,26 +129,13 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 </header>
 <div class="navbg">
   <nav role="tablist" aria-label="Sections">
-    <button role="tab" aria-selected="true" data-tab="training">Training</button>
-    <button role="tab" aria-selected="false" data-tab="fixtures">Fixtures</button>
+    <button role="tab" aria-selected="true" data-tab="fixtures">Fixtures</button>
     <button role="tab" aria-selected="false" data-tab="results">Results</button>
-    <button role="tab" aria-selected="false" data-tab="squad">Squad</button>
-    <button role="tab" aria-selected="false" data-tab="info">Info</button>
   </nav>
 </div>
 
 <main>
-  <section id="training">
-    <h2>Training</h2>
-    <div class="card"><h3>Schedule</h3>
-      <ul class="sched">
-        <li><span>Monday</span><span>7:30pm</span></li>
-        <li><span>Thursday</span><span>6:45pm</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="fixtures" hidden>
+  <section id="fixtures">
     <h2>Fixtures</h2>
     <div class="pills" id="pills" role="group" aria-label="Filter by grade (select one or more)"></div>
     <table>
@@ -172,16 +155,6 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
     <p class="msg" id="resMsg">Loading results…</p>
   </section>
 
-  <section id="squad" hidden>
-    <h2>Squad</h2>
-    <div class="card"><h3>Squad list</h3><p>Add players and positions here.</p></div>
-  </section>
-
-  <section id="info" hidden>
-    <h2>Info</h2>
-    <div class="card"><h3>Home ground</h3><p>Woodleigh Park</p></div>
-    <div class="card"><h3>Parking and dress code</h3><p>Add parking, dress code and contact details here.</p></div>
-  </section>
 </main>
 
 <script>
@@ -210,7 +183,7 @@ function show(id){
 }
 tabs.forEach(b => b.addEventListener("click", () => show(b.dataset.tab)));
 const start = location.hash.slice(1) || store.get("tab");
-if (start && document.querySelector(`nav [data-tab="${start}"]`)) show(start);
+if (start && document.querySelector(`nav [data-tab="${start}"]`)) show(start);   // otherwise Fixtures is already showing
 
 let fixtures = [], selected = new Set();  // empty set = show all grades
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
