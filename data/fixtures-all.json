@@ -10,46 +10,10 @@
   },
   {
     "Date": "24/10/2026",
-    "Opposition": "Instonians RFC",
-    "Referee": "Kevin Beakey",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Shaws Bridge",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "24/10/2026",
-    "Opposition": "Blackrock College RFC",
-    "Referee": "Andrew Fogarty",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Stradbrook",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "24/10/2026",
-    "Opposition": "Dublin University FC",
-    "Referee": "Ross Whitfield",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "College Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "24/10/2026",
     "Opposition": "MU Barnhall RFC",
     "Referee": "Stuart Douglas",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "24/10/2026",
-    "Opposition": "University College Cork Rugby",
-    "Referee": "Tomas OSullivan",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "The Mardyke",
     "Loc": "Away",
     "Grade": "Senior"
   },
@@ -108,42 +72,6 @@
     "Grade": "U14"
   },
   {
-    "Date": "31/10/2026",
-    "Opposition": "Instonians RFC",
-    "Referee": "Rob McGreer",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Shaws Bridge",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "31/10/2026",
-    "Opposition": "Garryowen FC",
-    "Referee": "Sam Holt",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Dooradoyle",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "31/10/2026",
-    "Opposition": "Naas RFC",
-    "Referee": "George Clancy",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Forenaughts",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "31/10/2026",
-    "Opposition": "Nenagh Ormond RFC",
-    "Referee": "Tomas OSullivan",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "New Ormond Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
     "Date": "01/11/2026",
     "Opposition": "Nenagh Ormond RFC 2nd XV",
     "Referee": "TBC (Pending)",
@@ -185,42 +113,6 @@
     "Referee": "Shane Gaughan",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Stradbrook",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "07/11/2026",
-    "Opposition": "City of Armagh RFC",
-    "Referee": "Stuart Douglas",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Palace Grounds",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "07/11/2026",
-    "Opposition": "Dublin University FC",
-    "Referee": "Daniel Carson",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "College Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "07/11/2026",
-    "Opposition": "MU Barnhall RFC",
-    "Referee": "Jack MacNeice",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "07/11/2026",
-    "Opposition": "Nenagh Ormond RFC",
-    "Referee": "Padraic Reidy",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "New Ormond Park",
     "Loc": "Away",
     "Grade": "Senior"
   },
@@ -307,47 +199,11 @@
   },
   {
     "Date": "28/11/2026",
-    "Opposition": "Dublin University FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "College Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "28/11/2026",
     "Opposition": "City of Armagh RFC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "28/11/2026",
-    "Opposition": "Instonians RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Shaws Bridge",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "28/11/2026",
-    "Opposition": "Naas RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Forenaughts",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "28/11/2026",
-    "Opposition": "Nenagh Ormond RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "New Ormond Park",
-    "Loc": "Away",
     "Grade": "Senior"
   },
   {
@@ -379,46 +235,10 @@
   },
   {
     "Date": "05/12/2026",
-    "Opposition": "Blackrock College RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Stradbrook",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "05/12/2026",
-    "Opposition": "City of Armagh RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Palace Grounds",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "05/12/2026",
     "Opposition": "Garryowen FC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Dooradoyle",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "05/12/2026",
-    "Opposition": "Naas RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Forenaughts",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "05/12/2026",
-    "Opposition": "University College Cork Rugby",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "The Mardyke",
     "Loc": "Away",
     "Grade": "Senior"
   },
@@ -442,47 +262,11 @@
   },
   {
     "Date": "12/12/2026",
-    "Opposition": "Dublin University FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "College Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "12/12/2026",
     "Opposition": "Naas RFC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "12/12/2026",
-    "Opposition": "Instonians RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Shaws Bridge",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "12/12/2026",
-    "Opposition": "MU Barnhall RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "12/12/2026",
-    "Opposition": "Nenagh Ormond RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "New Ormond Park",
-    "Loc": "Away",
     "Grade": "Senior"
   },
   {
@@ -514,46 +298,10 @@
   },
   {
     "Date": "09/01/2027",
-    "Opposition": "Blackrock College RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Stradbrook",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "09/01/2027",
-    "Opposition": "City of Armagh RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Palace Grounds",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "09/01/2027",
-    "Opposition": "Garryowen FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Dooradoyle",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "09/01/2027",
     "Opposition": "Naas RFC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Forenaughts",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "09/01/2027",
-    "Opposition": "University College Cork Rugby",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "The Mardyke",
     "Loc": "Away",
     "Grade": "Senior"
   },
@@ -577,47 +325,11 @@
   },
   {
     "Date": "16/01/2027",
-    "Opposition": "Dublin University FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "College Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "16/01/2027",
     "Opposition": "Garryowen FC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "16/01/2027",
-    "Opposition": "Instonians RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Shaws Bridge",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "16/01/2027",
-    "Opposition": "MU Barnhall RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "16/01/2027",
-    "Opposition": "Nenagh Ormond RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "New Ormond Park",
-    "Loc": "Away",
     "Grade": "Senior"
   },
   {
@@ -658,46 +370,10 @@
   },
   {
     "Date": "30/01/2027",
-    "Opposition": "Blackrock College RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Stradbrook",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "30/01/2027",
     "Opposition": "City of Armagh RFC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Palace Grounds",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "30/01/2027",
-    "Opposition": "Garryowen FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Dooradoyle",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "30/01/2027",
-    "Opposition": "MU Barnhall RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "30/01/2027",
-    "Opposition": "University College Cork Rugby",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "The Mardyke",
     "Loc": "Away",
     "Grade": "Senior"
   },
@@ -721,47 +397,11 @@
   },
   {
     "Date": "06/02/2027",
-    "Opposition": "Instonians RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Shaws Bridge",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "06/02/2027",
-    "Opposition": "Garryowen FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Dooradoyle",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "06/02/2027",
     "Opposition": "Blackrock College RFC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "06/02/2027",
-    "Opposition": "Naas RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Forenaughts",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "06/02/2027",
-    "Opposition": "University College Cork Rugby",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "The Mardyke",
-    "Loc": "Away",
     "Grade": "Senior"
   },
   {
@@ -792,60 +432,6 @@
     "Grade": "Senior"
   },
   {
-    "Date": "27/02/2027",
-    "Opposition": "Blackrock College RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Stradbrook",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "27/02/2027",
-    "Opposition": "City of Armagh RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Palace Grounds",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "27/02/2027",
-    "Opposition": "Dublin University FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "College Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "27/02/2027",
-    "Opposition": "MU Barnhall RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "06/03/2027",
-    "Opposition": "City of Armagh RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Palace Grounds",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "06/03/2027",
-    "Opposition": "Garryowen FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Dooradoyle",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
     "Date": "06/03/2027",
     "Opposition": "MU Barnhall RFC",
     "Referee": "",
@@ -855,92 +441,11 @@
     "Grade": "Senior"
   },
   {
-    "Date": "06/03/2027",
-    "Opposition": "Naas RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Forenaughts",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "06/03/2027",
-    "Opposition": "Nenagh Ormond RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "New Ormond Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "20/03/2027",
-    "Opposition": "Blackrock College RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Stradbrook",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
     "Date": "20/03/2027",
     "Opposition": "Dublin University FC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "College Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "20/03/2027",
-    "Opposition": "Instonians RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Shaws Bridge",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "20/03/2027",
-    "Opposition": "MU Barnhall RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "20/03/2027",
-    "Opposition": "University College Cork Rugby",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "The Mardyke",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "27/03/2027",
-    "Opposition": "Blackrock College RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Stradbrook",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "27/03/2027",
-    "Opposition": "City of Armagh RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Palace Grounds",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "27/03/2027",
-    "Opposition": "Garryowen FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Dooradoyle",
     "Loc": "Away",
     "Grade": "Senior"
   },
@@ -954,56 +459,11 @@
     "Grade": "Senior"
   },
   {
-    "Date": "27/03/2027",
-    "Opposition": "Naas RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Forenaughts",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "03/04/2027",
-    "Opposition": "Dublin University FC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "College Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "03/04/2027",
-    "Opposition": "Instonians RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Shaws Bridge",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "03/04/2027",
-    "Opposition": "MU Barnhall RFC",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
     "Date": "03/04/2027",
     "Opposition": "Nenagh Ormond RFC",
     "Referee": "",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "New Ormond Park",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
-    "Date": "03/04/2027",
-    "Opposition": "University College Cork Rugby",
-    "Referee": "",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "The Mardyke",
     "Loc": "Away",
     "Grade": "Senior"
   }
