@@ -7,10 +7,10 @@ pretty-printed so changes show up cleanly in git) to data/fixtures_sm.json,
 so you can look at it before deciding what to do with it.
 
 Usage:
-    python script/get-sm-fix.py
-    python script/get-sm-fix.py --from 2026-09-01 --to 2027-04-30
-    python script/get-sm-fix.py --url "https://sportsmanager.ie/dataFeed/index.php?..."   # exact URL
-    python script/get-sm-fix.py --dry-run          # show what came back, write nothing
+    python script/get-ail-fix.py
+    python script/get-ail-fix.py --from 2026-09-01 --to 2027-04-30
+    python script/get-ail-fix.py --url "https://sportsmanager.ie/dataFeed/index.php?..."   # exact URL
+    python script/get-ail-fix.py --dry-run          # show what came back, write nothing
 
 Dates are YYYY-MM-DD (the feed's format, unlike the DD-MM-YYYY the other scripts use).
 """
@@ -26,7 +26,7 @@ DEFAULT_FROM = "2026-09-01"
 DEFAULT_TO = "2027-04-30"
 USER_ID = "7533"
 COMPETITION_ID = "215685"
-OUTPUT = "data/fixtures_sm.json"
+OUTPUT = "data/fixtures_ail.json"
 
 # Say honestly who is asking, so the feed's owner can see what is calling it.
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:153.0) Gecko/20100101 Firefox/153.0"
