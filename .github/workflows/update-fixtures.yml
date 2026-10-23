@@ -6,7 +6,8 @@ on:
   push:
     branches: [main]          # change to master if that is your default branch
   schedule:
-    - cron: "0 9-23 * * *"    # on the hour, every hour from 09:00 to 23:00 UTC
+    - cron: "0 9-23 * * 0,3-6"
+    # on the hour, 09:00-23:00 UTC, Wednesday to Sunday
   workflow_dispatch:           # adds a "Run workflow" button
 
 permissions:
