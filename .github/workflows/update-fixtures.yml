@@ -1,64 +1,80 @@
-name: Update Munster Fixtures
+# Save as .github/workflows/update-data.yml (delete the older workflow file).
+# One-time setup: repo Settings > Pages > Build and deployment > Source = "GitHub Actions".
+name: Update Fixtures and Results
 
 on:
+  push:
+    branches: [main]          # change to master if that is your default branch
   schedule:
-    - cron: '0 9-23 * * *'      # hourly at 09:00 UTC
-  workflow_dispatch:         # manual "Run workflow" button
-    inputs:
-      from_date:
-        description: 'From date (DD-MM-YYYY), optional'
-        required: false
-      to_date:
-        description: 'To date (DD-MM-YYYY), optional'
-        required: false
+    - cron: "0 9-23 * * *"    # on the hour, every hour from 09:00 to 23:00 UTC
+  workflow_dispatch:           # adds a "Run workflow" button
 
 permissions:
-  contents: write
+  contents: write              # commit the data files
+  pages: write                 # publish the site
+  id-token: write              # needed by the Pages deploy action
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  update:
+  update-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v6
+      # The data refresh runs on the daily schedule and manual runs, not on ordinary pushes.
+      - uses: actions/setup-python@v5
+        if: github.event_name != 'push'
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Install dependencies
+        if: github.event_name != 'push'
         run: pip install requests
 
+      - name: Fetch fixtures
+        if: github.event_name != 'push'
+        run: python script/get-mr-fix.py
+
+      # Still runs if the fixtures step failed, so one problem doesn't block the other.
       - name: Fetch results
-        env:
-          FROM_DATE: ${{ inputs.from_date }}
-          TO_DATE: ${{ inputs.to_date }}
-        run: |
-          # Empty env vars would override the script defaults, so only pass them if set
-          ARGS=""
-          [ -n "$FROM_DATE" ] && ARGS="$ARGS --from $FROM_DATE"
-          [ -n "$TO_DATE" ] && ARGS="$ARGS --to $TO_DATE"
-          python script/get-mr-fix.py
+        if: ${{ !cancelled() && github.event_name != 'push' }}
+        run: python script/get-mr-res.py
 
-      - name: Upload raw response (for debugging)
-        if: always()
-        uses: actions/upload-artifact@v6
-        with:
-          name: raw-response
-          path: debug/raw.html
-          if-no-files-found: ignore
-
-      - name: Validate JSON
-        run: python -m json.tool data/fixtures.json > /dev/null
-
-      - name: Commit if changed
+      # The scripts only write their file on success, so committing here is safe.
+      # A commit made with the built-in token doesn't start another run, so no loop.
+      - name: Commit changes
+        id: commit
+        if: ${{ !cancelled() && github.event_name != 'push' }}
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/
-          if ! git diff --staged --quiet; then
-            git commit -m "Update results"
-            git pull --rebase
-            git push
-          else
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/fixtures.json data/results.json
+          if git diff --cached --quiet; then
             echo "No changes to commit"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Update fixtures and results"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+
+      # Publish the site from this run, so the new data goes live without a personal token.
+      # Scheduled runs publish only when the data changed. Pushes and manual runs always publish.
+      - uses: actions/configure-pages@v5
+        if: ${{ !cancelled() && (github.event_name != 'schedule' || steps.commit.outputs.changed == 'true') }}
+
+      - uses: actions/upload-pages-artifact@v3
+        if: ${{ !cancelled() && (github.event_name != 'schedule' || steps.commit.outputs.changed == 'true') }}
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: ${{ !cancelled() && (github.event_name != 'schedule' || steps.commit.outputs.changed == 'true') }}
+        uses: actions/deploy-pages@v4
