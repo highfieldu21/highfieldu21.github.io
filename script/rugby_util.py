@@ -17,8 +17,30 @@ DEFAULT_TO = "31-05-2027"
 # Some sites reject the default python-requests User-Agent
 USER_AGENT = "Mozilla/5.0 (compatible;  Google-Apps-Script)"
 
+IRISH_TZ = ZoneInfo("Europe/Dublin")
 
 # ---------------------------------------------------------------- fetching ---
+
+
+def timestamp_to_date(value, fmt="%d/%m/%Y") -> str:
+    """Unix timestamp -> date text in Irish time (the format_date style: dd/mm/yyyy).
+
+    1792848600     -> '24/10/2026'
+    '1792848600'   -> '24/10/2026'
+    1792848600000  -> '24/10/2026'   (milliseconds are detected too)
+    None / ''      -> ''
+    Anything unreadable is returned as the original text, like format_date().
+    """
+    if value is None or str(value).strip() == "":
+        return ""
+    try:
+        ts = float(value)
+        if ts > 1e11:                 # 13-digit values are milliseconds
+            ts /= 1000
+        return datetime.fromtimestamp(ts, IRISH_TZ).strftime(fmt)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return str(value).strip()
+
 
 def fetch_html(url: str, from_date: str, to_date: str) -> str:
     """POST the date-range form the Apps Script posted and return the page HTML."""
