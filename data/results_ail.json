@@ -1,0 +1,32 @@
+[
+  {
+    "Date": "10/10/2026",
+    "Competition": "Energia All-Ireland League 1B 26/27",
+    "Grade": "Senior",
+    "Referee": "Tomas OSullivan",
+    "Opposition": "Dublin University FC",
+    "Loc": "Home",
+    "Result": "Win",
+    "Score": "57:29"
+  },
+  {
+    "Date": "03/10/2026",
+    "Competition": "Energia All-Ireland League 1B 26/27",
+    "Grade": "Senior",
+    "Referee": "Sam Holt",
+    "Opposition": "Instonians RFC",
+    "Loc": "Away",
+    "Result": "Win",
+    "Score": "7:24"
+  },
+  {
+    "Date": "26/09/2026",
+    "Competition": "Energia All-Ireland League 1B 26/27",
+    "Grade": "Senior",
+    "Referee": "George Clancy",
+    "Opposition": "Nenagh Ormond RFC",
+    "Loc": "Home",
+    "Result": "Loss",
+    "Score": "12:22"
+  }
+]
