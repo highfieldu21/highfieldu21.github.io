@@ -1,65 +1,89 @@
 # Save as .github/workflows/update-ail.yml
-# Manual only: it runs when you press "Run workflow", never on a timer.
+# Runs every 30 minutes on Fridays 21:00-23:00 and Saturdays 16:00-19:00 (Irish time),
+# and whenever you press "Run workflow". No parameters: the dates are fixed below.
 name: Get AIL fixtures
 
 on:
-  workflow_dispatch:
-    inputs:
-      from_date:
-        description: "Start date (YYYY-MM-DD)"
-        default: "2026-09-01"
-      to_date:
-        description: "End date (YYYY-MM-DD)"
-        default: "2027-04-30"
-      save_to_repo:
-        description: "Also save data/fixtures_ail.json into the repo"
-        type: boolean
-        default: false
+  schedule:
+    # GitHub cron is always UTC. These cover the Irish windows in both summer (UTC+1) and
+    # winter (UTC+0) time; the "Check Irish time" step skips anything outside the windows.
+    - cron: "0,30 20-23 * * 5"    # Friday
+    - cron: "0,30 15-19 * * 6"    # Saturday
+  workflow_dispatch:               # "Run workflow" button, runs straight away
 
 permissions:
-  contents: write            # only used when "save_to_repo" is ticked
+  contents: write                  # commit the data files
+
+concurrency:
+  group: update-ail
+  cancel-in-progress: false
+
+env:
+  FROM_DATE: "2026-09-01"
+  TO_DATE: "2027-04-30"
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
+      # Scheduled runs only continue inside the windows, measured in Irish time (DST-safe).
+      # Friday 21:00-23:00 and Saturday 16:00-19:00, both ends included. Manual runs always continue.
+      - name: Check Irish time
+        id: gate
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          day=$(TZ=Europe/Dublin date +%u)
+          mins=$((10#$(TZ=Europe/Dublin date +%H) * 60 + 10#$(TZ=Europe/Dublin date +%M)))
+          echo "Irish day=$day minutes-since-midnight=$mins"
+          run=false
+          if [ "$day" = "5" ] && [ "$mins" -ge 1260 ] && [ "$mins" -le 1380 ]; then run=true; fi
+          if [ "$day" = "6" ] && [ "$mins" -ge 960 ]  && [ "$mins" -le 1140 ]; then run=true; fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v6
+        if: steps.gate.outputs.run == 'true'
 
       - uses: actions/setup-python@v6
+        if: steps.gate.outputs.run == 'true'
         with:
           python-version: "3.12"
 
       - name: Install dependencies
+        if: steps.gate.outputs.run == 'true'
         run: pip install requests
 
       - name: Download the feed
-        env:
-          FROM: ${{ inputs.from_date }}
-          TO: ${{ inputs.to_date }}
-        run: python script/get-ail-fix.py --from "$FROM" --to "$TO"
+        if: steps.gate.outputs.run == 'true'
+        run: python script/get-ail-fix.py --from "$FROM_DATE" --to "$TO_DATE"
 
-      - name: Merge Fixture Files        
+      - name: Merge Fixture Files
+        if: steps.gate.outputs.run == 'true'
         run: python script/merge-fixtures.py
 
-      # Always available from the run page, even if you don't save it to the repo.
+      # Also available from the run page for 14 days.
       - name: Keep a downloadable copy
+        if: steps.gate.outputs.run == 'true'
         uses: actions/upload-artifact@v6
         with:
-          name: fixtures_ail
-          path: data/fixtures_ail.json
+          name: fixtures
+          path: |
+            data/fixtures_ail.json
+            data/fixtures-all.json
           if-no-files-found: error
           retention-days: 14
 
       - name: Save to the repo
-        if: ${{ inputs.save_to_repo }}
+        if: steps.gate.outputs.run == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/fixtures_ail.json
+          git add data/fixtures_ail.json data/fixtures-all.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Add sportsmanager fixtures feed"
+            git commit -m "Update AIL and merged fixtures"
             git pull --rebase
             git push
           fi
