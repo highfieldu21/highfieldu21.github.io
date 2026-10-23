@@ -132,14 +132,17 @@ def convert(records):
         home = as_text(r.get("homeTeam"))
         away = as_text(r.get("awayTeam"))
         #loc = "Home" if club in home.lower() else "Away"
-        loc = "Home" if club in home.lower() else "Away" if club in away.lower() else "not-hf"
         
-        if loc == "Away" and club not in away.lower():
-            neither += 1
-
+         if club in home.lower():
+            loc = "Home"
+        elif club in away.lower():
+            loc = "Away"
+        else:
+            continue      
+        
         fixture = {
             "Date": timestamp_to_date(r.get("fixtureDate")),
-            "Opposition": away if loc == "Home" else home if loc == "Away",
+            "Opposition": away if loc == "Home" else home,
             "Referee": get_referee(r),
             "Competition": as_text(r.get("competitionName")),
             "Ground": as_text(r.get("venue")),
