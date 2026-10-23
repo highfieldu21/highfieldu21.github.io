@@ -1,6 +1,6 @@
-# Save as .github/workflows/get-sm-fixtures.yml
+# Save as .github/workflows/update-ail.yml
 # Manual only: it runs when you press "Run workflow", never on a timer.
-name: Get sportsmanager fixtures
+name: Get AIL fixtures
 
 on:
   workflow_dispatch:
