@@ -115,14 +115,9 @@ def find_records(data):
 
 
 def get_referee(record) -> str:
-    """officials.referee (also accepts the spelling 'refereee', and a list of officials)."""
     officials = record.get("officials")
-    for item in (officials if isinstance(officials, list) else [officials]):
-        if isinstance(item, dict):
-            for key in ("Referee"):
-                text = as_text(item.get(key))
-                if text:
-                    return text
+    if isinstance(officials, dict):
+        return as_text(officials.get("Referee"))
     return ""
 
 
