@@ -1,0 +1,292 @@
+[
+  {
+    "Date": "05/09/2026",
+    "Competition": "Bank of Ireland Munster Senior Challenge Cup",
+    "Result": "Loss",
+    "Loc": "Away",
+    "Opposition": "Nenagh Ormond RFC 1st XV",
+    "Grade": "Senior",
+    "Score": "31:26",
+    "Referee": "Michael Reidy"
+  },
+  {
+    "Date": "09/09/2026",
+    "Competition": "U21 Friendly",
+    "Result": "Loss",
+    "Loc": "Home",
+    "Opposition": "Dolphin RFC",
+    "Grade": "U21",
+    "Score": "17:36",
+    "Referee": "John Purcell"
+  },
+  {
+    "Date": "11/09/2026",
+    "Competition": "South - Dennehy Cup",
+    "Result": "",
+    "Loc": "Home",
+    "Opposition": "Sundays Well RFC 2nd XV",
+    "Grade": "J2",
+    "Score": "-:-",
+    "Referee": "Keith Lynch"
+  },
+  {
+    "Date": "18/09/2026",
+    "Competition": "South - Dennehy Cup",
+    "Result": "Win",
+    "Loc": "Home",
+    "Opposition": "Clonakilty RFC 2nd XV",
+    "Grade": "J2",
+    "Score": "23:22",
+    "Referee": "Justin Colgan"
+  },
+  {
+    "Date": "19/09/2026",
+    "Competition": "Boys Clubs U18.5 South Munster League Group 1",
+    "Result": "Loss",
+    "Loc": "Away",
+    "Opposition": "Cobh Pirates RFC",
+    "Grade": "U18.5",
+    "Score": "38:12",
+    "Referee": "Keith Lynch"
+  },
+  {
+    "Date": "19/09/2026",
+    "Competition": "Boys Clubs U16 South Munster League Group 4",
+    "Result": "Win",
+    "Loc": "Home",
+    "Opposition": "Crosshaven/Cork Con",
+    "Grade": "U16",
+    "Score": "17:12",
+    "Referee": "Jerry Lane"
+  },
+  {
+    "Date": "23/09/2026",
+    "Competition": "U21 Donal Walsh Trophy",
+    "Result": "Loss",
+    "Loc": "Away",
+    "Opposition": "University College Cork RFC",
+    "Grade": "U21",
+    "Score": "37:17",
+    "Referee": "Paudie Sheehan"
+  },
+  {
+    "Date": "25/09/2026",
+    "Competition": "South - Dennehy Cup",
+    "Result": "Loss",
+    "Loc": "Away",
+    "Opposition": "Bandon RFC 2nd XV",
+    "Grade": "J2",
+    "Score": "23:14",
+    "Referee": "Damien Power"
+  },
+  {
+    "Date": "25/09/2026",
+    "Competition": "Boys Clubs U16 South Munster League Group 4",
+    "Result": "Win",
+    "Loc": "Away",
+    "Opposition": "Ballincollig RFC White",
+    "Grade": "U16",
+    "Score": "17:20",
+    "Referee": "Jerry Lane"
+  },
+  {
+    "Date": "25/09/2026",
+    "Competition": "Boys Clubs U14 Friendly",
+    "Result": "Win",
+    "Loc": "Away",
+    "Opposition": "Fermoy RFC",
+    "Grade": "U14",
+    "Score": "37:43",
+    "Referee": "TBC (Pending)"
+  },
+  {
+    "Date": "26/09/2026",
+    "Competition": "Boys Clubs U18.5 Munster Conference 6",
+    "Result": "Win",
+    "Loc": "Home",
+    "Opposition": "Mallow RFC",
+    "Grade": "U18.5",
+    "Score": "26:17",
+    "Referee": "Alex Anthony"
+  },
+  {
+    "Date": "26/09/2026",
+    "Competition": "Energia All-Ireland League 1B 26/27",
+    "Grade": "Senior",
+    "Referee": "George Clancy",
+    "Opposition": "Nenagh Ormond RFC",
+    "Loc": "Home",
+    "Result": "Loss",
+    "Score": "12:22"
+  },
+  {
+    "Date": "27/09/2026",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Result": "Win",
+    "Loc": "Home",
+    "Opposition": "Cork Constitution FC",
+    "Grade": "U13",
+    "Score": "46:38",
+    "Referee": "TBC (Pending)"
+  },
+  {
+    "Date": "30/09/2026",
+    "Competition": "Boys Clubs U14 South Munster League Group 2",
+    "Result": "Win",
+    "Loc": "Away",
+    "Opposition": "Cork Constitution FC",
+    "Grade": "U14",
+    "Score": "0:30",
+    "Referee": "TBC (Pending)"
+  },
+  {
+    "Date": "02/10/2026",
+    "Competition": "South - Junior 2 League",
+    "Result": "Win",
+    "Loc": "Away",
+    "Opposition": "Skibbereen RFC 2nd XV",
+    "Grade": "J2",
+    "Score": "25:45",
+    "Referee": "Brian Finbar O Connor"
+  },
+  {
+    "Date": "02/10/2026",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Result": "Loss",
+    "Loc": "Home",
+    "Opposition": "Muskerry RFC",
+    "Grade": "U13",
+    "Score": "12:38",
+    "Referee": "TBC (Pending)"
+  },
+  {
+    "Date": "03/10/2026",
+    "Competition": "Boys Clubs U18.5 Munster Conference 6",
+    "Result": "Loss",
+    "Loc": "Home",
+    "Opposition": "Old Christians RFC",
+    "Grade": "U18.5",
+    "Score": "7:31",
+    "Referee": "Martin Ryan"
+  },
+  {
+    "Date": "03/10/2026",
+    "Competition": "Boys Clubs U16 Munster Conference 7",
+    "Result": "Win",
+    "Loc": "Home",
+    "Opposition": "Kanturk RFC",
+    "Grade": "U16",
+    "Score": "36:5",
+    "Referee": "Niall Higgins"
+  },
+  {
+    "Date": "03/10/2026",
+    "Competition": "Energia All-Ireland League 1B 26/27",
+    "Grade": "Senior",
+    "Referee": "Sam Holt",
+    "Opposition": "Instonians RFC",
+    "Loc": "Away",
+    "Result": "Win",
+    "Score": "7:24"
+  },
+  {
+    "Date": "07/10/2026",
+    "Competition": "U21 Donal Walsh Trophy",
+    "Result": "",
+    "Loc": "Home",
+    "Opposition": "UL Bohemian RFC",
+    "Grade": "U21",
+    "Score": "-:-",
+    "Referee": "Jack Kingston"
+  },
+  {
+    "Date": "10/10/2026",
+    "Competition": "Boys Clubs U18.5 Munster Conference 6",
+    "Result": "Loss",
+    "Loc": "Away",
+    "Opposition": "Cobh Pirates RFC",
+    "Grade": "U18.5",
+    "Score": "24:7",
+    "Referee": "Conor McAlonan"
+  },
+  {
+    "Date": "10/10/2026",
+    "Competition": "Boys Clubs U16 Munster Conference 7",
+    "Result": "Win",
+    "Loc": "Away",
+    "Opposition": "Mallow RFC",
+    "Grade": "U16",
+    "Score": "7:12",
+    "Referee": ""
+  },
+  {
+    "Date": "10/10/2026",
+    "Competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
+    "Result": "Loss",
+    "Loc": "Away",
+    "Opposition": "Crosshaven RFC",
+    "Grade": "U14",
+    "Score": "25:5",
+    "Referee": "TBC (Pending)"
+  },
+  {
+    "Date": "10/10/2026",
+    "Competition": "Energia All-Ireland League 1B 26/27",
+    "Grade": "Senior",
+    "Referee": "Tomas OSullivan",
+    "Opposition": "Dublin University FC",
+    "Loc": "Home",
+    "Result": "Win",
+    "Score": "57:29"
+  },
+  {
+    "Date": "16/10/2026",
+    "Competition": "South - Junior 2 League",
+    "Result": "Win",
+    "Loc": "Home",
+    "Opposition": "Clonakilty RFC 2nd XV",
+    "Grade": "J2",
+    "Score": "42:0",
+    "Referee": "Keith Lynch"
+  },
+  {
+    "Date": "16/10/2026",
+    "Competition": "Boys Clubs U18.5 Munster Conference 6",
+    "Result": "Win",
+    "Loc": "Away",
+    "Opposition": "Muskerry RFC",
+    "Grade": "U18.5",
+    "Score": "7:12",
+    "Referee": "Ben Horgan"
+  },
+  {
+    "Date": "17/10/2026",
+    "Competition": "U21 Donal Walsh Trophy",
+    "Result": "Win",
+    "Loc": "Home",
+    "Opposition": "Young Munster RFC",
+    "Grade": "U21",
+    "Score": "69:12",
+    "Referee": "Brendan O'Connor"
+  },
+  {
+    "Date": "18/10/2026",
+    "Competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
+    "Result": "Loss",
+    "Loc": "Away",
+    "Opposition": "Ballincollig RFC",
+    "Grade": "U14",
+    "Score": "20:7",
+    "Referee": "Charlotte McCabe"
+  },
+  {
+    "Date": "21/10/2026",
+    "Competition": "Boys Clubs U16 Munster Conference 7",
+    "Result": "Loss",
+    "Loc": "Away",
+    "Opposition": "Muskerry RFC",
+    "Grade": "U16",
+    "Score": "31:28",
+    "Referee": "TBC (Pending)"
+  }
+]
