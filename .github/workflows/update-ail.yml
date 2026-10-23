@@ -62,14 +62,6 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         run: python script/get-ail-res.py --from "$FROM_DATE" --to "$TO_DATE"
 
-      - name: Merge Fixture Files
-        if: steps.gate.outputs.run == 'true'
-        run: python script/merge-fixtures.py
-
-      - name: Merge Result Files
-        if: steps.gate.outputs.run == 'true'
-        run: python script/merge-results.py
-        
       # Also available from the run page for 14 days.
       - name: Keep a downloadable copy
         if: steps.gate.outputs.run == 'true'
@@ -79,8 +71,6 @@ jobs:
           path: |
             data/fixtures_ail.json            
             data/results_ail.json
-            data/fixtures-all.json
-            data/results-all.json
           if-no-files-found: error
           retention-days: 14
 
@@ -89,11 +79,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/fixtures_ail.json data/fixtures-all.json data/results_ail.json data/results-all.json
+          git add data/fixtures_ail.json data/results_ail.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Update AIL and merged fixtures"
+            git commit -m "Update AIL results and fixtures"
             git pull --rebase
             git push
           fi
