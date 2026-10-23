@@ -60,7 +60,7 @@ jobs:
 
       - name: Download results
         if: steps.gate.outputs.run == 'true'
-        run: python script/get-ail-res.py 
+        run: python script/get-ail-res.py --from "$FROM_DATE" --to "$TO_DATE"
 
       - name: Merge Fixture Files
         if: steps.gate.outputs.run == 'true'
