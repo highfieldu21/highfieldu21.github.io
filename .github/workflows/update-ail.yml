@@ -75,6 +75,7 @@ jobs:
           path: |
             data/fixtures_ail.json
             data/fixtures-all.json
+            data/results-ail.json
           if-no-files-found: error
           retention-days: 14
 
