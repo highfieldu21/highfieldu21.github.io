@@ -133,7 +133,7 @@ def convert(records):
         away = as_text(r.get("awayTeam"))
         #loc = "Home" if club in home.lower() else "Away"
         
-         if club in home.lower():
+        if club in home.lower():
             loc = "Home"
         elif club in away.lower():
             loc = "Away"
