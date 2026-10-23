@@ -40,6 +40,10 @@ jobs:
       - name: Fetch fixtures
         if: github.event_name != 'push'
         run: python script/get-mr-fix.py
+        
+      - name: Merge Fixture Files       
+        if: github.event_name != 'push'      
+        run: python script/merge-fixtures.py
 
       # Still runs if the fixtures step failed, so one problem doesn't block the other.
       - name: Fetch results
