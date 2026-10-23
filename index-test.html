@@ -318,7 +318,7 @@ function buildResPills(){
   sync();
 }
 
-fresh("data/results.json")
+fresh("data/results-all.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     results = data.map(r => ({...r, date: r.Date ? toDate(r.Date) : null}))
