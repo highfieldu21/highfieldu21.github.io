@@ -38,6 +38,9 @@ jobs:
           TO: ${{ inputs.to_date }}
         run: python script/get-ail-fix.py --from "$FROM" --to "$TO"
 
+      - name: Merge Fixture Files        
+        run: python script/merge-fixtures.py
+
       # Always available from the run page, even if you don't save it to the repo.
       - name: Keep a downloadable copy
         uses: actions/upload-artifact@v6
