@@ -1,14 +1,5 @@
 [
   {
-    "Date": "24/10/2026",
-    "Opposition": "MU Barnhall RFC",
-    "Referee": "Stuart Douglas",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Parsonstown",
-    "Loc": "Away",
-    "Grade": "Senior"
-  },
-  {
     "Date": "25/10/2026",
     "Opposition": "Cork Constitution FC 2nd XV",
     "Referee": "John Moynihan",
@@ -412,6 +403,15 @@
     "Ground": "Cobh",
     "Loc": "Away",
     "Grade": "U16"
+  },
+  {
+    "Date": "19/02/2027",
+    "Opposition": "Kinsale RFC 2nd XV",
+    "Referee": "TBC (Pending)",
+    "Competition": "South - Junior 2 League",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "J2"
   },
   {
     "Date": "26/02/2027",
