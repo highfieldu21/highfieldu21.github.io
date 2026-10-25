@@ -1,0 +1,122 @@
+[
+  {
+    "team": "Highfield RFC",
+    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/11433/highfield.gif",
+    "played": 4,
+    "gameswon": 3,
+    "gamesdraw": 0,
+    "gameslost": 1,
+    "pointsfor": 110,
+    "pointsagainst": 73,
+    "pointsdifference": 37,
+    "points": 14
+  },
+  {
+    "team": "Dublin University FC",
+    "club_logo": "",
+    "played": 4,
+    "gameswon": 2,
+    "gamesdraw": 1,
+    "gameslost": 1,
+    "pointsfor": 125,
+    "pointsagainst": 107,
+    "pointsdifference": 18,
+    "points": 13
+  },
+  {
+    "team": "Blackrock College RFC",
+    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/11401/blackrock-logo.png",
+    "played": 4,
+    "gameswon": 3,
+    "gamesdraw": 0,
+    "gameslost": 1,
+    "pointsfor": 85,
+    "pointsagainst": 107,
+    "pointsdifference": -22,
+    "points": 13
+  },
+  {
+    "team": "Naas RFC",
+    "club_logo": "",
+    "played": 4,
+    "gameswon": 2,
+    "gamesdraw": 0,
+    "gameslost": 2,
+    "pointsfor": 134,
+    "pointsagainst": 89,
+    "pointsdifference": 45,
+    "points": 12
+  },
+  {
+    "team": "City of Armagh RFC",
+    "club_logo": "",
+    "played": 4,
+    "gameswon": 1,
+    "gamesdraw": 1,
+    "gameslost": 2,
+    "pointsfor": 84,
+    "pointsagainst": 75,
+    "pointsdifference": 9,
+    "points": 10
+  },
+  {
+    "team": "Nenagh Ormond RFC",
+    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/11447/nenagh.gif",
+    "played": 4,
+    "gameswon": 2,
+    "gamesdraw": 0,
+    "gameslost": 2,
+    "pointsfor": 81,
+    "pointsagainst": 85,
+    "pointsdifference": -4,
+    "points": 10
+  },
+  {
+    "team": "Instonians RFC",
+    "club_logo": "",
+    "played": 4,
+    "gameswon": 2,
+    "gamesdraw": 0,
+    "gameslost": 2,
+    "pointsfor": 82,
+    "pointsagainst": 97,
+    "pointsdifference": -15,
+    "points": 10
+  },
+  {
+    "team": "MU Barnhall RFC",
+    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/48233/MU Barnhall RFC_women.jpg",
+    "played": 4,
+    "gameswon": 2,
+    "gamesdraw": 0,
+    "gameslost": 2,
+    "pointsfor": 76,
+    "pointsagainst": 84,
+    "pointsdifference": -8,
+    "points": 9
+  },
+  {
+    "team": "Garryowen FC",
+    "club_logo": "",
+    "played": 4,
+    "gameswon": 2,
+    "gamesdraw": 0,
+    "gameslost": 2,
+    "pointsfor": 96,
+    "pointsagainst": 117,
+    "pointsdifference": -21,
+    "points": 9
+  },
+  {
+    "team": "University College Cork Rugby",
+    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/11475/University College Cork.jpg",
+    "played": 4,
+    "gameswon": 0,
+    "gamesdraw": 0,
+    "gameslost": 4,
+    "pointsfor": 73,
+    "pointsagainst": 112,
+    "pointsdifference": -39,
+    "points": 3
+  }
+]
