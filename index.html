@@ -118,6 +118,22 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 /* Results table rows: normal weight, wins shaded light green */
 #results td,#results .loc,#results .gr,#results .rb{font-weight:400}
 #results tr.win{background:#dff3e3}
+
+/* AIL Table: a real table on phones too (the card layout above is for fixtures and results) */
+#ail-table{display:table;width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+#ail-table thead{display:table-header-group}
+#ail-table tbody{display:table-row-group}
+#ail-table tr{display:table-row;border:0;border-radius:0;padding:0;margin:0;background:none}
+#ail-table th,#ail-table td{display:table-cell;padding:10px 6px;text-align:center;border-bottom:1px solid var(--line);vertical-align:middle;font-weight:400}
+#ail-table th{background:var(--green);color:#fff;font-size:13px;font-weight:600}
+#ail-table th.team,#ail-table td.team{text-align:left;padding-left:10px}
+#ail-table td.pos{color:var(--muted)}
+#ail-table td.pts{font-weight:700;color:var(--green)}
+#ail-table tbody tr:last-child td{border-bottom:0}
+@media (min-width:720px){
+  #ail-table{font-size:15px}
+  #ail-table th,#ail-table td{padding:11px 14px}
+}
 </style>
 </head>
 <body>
@@ -134,6 +150,7 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
   <nav role="tablist" aria-label="Sections">
     <button role="tab" aria-selected="true" data-tab="fixtures">Fixtures</button>
     <button role="tab" aria-selected="false" data-tab="results">Results</button>
+    <button role="tab" aria-selected="false" data-tab="ailtable">AIL Table</button>
   </nav>
 </div>
 
@@ -156,6 +173,15 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
       <tbody id="resRows"></tbody>
     </table>
     <p class="msg" id="resMsg">Loading results…</p>
+  </section>
+
+  <section id="ailtable" hidden>
+    <h2>AIL Table</h2>
+    <table id="ail-table">
+      <thead><tr><th>Pos</th><th class="team">Team</th><th>Won</th><th>Lost</th><th>Draw</th><th>PD</th><th>Points</th></tr></thead>
+      <tbody id="ailRows"></tbody>
+    </table>
+    <p class="msg" id="ailMsg">Loading table…</p>
   </section>
 
 </main>
@@ -302,6 +328,23 @@ fresh("data/results-all.json")
     const m = document.getElementById("resMsg");
     m.className = "msg err";
     m.textContent = "Couldn't load data/results.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
+  });
+
+// AIL Table: rows in the same order as data/table_ail.json; Pos is the row's place in the file
+const pd = v => { const n = Number(v); return v === "" || v == null || isNaN(n) ? esc(v) : (n > 0 ? "+" : "") + n; };
+fresh("data/table_ail.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(data => {
+    document.getElementById("ailRows").innerHTML = data.map((t, i) =>
+      `<tr><td class="pos">${i + 1}</td><td class="team">${esc(t.team)}</td><td>${esc(t.gameswon)}</td>` +
+      `<td>${esc(t.gameslost)}</td><td>${esc(t.gamesdraw)}</td><td>${pd(t.pointsdifference)}</td>` +
+      `<td class="pts">${esc(t.points)}</td></tr>`).join("");
+    document.getElementById("ailMsg").textContent = `${data.length} team${data.length === 1 ? "" : "s"}`;
+  })
+  .catch(() => {
+    const m = document.getElementById("ailMsg");
+    m.className = "msg err";
+    m.textContent = "Couldn't load data/table_ail.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
   });
 </script>
 </body>
