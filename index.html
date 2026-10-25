@@ -178,7 +178,7 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
   <section id="ailtable" hidden>
     <h2>AIL Table</h2>
     <table id="ail-table">
-      <thead><tr><th>Pos</th><th class="team">Team</th><th>Won</th><th>Lost</th><th>Draw</th><th>PD</th><th>Points</th></tr></thead>
+      <thead><tr><th>Pos</th><th class="team">Team</th><th>P</th><th>W</th><th>L</th><th>D</th><th>PD</th><th>Points</th></tr></thead>
       <tbody id="ailRows"></tbody>
     </table>
     <p class="msg" id="ailMsg">Loading table…</p>
@@ -336,7 +336,7 @@ fresh("data/table_ail.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     document.getElementById("ailRows").innerHTML = data.map((t, i) =>
-      `<tr><td class="pos">${i + 1}</td><td class="team">${esc(t.team)}</td><td>${esc(t.gameswon)}</td>` +
+      `<tr><td class="pos">${i + 1}</td><td class="team">${esc(t.team)}</td><td>${esc(t.played)}</td><td>${esc(t.gameswon)}</td>` +
       `<td>${esc(t.gameslost)}</td><td>${esc(t.gamesdraw)}</td><td>${pd(t.pointsdifference)}</td>` +
       `<td class="pts">${esc(t.points)}</td></tr>`).join("");
     document.getElementById("ailMsg").textContent = `${data.length} team${data.length === 1 ? "" : "s"}`;
