@@ -15,6 +15,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system
 .crest{width:68px;height:68px;border-radius:50%;object-fit:contain;background:#fff;padding:3px;border:2px solid rgba(201,162,39,.8);margin:0 auto 10px;display:block}
 .eyebrow{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
 .hero h1{margin:4px 0 4px;font-size:28px;line-height:1.15}
+.hero h2a{margin:4px 0 4px;font-size:24px;line-height:1.15}
 .herosub{margin:0;font-size:14px;opacity:.85}
 .wrap{max-width:960px;margin:0 auto}
 
@@ -38,8 +39,6 @@ h2{font-size:20px;margin:0 0 12px;color:var(--green)}
 .pill{flex:0 0 auto;min-height:44px;border:1.5px solid var(--green);background:#fff;color:var(--green);
   border-radius:999px;padding:0 20px;font:inherit;font-weight:600;cursor:pointer}
 .pill[aria-pressed=true]{background:var(--green);color:#fff}
-.pills[hidden]{display:none}
-.pills.sub .pill{min-height:38px;font-size:14px;padding:0 16px;border-width:1px}
 
 /* Fixtures: each table row is a card on phones */
 table,tbody{display:block}
@@ -119,6 +118,24 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
 /* Results table rows: normal weight, wins shaded light green */
 #results td,#results .loc,#results .gr,#results .rb{font-weight:400}
 #results tr.win{background:#dff3e3}
+
+/* AIL Table: a real table on phones too (the card layout above is for fixtures and results) */
+#ail-table{display:table;width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+#ail-table thead{display:table-header-group}
+#ail-table tbody{display:table-row-group}
+#ail-table tr{display:table-row;border:0;border-radius:0;padding:0;margin:0;background:none}
+#ail-table th,#ail-table td{display:table-cell;padding:10px 6px;text-align:center;border-bottom:1px solid var(--line);vertical-align:middle;font-weight:400}
+#ail-table th{background:var(--green);color:#fff;font-size:13px;font-weight:600}
+#ail-table th.team,#ail-table td.team{text-align:left;padding-left:4px}
+#ail-table th.logo,#ail-table td.logo{width:34px;padding:0 2px}
+#ail-table td.logo img{display:block;margin:0 auto;width:26px;height:26px;object-fit:contain}
+#ail-table td.pos{color:var(--muted)}
+#ail-table td.pts{font-weight:700;color:var(--green)}
+#ail-table tbody tr:last-child td{border-bottom:0}
+@media (min-width:720px){
+  #ail-table{font-size:15px}
+  #ail-table th,#ail-table td{padding:11px 14px}
+}
 </style>
 </head>
 <body>
@@ -128,13 +145,14 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
     <p class="eyebrow"></p>
     <h1>Highfield RFC</h1>
     <p class="herosub">Woodleigh Park</p>    
-    <p class="hero">Fixtures & Results</p>
+    <h2a>Fixtures & Results</h2a>
   </div>
 </header>
 <div class="navbg">
   <nav role="tablist" aria-label="Sections">
     <button role="tab" aria-selected="true" data-tab="fixtures">Fixtures</button>
     <button role="tab" aria-selected="false" data-tab="results">Results</button>
+    <button role="tab" aria-selected="false" data-tab="ailtable">AIL Table</button>
   </nav>
 </div>
 
@@ -142,7 +160,6 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
   <section id="fixtures">
     <h2>Fixtures</h2>
     <div class="pills" id="pills" role="group" aria-label="Filter by grade (select one or more)"></div>
-    <div class="pills sub" id="compPills" role="group" aria-label="Filter fixtures by competition (select one or more)" hidden></div>
     <table>
       <thead><tr><th>Date</th><th>Opposition</th><th>Grade</th><th>H/A</th><th>Ground</th><th>Competition</th><th>Referee</th></tr></thead>
       <tbody id="rows"></tbody>
@@ -153,12 +170,20 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
   <section id="results" hidden>
     <h2>Results</h2>
     <div class="pills" id="resPills" role="group" aria-label="Filter results by grade (select one or more)"></div>
-    <div class="pills sub" id="resCompPills" role="group" aria-label="Filter results by competition (select one or more)" hidden></div>
     <table>
       <thead><tr><th>Date</th><th>Opposition</th><th>Score</th><th>Result</th><th>H/A</th><th>Competition</th><th>Grade</th></tr></thead>
       <tbody id="resRows"></tbody>
     </table>
     <p class="msg" id="resMsg">Loading results…</p>
+  </section>
+
+  <section id="ailtable" hidden>
+    <h2>AIL Table</h2>
+    <table id="ail-table">
+      <thead><tr><th>Pos</th><th class="logo"></th><th class="team">Team</th><th>P</th><th>W</th><th>L</th><th>D</th><th>PD</th><th>Points</th></tr></thead>
+      <tbody id="ailRows"></tbody>
+    </table>
+    <p class="msg" id="ailMsg">Loading table…</p>
   </section>
 
 </main>
@@ -191,7 +216,7 @@ tabs.forEach(b => b.addEventListener("click", () => show(b.dataset.tab)));
 const start = location.hash.slice(1) || store.get("tab");
 if (start && document.querySelector(`nav [data-tab="${start}"]`)) show(start);   // otherwise Fixtures is already showing
 
-let fixtures = [], selected = new Set(), selComp = new Set();  // empty set = show all
+let fixtures = [], selected = new Set();  // empty set = show all grades
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const toDate = s => { const [d,m,y] = s.split("/").map(Number); return new Date(y, m-1, d); };
 const locKey = v => String(v ?? "").trim().charAt(0).toUpperCase();   // "Home"/"H" -> H, "Away"/"A" -> A
@@ -199,7 +224,7 @@ const fmt = d => d.toLocaleDateString("en-IE", {weekday:"short", day:"numeric", 
 
 function renderList(){
   const today = new Date(); today.setHours(0,0,0,0);
-  const list = fixtures.filter(f => (selected.size === 0 || selected.has(f.Grade)) && (selComp.size === 0 || selComp.has(f.Competition)));
+  const list = fixtures.filter(f => selected.size === 0 || selected.has(f.Grade));
   const nextIdx = list.findIndex(f => f.date >= today);
   document.getElementById("rows").innerHTML = list.map((f,i) => {
     const cls = [locKey(f.Loc) === "A" ? "away" : "", f.date < today ? "past" : (i === nextIdx ? "next" : "")].join(" ");
@@ -216,31 +241,6 @@ function renderList(){
 
 function render(){ renderList(); }
 
-// Second filter: only shown once a grade is selected, and lists just the competitions in those grades.
-function buildFxCompPills(){
-  const box = document.getElementById("compPills");
-  const comps = selected.size === 0 ? [] :
-    [...new Set(fixtures.filter(f => selected.has(f.Grade)).map(f => f.Competition).filter(Boolean))]
-      .sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" }));
-  selComp = new Set([...selComp].filter(c => comps.includes(c)));   // drop picks that no longer apply
-  store.set("fxComps", [...selComp]);
-  box.hidden = comps.length < 1;
-  if (box.hidden) { selComp.clear(); box.innerHTML = ""; return; }
-  box.innerHTML = `<button class="pill" data-c="">All competitions</button>` +
-    comps.map(c => `<button class="pill" data-c="${esc(c)}">${esc(c)}</button>`).join("");
-  const sync = () => box.querySelectorAll(".pill").forEach(p =>
-    p.setAttribute("aria-pressed", p.dataset.c === "" ? selComp.size === 0 : selComp.has(p.dataset.c)));
-  box.querySelectorAll(".pill").forEach(p => p.addEventListener("click", () => {
-    const c = p.dataset.c;
-    if (c === "") selComp.clear();
-    else if (selComp.has(c)) selComp.delete(c);
-    else selComp.add(c);
-    store.set("fxComps", [...selComp]);
-    sync(); render();
-  }));
-  sync();
-}
-
 function buildPills(){
   const grades = sortGrades(new Set(fixtures.map(f => f.Grade)));
   selected = new Set((store.get("fxGrades") || []).filter(g => grades.includes(g)));
@@ -255,7 +255,7 @@ function buildPills(){
     else if (selected.has(g)) selected.delete(g);         // tap again to remove
     else selected.add(g);
     store.set("fxGrades", [...selected]);
-    sync(); buildFxCompPills(); render();
+    sync(); render();
   }));
   sync();
 }
@@ -264,8 +264,7 @@ fresh("data/fixtures-all.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort((a,b) => a.date - b.date);
-    selComp = new Set(store.get("fxComps") || []);
-    buildPills(); buildFxCompPills(); render();
+    buildPills(); render();
   })
   .catch(() => {
     const m = document.getElementById("msg");
@@ -274,7 +273,7 @@ fresh("data/fixtures-all.json")
   });
 
 // Results
-let results = [], resSel = new Set(), resComp = new Set();
+let results = [], resSel = new Set();
 const resultOf = r => {
   if (r.Result) return String(r.Result).trim().charAt(0).toUpperCase();
   if (r.For != null && r.Against != null && r.For !== "" && r.Against !== "") {
@@ -286,7 +285,7 @@ const resultOf = r => {
 const scoreOf = r => r.Score ?? (r.For != null && r.Against != null ? `${r.For}-${r.Against}` : "");
 
 function renderResults(){
-  const list = results.filter(r => (resSel.size === 0 || resSel.has(r.Grade)) && (resComp.size === 0 || resComp.has(r.Competition)));
+  const list = results.filter(r => resSel.size === 0 || resSel.has(r.Grade));
   document.getElementById("resRows").innerHTML = list.map(r => {
     const res = resultOf(r), sc = scoreOf(r);
     const win = String(r.Result ?? "").trim().toLowerCase() === "win";
@@ -299,31 +298,6 @@ function renderResults(){
   const m = document.getElementById("resMsg");
   m.className = "msg";
   m.textContent = `${list.length} result${list.length === 1 ? "" : "s"}`;
-}
-
-// Second filter: only shown once a grade is selected, and lists just the competitions in those grades.
-function buildCompPills(){
-  const box = document.getElementById("resCompPills");
-  const comps = resSel.size === 0 ? [] :
-    [...new Set(results.filter(r => resSel.has(r.Grade)).map(r => r.Competition).filter(Boolean))]
-      .sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" }));
-  resComp = new Set([...resComp].filter(c => comps.includes(c)));   // drop picks that no longer apply
-  store.set("resComps", [...resComp]);
-  box.hidden = comps.length < 1;                                    // no competition names in these grades
-  if (box.hidden) { resComp.clear(); box.innerHTML = ""; return; }
-  box.innerHTML = `<button class="pill" data-c="">All competitions</button>` +
-    comps.map(c => `<button class="pill" data-c="${esc(c)}">${esc(c)}</button>`).join("");
-  const sync = () => box.querySelectorAll(".pill").forEach(p =>
-    p.setAttribute("aria-pressed", p.dataset.c === "" ? resComp.size === 0 : resComp.has(p.dataset.c)));
-  box.querySelectorAll(".pill").forEach(p => p.addEventListener("click", () => {
-    const c = p.dataset.c;
-    if (c === "") resComp.clear();
-    else if (resComp.has(c)) resComp.delete(c);
-    else resComp.add(c);
-    store.set("resComps", [...resComp]);
-    sync(); renderResults();
-  }));
-  sync();
 }
 
 function buildResPills(){
@@ -340,23 +314,39 @@ function buildResPills(){
     else if (resSel.has(g)) resSel.delete(g);
     else resSel.add(g);
     store.set("resGrades", [...resSel]);
-    sync(); buildCompPills(); renderResults();
+    sync(); renderResults();
   }));
   sync();
 }
 
-fresh("data/results.json")
+fresh("data/results-all.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     results = data.map(r => ({...r, date: r.Date ? toDate(r.Date) : null}))
                   .sort((a,b) => (b.date || 0) - (a.date || 0));   // latest first
-    resComp = new Set(store.get("resComps") || []);
-    buildResPills(); buildCompPills(); renderResults();
+    buildResPills(); renderResults();
   })
   .catch(() => {
     const m = document.getElementById("resMsg");
     m.className = "msg err";
     m.textContent = "Couldn't load data/results.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
+  });
+
+// AIL Table: rows in the same order as data/table_ail.json; Pos is the row's place in the file
+const pd = v => { const n = Number(v); return v === "" || v == null || isNaN(n) ? esc(v) : (n > 0 ? "+" : "") + n; };
+fresh("data/table_ail.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(data => {
+    document.getElementById("ailRows").innerHTML = data.map((t, i) =>
+      `<tr><td class="pos">${i + 1}</td><td class="logo">${t.club_logo ? `<img src="${esc(t.club_logo)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</td><td class="team">${esc(t.team)}</td><td>${esc(t.played)}</td><td>${esc(t.gameswon)}</td>` +
+      `<td>${esc(t.gameslost)}</td><td>${esc(t.gamesdraw)}</td><td>${pd(t.pointsdifference)}</td>` +
+      `<td class="pts">${esc(t.points)}</td></tr>`).join("");
+    document.getElementById("ailMsg").textContent = `${data.length} team${data.length === 1 ? "" : "s"}`;
+  })
+  .catch(() => {
+    const m = document.getElementById("ailMsg");
+    m.className = "msg err";
+    m.textContent = "Couldn't load data/table_ail.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
   });
 </script>
 </body>
