@@ -20,7 +20,7 @@
   {
     "Date": "30/10/2026",
     "Opposition": "Sundays Well RFC 2nd XV",
-    "Referee": "TBC (Pending)",
+    "Referee": "Kevin Humphreys",
     "Competition": "South - Junior 2 League",
     "Ground": "Virgin Media Park",
     "Loc": "Away",
@@ -45,9 +45,18 @@
     "Grade": "U14"
   },
   {
+    "Date": "31/10/2026",
+    "Opposition": "Fermoy RFC",
+    "Referee": "John McNamara",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "U13"
+  },
+  {
     "Date": "01/11/2026",
     "Opposition": "Nenagh Ormond RFC 2nd XV",
-    "Referee": "TBC (Pending)",
+    "Referee": "Barrie O'Connell",
     "Competition": "Munster Senior Clubs League Division 1",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
