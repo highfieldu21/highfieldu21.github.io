@@ -199,6 +199,14 @@ const gradeKey = g => String(g ?? "").trim().toLowerCase();
 const gradeRank = g => { const i = GRADE_ORDER.findIndex(x => gradeKey(x) === gradeKey(g)); return i === -1 ? GRADE_ORDER.length : i; };
 const sortGrades = list => [...list].sort((a, b) =>
   gradeRank(a) - gradeRank(b) || String(b).localeCompare(String(a), undefined, { numeric: true, sensitivity: "base" }));
+// Row order: by date (dir 1 = oldest first, -1 = newest first), then Grade on the same date
+// (Senior, J1, U21, J2, then the rest descending). Rows with no date go last either way.
+const byGrade = (a, b) => gradeRank(a.Grade) - gradeRank(b.Grade) ||
+  String(b.Grade ?? "").localeCompare(String(a.Grade ?? ""), undefined, { numeric: true, sensitivity: "base" });
+const byDateThenGrade = dir => (a, b) => {
+  if (!a.date || !b.date) return (!a.date) - (!b.date) || byGrade(a, b);
+  return dir * (a.date - b.date) || byGrade(a, b);
+};
 // Always ask for a fresh copy of the data files: "no-cache" makes the browser check with the
 // server, and the changing ?v= value stops any cached copy along the way being reused.
 const fresh = path => fetch(`${path}?v=${Date.now()}`, { cache: "no-cache" });
@@ -261,7 +269,7 @@ function buildPills(){
 fresh("data/fixtures-all.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
-    fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort((a,b) => a.date - b.date);
+    fixtures = data.map(f => ({...f, date: toDate(f.Date)})).sort(byDateThenGrade(1));   // oldest first, then by grade
     buildPills(); render();
   })
   .catch(() => {
@@ -321,7 +329,7 @@ fresh("data/results-all.json")
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(data => {
     results = data.map(r => ({...r, date: r.Date ? toDate(r.Date) : null}))
-                  .sort((a,b) => (b.date || 0) - (a.date || 0));   // latest first
+                  .sort(byDateThenGrade(-1));   // newest first, then by grade
     buildResPills(); renderResults();
   })
   .catch(() => {
