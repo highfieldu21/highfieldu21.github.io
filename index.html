@@ -20,6 +20,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system
 .hero h2a{margin:4px 0 4px;font-size:24px;line-height:1.15}
 .herosub{margin:0;font-size:14px;opacity:.85}
 .wrap{max-width:960px;margin:0 auto}
+.runinfo{margin:8px 0 0;font-size:12px;opacity:.9;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.runinfo[hidden]{display:none}
+.runinfo .dot{width:9px;height:9px;border-radius:50%;background:#b9cfbf;box-shadow:0 0 0 2px rgba(255,255,255,.35)}
+.runinfo.ok .dot{background:#3ecf6a}.runinfo.fail .dot{background:#ff6b5b}.runinfo.busy .dot{background:var(--gold)}
+.runinfo a{color:inherit}
 
 /* Tab bar: fixed at the bottom on phones, within thumb reach */
 nav{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;background:var(--green);
@@ -146,6 +151,7 @@ tr.res.W{border-left-color:#1d7a3a}tr.res.L{border-left-color:#b03a2e}tr.res.D{b
     <h1>Highfield RFC</h1>
     <p class="herosub">Woodleigh Park</p>    
     <h2a>Fixtures & Results</h2a>
+    <p class="runinfo" id="runinfo" hidden><span class="dot"></span><span id="runtext"></span></p>
   </div>
 </header>
 <div class="navbg">
@@ -356,6 +362,43 @@ fresh("data/table_ail.json")
     m.className = "msg err";
     m.textContent = "Couldn't load data/table_ail.json. Keep it in the data folder next to this page and open the page from its web address, not from a local file.";
   });
+
+// Last GitHub Actions run, shown under the page heading.
+// Set GH_REPO to "owner/repo". If left blank, it is worked out from a username.github.io/repo address.
+// Set GH_WORKFLOW to the workflow's file name (e.g. "update-data.yml"); if blank, the latest run of any
+// workflow is shown, ignoring GitHub's own "pages build and deployment" runs.
+// Works for public repositories only (no token is needed or should ever be put in this page).
+const GH_REPO = "highfieldu21/highfieldu21.github.io";
+const GH_WORKFLOW = "update-fixtures.yml";
+(function lastRun(){
+  let repo = GH_REPO;
+  if (!repo && location.hostname.endsWith(".github.io")) {
+    const user = location.hostname.split(".")[0], first = location.pathname.split("/")[1];
+    repo = `${user}/${first || location.hostname}`;
+  }
+  if (!repo) return;
+  const url = GH_WORKFLOW
+    ? `https://api.github.com/repos/${repo}/actions/workflows/${encodeURIComponent(GH_WORKFLOW)}/runs?per_page=1`
+    : `https://api.github.com/repos/${repo}/actions/runs?per_page=10`;
+  fetch(url, { headers: { Accept: "application/vnd.github+json" } })
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(data => {
+      const run = (data.workflow_runs || []).find(w => GH_WORKFLOW || w.name !== "pages build and deployment");
+      if (!run) return;
+      const when = new Date(run.run_started_at || run.created_at).toLocaleString("en-IE",
+        { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+      let label, cls;
+      if (run.status !== "completed") { label = run.status === "in_progress" ? "Running now" : "Queued"; cls = "busy"; }
+      else if (run.conclusion === "success") { label = "Success"; cls = "ok"; }
+      else { label = ({ failure: "Failed", cancelled: "Cancelled", timed_out: "Timed out", skipped: "Skipped" })[run.conclusion] || run.conclusion || "Unknown"; cls = "fail"; }
+      const box = document.getElementById("runinfo");
+      box.classList.add(cls);
+      document.getElementById("runtext").innerHTML =
+        `Data last updated ${esc(when)} &middot; <a href="${esc(run.html_url)}" target="_blank" rel="noopener">${esc(label)}</a>`;
+      box.hidden = false;
+    })
+    .catch(() => {});   // if GitHub can't be reached (or the repo is private) the line simply stays hidden
+})();
 </script>
 </body>
 </html>
