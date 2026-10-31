@@ -1,5 +1,17 @@
 [
   {
+    "team": "Blackrock College RFC",
+    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/11401/blackrock-logo.png",
+    "played": 5,
+    "gameswon": 4,
+    "gamesdraw": 0,
+    "gameslost": 1,
+    "pointsfor": 128,
+    "pointsagainst": 123,
+    "pointsdifference": 5,
+    "points": 18
+  },
+  {
     "team": "Naas RFC",
     "club_logo": "",
     "played": 5,
@@ -48,27 +60,27 @@
     "points": 14
   },
   {
-    "team": "Blackrock College RFC",
-    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/11401/blackrock-logo.png",
-    "played": 4,
-    "gameswon": 3,
-    "gamesdraw": 0,
-    "gameslost": 1,
-    "pointsfor": 85,
-    "pointsagainst": 107,
-    "pointsdifference": -22,
-    "points": 13
-  },
-  {
     "team": "Nenagh Ormond RFC",
     "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/11447/nenagh.gif",
-    "played": 4,
-    "gameswon": 2,
+    "played": 5,
+    "gameswon": 3,
     "gamesdraw": 0,
     "gameslost": 2,
-    "pointsfor": 81,
-    "pointsagainst": 85,
-    "pointsdifference": -4,
+    "pointsfor": 99,
+    "pointsagainst": 101,
+    "pointsdifference": -2,
+    "points": 14
+  },
+  {
+    "team": "MU Barnhall RFC",
+    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/48233/MU Barnhall RFC_women.jpg",
+    "played": 5,
+    "gameswon": 2,
+    "gamesdraw": 0,
+    "gameslost": 3,
+    "pointsfor": 92,
+    "pointsagainst": 102,
+    "pointsdifference": -10,
     "points": 10
   },
   {
@@ -84,27 +96,15 @@
     "points": 10
   },
   {
-    "team": "MU Barnhall RFC",
-    "club_logo": "https://sportlomo-userupload.s3.amazonaws.com/clubLogos/48233/MU Barnhall RFC_women.jpg",
-    "played": 4,
-    "gameswon": 2,
-    "gamesdraw": 0,
-    "gameslost": 2,
-    "pointsfor": 76,
-    "pointsagainst": 84,
-    "pointsdifference": -8,
-    "points": 9
-  },
-  {
     "team": "Garryowen FC",
     "club_logo": "",
-    "played": 4,
+    "played": 5,
     "gameswon": 2,
     "gamesdraw": 0,
-    "gameslost": 2,
-    "pointsfor": 96,
-    "pointsagainst": 117,
-    "pointsdifference": -21,
+    "gameslost": 3,
+    "pointsfor": 112,
+    "pointsagainst": 160,
+    "pointsdifference": -48,
     "points": 9
   },
   {
