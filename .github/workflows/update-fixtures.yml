@@ -41,6 +41,10 @@ jobs:
       - name: Fetch fixtures
         if: github.event_name != 'push'
         run: python script/get-mr-fix.py
+
+      - name: Fetch results
+        if: ${{ !cancelled() && github.event_name != 'push' }}
+        run: python script/get-mr-res.py
         
       - name: Merge Fixture Files       
         if: github.event_name != 'push'      
@@ -50,10 +54,6 @@ jobs:
         if: github.event_name != 'push'      
         run: python script/merge-results.py
         
-      # Still runs if the fixtures step failed, so one problem doesn't block the other.
-      - name: Fetch results
-        if: ${{ !cancelled() && github.event_name != 'push' }}
-        run: python script/get-mr-res.py
 
       # The scripts only write their file on success, so committing here is safe.
       # A commit made with the built-in token doesn't start another run, so no loop.
