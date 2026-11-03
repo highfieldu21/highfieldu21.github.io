@@ -1,12 +1,12 @@
 [
   {
-    "Date": "31/10/2026",
-    "Opposition": "Kanturk RFC",
-    "Referee": "",
-    "Competition": "Boys Clubs U14 South Munster League Group 2",
-    "Ground": "Kanturk",
-    "Loc": "Away",
-    "Grade": "U14"
+    "Date": "06/11/2026",
+    "Opposition": "Crosshaven/Cork Con",
+    "Referee": "TBC (Pending)",
+    "Competition": "Boys Clubs U18.5 Munster Conference 6",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "U18.5"
   },
   {
     "Date": "07/11/2026",
@@ -19,21 +19,21 @@
   },
   {
     "Date": "07/11/2026",
-    "Opposition": "Crosshaven/Cork Con",
-    "Referee": "TBC (Pending)",
-    "Competition": "Boys Clubs U18.5 Munster Conference 6",
-    "Ground": "Woodleigh Park",
-    "Loc": "Home",
-    "Grade": "U18.5"
-  },
-  {
-    "Date": "07/11/2026",
     "Opposition": "Ballincollig RFC White",
     "Referee": "TBC (Pending)",
     "Competition": "Boys Clubs U16 Munster Conference 7",
     "Ground": "Tanner Park",
     "Loc": "Home",
     "Grade": "U16"
+  },
+  {
+    "Date": "08/11/2026",
+    "Opposition": "Fermoy RFC",
+    "Referee": "TBC (Pending)",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "U13"
   },
   {
     "Date": "13/11/2026",

@@ -9,13 +9,13 @@
     "Grade": "Senior"
   },
   {
-    "Date": "31/10/2026",
-    "Opposition": "Kanturk RFC",
-    "Referee": "",
-    "Competition": "Boys Clubs U14 South Munster League Group 2",
-    "Ground": "Kanturk",
-    "Loc": "Away",
-    "Grade": "U14"
+    "Date": "06/11/2026",
+    "Opposition": "Crosshaven/Cork Con",
+    "Referee": "TBC (Pending)",
+    "Competition": "Boys Clubs U18.5 Munster Conference 6",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "U18.5"
   },
   {
     "Date": "07/11/2026",
@@ -25,15 +25,6 @@
     "Ground": "Woodleigh Park",
     "Loc": "Home",
     "Grade": "U21"
-  },
-  {
-    "Date": "07/11/2026",
-    "Opposition": "Crosshaven/Cork Con",
-    "Referee": "TBC (Pending)",
-    "Competition": "Boys Clubs U18.5 Munster Conference 6",
-    "Ground": "Woodleigh Park",
-    "Loc": "Home",
-    "Grade": "U18.5"
   },
   {
     "Date": "07/11/2026",
@@ -52,6 +43,15 @@
     "Ground": "Stradbrook",
     "Loc": "Away",
     "Grade": "Senior"
+  },
+  {
+    "Date": "08/11/2026",
+    "Opposition": "Fermoy RFC",
+    "Referee": "TBC (Pending)",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "U13"
   },
   {
     "Date": "13/11/2026",
@@ -137,7 +137,7 @@
   {
     "Date": "28/11/2026",
     "Opposition": "City of Armagh RFC",
-    "Referee": "",
+    "Referee": "Max Weston",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
@@ -200,7 +200,7 @@
   {
     "Date": "12/12/2026",
     "Opposition": "Naas RFC",
-    "Referee": "",
+    "Referee": "Christopher Lough",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
