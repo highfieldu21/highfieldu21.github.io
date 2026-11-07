@@ -160,16 +160,6 @@
     "Score": "7:24"
   },
   {
-    "Date": "07/10/2026",
-    "Competition": "U21 Donal Walsh Trophy",
-    "Result": "",
-    "Loc": "Home",
-    "Opposition": "UL Bohemian RFC",
-    "Grade": "U21",
-    "Score": "-:-",
-    "Referee": "Jack Kingston"
-  },
-  {
     "Date": "10/10/2026",
     "Competition": "Boys Clubs U18.5 Munster Conference 6",
     "Result": "Loss",
@@ -358,5 +348,15 @@
     "Grade": "U16",
     "Score": "17:38",
     "Referee": "Des O'Halloran"
+  },
+  {
+    "Date": "07/11/2026",
+    "Competition": "Energia All-Ireland League 1B 26/27",
+    "Grade": "Senior",
+    "Referee": "Shane Gaughan",
+    "Opposition": "Blackrock College RFC",
+    "Loc": "Away",
+    "Result": "Win",
+    "Score": "31:40"
   }
 ]
