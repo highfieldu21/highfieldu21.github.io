@@ -1,5 +1,15 @@
 [
   {
+    "Date": "08/11/2026",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Result": "Loss",
+    "Loc": "Home",
+    "Opposition": "Fermoy RFC",
+    "Grade": "U13",
+    "Score": "17:26",
+    "Referee": "TBC (Pending)"
+  },
+  {
     "Date": "07/11/2026",
     "Competition": "U21 Donal Walsh Trophy",
     "Result": "Loss",
@@ -318,15 +328,5 @@
     "Grade": "U16",
     "Score": "17:12",
     "Referee": "Jerry Lane"
-  },
-  {
-    "Date": "18/09/2026",
-    "Competition": "South - Dennehy Cup",
-    "Result": "Win",
-    "Loc": "Home",
-    "Opposition": "Clonakilty RFC 2nd XV",
-    "Grade": "J2",
-    "Score": "23:22",
-    "Referee": "Justin Colgan"
   }
 ]

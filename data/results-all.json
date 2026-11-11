@@ -1,15 +1,5 @@
 [
   {
-    "Date": "18/09/2026",
-    "Competition": "South - Dennehy Cup",
-    "Result": "Win",
-    "Loc": "Home",
-    "Opposition": "Clonakilty RFC 2nd XV",
-    "Grade": "J2",
-    "Score": "23:22",
-    "Referee": "Justin Colgan"
-  },
-  {
     "Date": "19/09/2026",
     "Competition": "Boys Clubs U18.5 South Munster League Group 1",
     "Result": "Loss",
@@ -368,5 +358,15 @@
     "Loc": "Away",
     "Result": "Win",
     "Score": "31:40"
+  },
+  {
+    "Date": "08/11/2026",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Result": "Loss",
+    "Loc": "Home",
+    "Opposition": "Fermoy RFC",
+    "Grade": "U13",
+    "Score": "17:26",
+    "Referee": "TBC (Pending)"
   }
 ]

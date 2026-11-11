@@ -9,34 +9,16 @@
     "Grade": "Senior"
   },
   {
-    "Date": "08/11/2026",
-    "Opposition": "Fermoy RFC",
-    "Referee": "TBC (Pending)",
-    "Competition": "Boys Clubs U13 Friendly",
-    "Ground": "Woodleigh Park",
-    "Loc": "Home",
-    "Grade": "U13"
-  },
-  {
-    "Date": "13/11/2026",
-    "Opposition": "Bandon RFC 2nd XV",
-    "Referee": "TBC (Pending)",
-    "Competition": "South - Junior 2 League",
-    "Ground": "Bandon",
-    "Loc": "Away",
-    "Grade": "J2"
-  },
-  {
     "Date": "13/11/2026",
     "Opposition": "Mitchelstown-Galbally-Fermoy",
-    "Referee": "TBC (Pending)",
+    "Referee": "Kevin Humphreys",
     "Competition": "Boys Clubs U18.5 Munster Conference 6",
     "Ground": "Fermoy",
     "Loc": "Away",
     "Grade": "U18.5"
   },
   {
-    "Date": "14/11/2026",
+    "Date": "13/11/2026",
     "Opposition": "Crosshaven RFC",
     "Referee": "TBC (Pending)",
     "Competition": "Boys Clubs U14 South Munster League Group 2",
@@ -45,9 +27,18 @@
     "Grade": "U14"
   },
   {
+    "Date": "13/11/2026",
+    "Opposition": "Old Christians RFC",
+    "Referee": "TBC (Pending)",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "U13"
+  },
+  {
     "Date": "18/11/2026",
     "Opposition": "Cork Constitution FC",
-    "Referee": "TBC (Pending)",
+    "Referee": "Jack Kingston (Pending)",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
@@ -124,6 +115,15 @@
     "Ground": "Nenagh",
     "Loc": "Away",
     "Grade": "U21"
+  },
+  {
+    "Date": "04/12/2026",
+    "Opposition": "Bandon RFC 2nd XV",
+    "Referee": "TBC (Pending)",
+    "Competition": "South - Junior 2 League",
+    "Ground": "Bandon",
+    "Loc": "Away",
+    "Grade": "J2"
   },
   {
     "Date": "05/12/2026",
