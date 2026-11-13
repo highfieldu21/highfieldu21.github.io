@@ -1,14 +1,5 @@
 [
   {
-    "Date": "30/10/2026",
-    "Opposition": "University College Cork Rugby",
-    "Referee": "Andrew Fogarty",
-    "Competition": "Energia All-Ireland League 1B 26/27",
-    "Ground": "Woodleigh Park",
-    "Loc": "Home",
-    "Grade": "Senior"
-  },
-  {
     "Date": "28/11/2026",
     "Opposition": "City of Armagh RFC",
     "Referee": "Max Weston",
@@ -30,6 +21,15 @@
     "Date": "12/12/2026",
     "Opposition": "Naas RFC",
     "Referee": "Christopher Lough",
+    "Competition": "Energia All-Ireland League 1B 26/27",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "Senior"
+  },
+  {
+    "Date": "19/12/2026",
+    "Opposition": "University College Cork Rugby",
+    "Referee": "Andrew Cole",
     "Competition": "Energia All-Ireland League 1B 26/27",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
