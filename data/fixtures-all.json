@@ -9,24 +9,6 @@
     "Grade": "U14"
   },
   {
-    "Date": "22/11/2026",
-    "Opposition": "Youghal RFC",
-    "Referee": "Cormac Rafferty",
-    "Competition": "Boys Clubs U18.5 South Munster League Group 1",
-    "Ground": "Woodleigh Park",
-    "Loc": "Home",
-    "Grade": "U18.5"
-  },
-  {
-    "Date": "22/11/2026",
-    "Opposition": "Midleton RFC",
-    "Referee": "",
-    "Competition": "Boys Clubs U16 South Munster League Group 4",
-    "Ground": "Woodleigh Park",
-    "Loc": "Home",
-    "Grade": "U16"
-  },
-  {
     "Date": "25/11/2026",
     "Opposition": "UL Bohemian RFC",
     "Referee": "John Purcell",
@@ -61,6 +43,15 @@
     "Ground": "Coonagh",
     "Loc": "Away",
     "Grade": "J1"
+  },
+  {
+    "Date": "29/11/2026",
+    "Opposition": "Midleton RFC",
+    "Referee": "",
+    "Competition": "Boys Clubs U16 South Munster League Group 4",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "U16"
   },
   {
     "Date": "02/12/2026",
