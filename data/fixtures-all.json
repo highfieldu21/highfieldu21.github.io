@@ -1,14 +1,5 @@
 [
   {
-    "Date": "21/11/2026",
-    "Opposition": "Skibbereen RFC",
-    "Referee": "TBC (Pending)",
-    "Competition": "Boys Clubs U14 South Munster Dev 2014 Group 2 NC",
-    "Ground": "Skibbereen",
-    "Loc": "Away",
-    "Grade": "U14"
-  },
-  {
     "Date": "25/11/2026",
     "Opposition": "UL Bohemian RFC",
     "Referee": "John Purcell",
@@ -20,11 +11,20 @@
   {
     "Date": "27/11/2026",
     "Opposition": "Cork Constitution FC 3rd XV",
-    "Referee": "TBC (Pending)",
+    "Referee": "Damien Power",
     "Competition": "South - Junior 2 League",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
     "Grade": "J2"
+  },
+  {
+    "Date": "27/11/2026",
+    "Opposition": "Cork Constitution FC",
+    "Referee": "TBC (Pending)",
+    "Competition": "Boys Clubs U13 Friendly",
+    "Ground": "Woodleigh Park",
+    "Loc": "Home",
+    "Grade": "U13"
   },
   {
     "Date": "28/11/2026",
@@ -38,7 +38,7 @@
   {
     "Date": "29/11/2026",
     "Opposition": "Shannon RFC 2nd XV",
-    "Referee": "TBC (Pending)",
+    "Referee": "Brían Bennett",
     "Competition": "Munster Senior Clubs League Division 1",
     "Ground": "Coonagh",
     "Loc": "Away",
@@ -47,7 +47,7 @@
   {
     "Date": "29/11/2026",
     "Opposition": "Midleton RFC",
-    "Referee": "",
+    "Referee": "Declan Woulfe (Pending)",
     "Competition": "Boys Clubs U16 South Munster League Group 4",
     "Ground": "Woodleigh Park",
     "Loc": "Home",
@@ -56,7 +56,7 @@
   {
     "Date": "02/12/2026",
     "Opposition": "Nenagh Ormond RFC",
-    "Referee": "TBC (Pending)",
+    "Referee": "Brían Bennett",
     "Competition": "U21 Donal Walsh Trophy",
     "Ground": "Nenagh",
     "Loc": "Away",
